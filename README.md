@@ -12,7 +12,7 @@
     - `<branch-name>` typically will be something like `feature/add-server-auth` , `fix/handle-404-error`, etc. No strict rules on this one though
 7. Create a PR to merge your changes to develop branch
 8. Wait for it to be approved or merged
-9. When approved you can view your changes live on [here](https://unipass-dev.azurewebsites.net) _(Might take a few seconds)_.
+9. When approved you can view your changes live on [here](https://unipass-dev.azurewebsites.net) _(Might take a few minutes)_.
 10. Always **`git pull`** before you push to avoid merge conflicts.
 
 ### Requirements
@@ -32,6 +32,6 @@ Node 18.12.1
 #### React Client
 
 1. `cd client`
-2. `npm run build`
-3. `npm install -g serve` _Might be optional_
-4. `serve -s build`
+2. `npm install`
+3. Create `.env.development` file inside `/client` and add an entry for `REACT_APP_API_URL`. Follow this [reference](https://www.architect.io/blog/2022-08-16/react-environment-variables-developers-guide/).
+4. `npm run start`
