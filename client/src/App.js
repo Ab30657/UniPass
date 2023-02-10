@@ -2,7 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
-    fetch("https://localhost:7153/WeatherForecast").then(x => x.json()).then(x => console.log(x));
+    console.log(process.env.REACT_APP_API_URL + '/WeatherForecast');
+    fetch(process.env.REACT_APP_API_URL + '/WeatherForecast').then(x => x.json()).then(x => console.log(x));
     return (
         <div className="App">
             <header className="App-header">
