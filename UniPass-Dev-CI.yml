@@ -1,0 +1,62 @@
+# Variable 'REACT_APP_API_URL' was defined in the Variables tab
+# Agent Queue 'Azure Pipelines' was used with unrecognized Agent Specification, vmImage property must be specified to determine image - https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml#software
+trigger:
+  branches:
+    include:
+    - develop
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: refs/heads/develop
+jobs:
+- job: Job_1
+  displayName: Agent job 1
+  pool:
+    name: Azure Pipelines
+  steps:
+  - checkout: self
+    clean: true
+    fetchTags: false
+  - task: Npm@1
+    displayName: npm install
+    inputs:
+      workingDir: client/
+      verbose: false
+  - task: Npm@1
+    displayName: npm run build
+    inputs:
+      command: custom
+      workingDir: client/
+      verbose: false
+      customCommand: run build
+  - task: CmdLine@2
+    displayName: Command Line Script
+    inputs:
+      script: >
+        mv client/build API/wwwroot
+  - task: DotNetCoreCLI@2
+    displayName: dotnet restore
+    inputs:
+      command: restore
+      projects: API/API.csproj
+  - task: DotNetCoreCLI@2
+    displayName: dotnet build
+    inputs:
+      projects: API/API.csproj
+  - task: DotNetCoreCLI@2
+    displayName: dotnet test
+    inputs:
+      command: test
+      projects: API.Test/API.Test.csproj
+  - task: DotNetCoreCLI@2
+    displayName: dotnet publish
+    inputs:
+      command: publish
+      arguments: -c Release -o $(Build.ArtifactStagingDirectory)/publish
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: UniPASS-dev'
+    inputs:
+      PathtoPublish: $(Build.ArtifactStagingDirectory)/publish
+      ArtifactName: UniPASS-dev
+...
