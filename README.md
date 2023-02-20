@@ -35,3 +35,6 @@ Node 18.12.1
 2. `npm install`
 3. Create `.env.development` file inside `/client` and add an entry for `REACT_APP_API_URL`. Follow this [reference](https://www.architect.io/blog/2022-08-16/react-environment-variables-developers-guide/).
 4. `npm run start`
+
+### Extras
+Prettier + Eslint enabled autoformatting is applied for the client-side application.
