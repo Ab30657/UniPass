@@ -18,11 +18,22 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<DataContext>(opt =>
+if (builder.Environment.IsDevelopment())
 {
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    opt.UseSqlite(connectionString);
-});
+    builder.Services.AddDbContext<DataContext>(opt =>
+    {
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+        opt.UseSqlite(connectionString);
+    });
+}
+else
+{
+    builder.Services.AddDbContext<DataContext>(opt =>
+    {
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+        opt.UseNpgsql(connectionString);
+    });
+}
 
 var app = builder.Build();
 
