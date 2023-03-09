@@ -41,9 +41,28 @@ jobs:
       command: restore
       projects: API/API.csproj
   - task: DotNetCoreCLI@2
+    displayName: 'dotnet custom'
+    inputs:
+      command: custom
+      projects: API/API.csproj
+      custom: tool
+      arguments: 'install --global dotnet-ef'
+  - task: DotNetCoreCLI@2
     displayName: dotnet build
     inputs:
       projects: API/API.csproj
+  - task: DotNetCoreCLI@2
+    displayName: 'dotnet ef migrations bundle'
+    inputs:
+      command: custom
+      projects: API/API.csproj
+      custom: ef
+      arguments: 'migrations bundle -o $(Build.ArtifactStagingDirectory)/migrations/efbundle'
+  - task: CmdLine@2
+    displayName: efbundle
+    inputs:
+      script: >
+        ./$(Build.ArtifactStagingDirectory)/migrations/efbundle
   - task: DotNetCoreCLI@2
     displayName: dotnet test
     inputs:
