@@ -1,10 +1,15 @@
 using API.Data;
+using API.Helpers;
+using API.Interfaces;
+using API.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddAutoMapper(typeof(MappingProfiles));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -43,11 +48,15 @@ using (var scope = app.Services.CreateScope())
     await context.Database.MigrateAsync();
 }
 
+builder.Services.AddIdentity<AppUser, AppUserRole>(x =>
+{ }).AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseCors();
     app.UseHttpsRedirection();
+    app.UseCors();
+    app.UseAuthentication();
     app.UseAuthorization();
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -59,6 +68,7 @@ else if (app.Environment.IsStaging())
     app.UseRouting();
     app.UseDefaultFiles();
     app.UseStaticFiles();
+    app.UseAuthentication();
     app.UseAuthorization();
     app.UseEndpoints(endpoints =>
         {
