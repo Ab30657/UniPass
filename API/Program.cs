@@ -1,3 +1,6 @@
+using API.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,8 +18,30 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDbContext<DataContext>(opt =>
+    {
+        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+        opt.UseSqlite(connectionString);
+    });
+}
+else
+{
+    builder.Services.AddDbContext<DataContext>(opt =>
+    {
+        var connectionString = Environment.GetEnvironmentVariable("CUSTOMCONNSTR_DefaultConnection");
+        opt.UseNpgsql(connectionString);
+    });
+}
+
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+    await context.Database.MigrateAsync();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
