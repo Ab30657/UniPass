@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace API.Interfaces
 {
+    [Obsolete]
     public interface IUserAuthenticationRepository
     {
         Task<IdentityResult> RegisterUserAsync(RegisterDto registerDto);

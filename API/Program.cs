@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddAutoMapper(typeof(MappingProfiles));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddAutoMapper(typeof(MappingProfiles));
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -40,16 +40,26 @@ else
     });
 }
 
+builder.Services.AddIdentity<AppUser, AppRole>(x =>
+{
+    x.Password.RequireDigit = false;
+    x.Password.RequiredLength = 1;
+    x.Password.RequireLowercase = false;
+    x.Password.RequireUppercase = false;
+    x.Password.RequireNonAlphanumeric = false;
+}).AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
     await context.Database.MigrateAsync();
+    await Seed.SeedUsersAsync(userManager, roleManager);
 }
 
-builder.Services.AddIdentity<AppUser, AppUserRole>(x =>
-{ }).AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
