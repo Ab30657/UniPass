@@ -1,14 +1,19 @@
+using System.Text;
 using API.Data;
 using API.Helpers;
 using API.Interfaces;
 using API.Models;
+using API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddAutoMapper(typeof(MappingProfiles));
 builder.Services.AddCors(options =>
 {
@@ -48,6 +53,23 @@ builder.Services.AddIdentity<AppUser, AppRole>(x =>
     x.Password.RequireUppercase = false;
     x.Password.RequireNonAlphanumeric = false;
 }).AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtTokenKey"])),
+        ValidateIssuer = false,
+        ValidateAudience = false,
+    };
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("RequireInstructorRole", policy => policy.RequireRole("Admin", "Instructor"));
+});
 
 var app = builder.Build();
 

@@ -15,8 +15,11 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        public AccountController(IUnitOfWork unitOfWork, IMapper mapper, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        private readonly ITokenService _tokenService;
+        public AccountController(IUnitOfWork unitOfWork, IMapper mapper, UserManager<AppUser> userManager,
+            SignInManager<AppUser> signInManager, ITokenService tokenService)
         {
+            this._tokenService = tokenService;
             this._signInManager = signInManager;
             this._userManager = userManager;
             this._mapper = mapper;
@@ -43,7 +46,7 @@ namespace API.Controllers
             return new UserDto
             {
                 Username = user.UserName,
-                // Token = await _tokenService.CreateToken(user),
+                Token = await _tokenService.CreateToken(user),
                 // KnownAs = user.KnownAs,
                 // Gender = user.Gender
             };
@@ -60,7 +63,7 @@ namespace API.Controllers
             return new UserDto
             {
                 Username = user.UserName,
-                // Token = await _tokenService.CreateToken(user),
+                Token = await _tokenService.CreateToken(user),
             };
 
         }
