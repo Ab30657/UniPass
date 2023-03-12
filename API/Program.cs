@@ -66,27 +66,8 @@ builder.Services.AddAuthorization(options =>
 var app = builder.Build();
 
 
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<DataContext>();
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
-    await context.Database.MigrateAsync();
-    await Seed.SeedUsersAsync(userManager, roleManager);
-}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
-{
-
-    app.UseHttpsRedirection();
-    app.UseCors();
-    app.UseAuthentication();
-    app.UseAuthorization();
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    app.MapControllers();
-}
-else if (app.Environment.IsStaging())
 {
     using (var scope = app.Services.CreateScope())
     {
@@ -96,6 +77,16 @@ else if (app.Environment.IsStaging())
         await context.Database.MigrateAsync();
         await Seed.SeedUsersAsync(userManager, roleManager);
     }
+    app.UseHttpsRedirection();
+    app.UseCors();
+    app.UseAuthentication();
+    app.UseAuthorization();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+    app.MapControllers();
+}
+else
+{
     app.UseHttpsRedirection();
     app.UseRouting();
     app.UseAuthentication();

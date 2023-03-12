@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace API.Migrations.SqliteMigrations
+namespace API.Data.Migrations.SqliteMigrations
 {
     [DbContext(typeof(SqliteDataContext))]
-    [Migration("20230312223558_InitialCreate")]
+    [Migration("20230312231334_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -385,6 +385,10 @@ namespace API.Migrations.SqliteMigrations
 
                     b.Property<int>("SemesterId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Grade")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("StudentId", "CourseId", "SemesterId");
 

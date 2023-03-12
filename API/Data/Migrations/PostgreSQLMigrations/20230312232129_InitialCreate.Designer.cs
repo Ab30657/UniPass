@@ -9,10 +9,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace API.Migrations.PostgreSQLMigrations
+namespace API.Data.Migrations.PostgreSQLMigrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230312223722_InitialCreate")]
+    [Migration("20230312232129_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

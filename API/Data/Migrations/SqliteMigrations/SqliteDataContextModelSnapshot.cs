@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace API.Migrations.SqliteMigrations
+namespace API.Data.Migrations.SqliteMigrations
 {
     [DbContext(typeof(SqliteDataContext))]
     partial class SqliteDataContextModelSnapshot : ModelSnapshot
@@ -383,6 +383,10 @@ namespace API.Migrations.SqliteMigrations
 
                     b.Property<int>("SemesterId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Grade")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("StudentId", "CourseId", "SemesterId");
 
