@@ -8,9 +8,17 @@ namespace API.Data
 {
     public class DataContext : IdentityDbContext<AppUser, AppRole, int, IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        protected readonly IConfiguration _configuration;
+        public DataContext(IConfiguration configuration)
         {
+            this._configuration = configuration;
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            options.UseNpgsql(_configuration.GetConnectionString("POSTGRESQLCONNSTR_DefaultConnection"));
+        }
+
         public DbSet<Student> Students { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Course> Courses { get; set; }

@@ -30,20 +30,11 @@ builder.Services.AddSwaggerGen();
 
 if (builder.Environment.IsDevelopment())
 {
-    builder.Services.AddDbContext<DataContext>(opt =>
-    {
-        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-        opt.UseSqlite(connectionString);
-    });
+    builder.Services.AddDbContext<DataContext, SqliteDataContext>();
 }
 else
 {
-    builder.Services.AddDbContext<DataContext>(opt =>
-    {
-        var connectionString = builder.Configuration.GetConnectionString("POSTGRESQLCONNSTR_DefaultConnection");
-
-        opt.UseNpgsql(connectionString);
-    });
+    builder.Services.AddDbContext<DataContext>();
 }
 
 builder.Services.AddIdentity<AppUser, AppRole>(x =>
@@ -75,18 +66,18 @@ builder.Services.AddAuthorization(options =>
 var app = builder.Build();
 
 
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<DataContext>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
+    await context.Database.MigrateAsync();
+    await Seed.SeedUsersAsync(userManager, roleManager);
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
 
-    using (var scope = app.Services.CreateScope())
-    {
-        var context = scope.ServiceProvider.GetRequiredService<DataContext>();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
-        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
-        await context.Database.MigrateAsync();
-        await Seed.SeedUsersAsync(userManager, roleManager);
-    }
     app.UseHttpsRedirection();
     app.UseCors();
     app.UseAuthentication();
