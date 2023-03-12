@@ -40,7 +40,7 @@ else
 {
     builder.Services.AddDbContext<DataContext>(opt =>
     {
-        var connectionString = Environment.GetEnvironmentVariable("CUSTOMCONNSTR_DefaultConnection");
+        var connectionString = builder.Configuration.GetConnectionString("POSTGRESQLCONNSTR_DefaultConnection");
         opt.UseNpgsql(connectionString);
     });
 }
