@@ -384,9 +384,8 @@ namespace API.Data.Migrations.SqliteMigrations
                     b.Property<int>("SemesterId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Grade")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("Grade")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("StudentId", "CourseId", "SemesterId");
 

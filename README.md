@@ -38,3 +38,7 @@ Node 18.12.1
 
 ### Extras
 Prettier + Eslint enabled autoformatting is applied for the client-side application.
+
+
+### Information on Migrations being Used
+Migrations are being tracked for both dev and prod databases. These migrations do not yet support multiple DbContexts being used with ef bundle (released with .NET 6), so the migrations will be applied once, and won't be part of the CI/CD Pipelines.
