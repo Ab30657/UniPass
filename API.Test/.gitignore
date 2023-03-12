@@ -330,7 +330,10 @@ __pycache__/
 
 # BizTalk build output
 *.btp.cs
-*.btm.cs
+*.btm.cs        // _userStore = new Mock<IUserStore<AppUser>>();
+
+        // _userManager = new Mock<UserManager<AppUser>>(_userStore.Object, null, null, null, null, null, null, null, null);
+        // _signInManager = new Mock<SignInManager<AppUser>>(_userManager.Object, Mock.Of<IHttpContextAccessor>(), Mock.Of<IUserClaimsPrincipalFactory<AppUser>>(), null, null, null, null);
 *.odx.cs
 *.xsd.cs
 
@@ -452,3 +455,5 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+AccountControllerTests.cs
