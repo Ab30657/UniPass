@@ -1,0 +1,128 @@
+[
+    {
+        "FirstName": "Laurie",
+        "LastName": " Dickerson",
+        "UserName": "Massey",
+        "Email": "masseydickerson@furnitech.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Francis",
+        "LastName": " Golden",
+        "UserName": "Barron",
+        "Email": "barrongolden@furnitech.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Beach",
+        "LastName": " Hanson",
+        "UserName": "Abigail",
+        "Email": "abigailhanson@furnitech.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Tamika",
+        "LastName": " Dawson",
+        "UserName": "Billie",
+        "Email": "billiedawson@furnitech.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Benton",
+        "LastName": " Howard",
+        "UserName": "Gallagher",
+        "Email": "gallagherhoward@furnitech.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Rosemarie",
+        "LastName": " Pearson",
+        "UserName": "Cochran",
+        "Email": "cochranpearson@furnitech.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Wynn",
+        "LastName": " Yates",
+        "UserName": "Clare",
+        "Email": "clareyates@furnitech.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Rogers",
+        "LastName": " Carey",
+        "UserName": "Lou",
+        "Email": "loucarey@furnitech.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Ursula",
+        "LastName": " Frost",
+        "UserName": "Colon",
+        "Email": "colonfrost@furnitech.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Magdalena",
+        "LastName": " Hood",
+        "UserName": "Walsh",
+        "Email": "walshhood@furnitech.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Martina",
+        "LastName": " Robbins",
+        "UserName": "Ward",
+        "Email": "wardrobbins@furnitech.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Sheena",
+        "LastName": " Whitney",
+        "UserName": "Kim",
+        "Email": "kimwhitney@furnitech.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Brady",
+        "LastName": " Sims",
+        "UserName": "Wilda",
+        "Email": "wildasims@furnitech.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Rhonda",
+        "LastName": " Wiggins",
+        "UserName": "English",
+        "Email": "englishwiggins@furnitech.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Combs",
+        "LastName": " Atkinson",
+        "UserName": "Dale",
+        "Email": "daleatkinson@furnitech.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Espinoza",
+        "LastName": " Leonard",
+        "UserName": "Hahn",
+        "Email": "hahnleonard@furnitech.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Wilcox",
+        "LastName": " Hewitt",
+        "UserName": "Angie",
+        "Email": "angiehewitt@furnitech.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Carmela",
+        "LastName": " Figueroa",
+        "UserName": "Socorro",
+        "Email": "socorrofigueroa@furnitech.com",
+        "Role": "Student"
+    }
+]
