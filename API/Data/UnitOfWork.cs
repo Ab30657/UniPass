@@ -26,6 +26,10 @@ namespace API.Data
         /*    
 W
         */
+        public IAssignmentRepository AssignmentRepository => new AssignmentRepository(_context, _mapper);
+        public ICourseRepository CourseRepository => new CourseRepository(_context, _mapper);
+        public IDepartmentRepository DepartmentRepository => new DepartmentRepository(_context, _mapper);
+        public IPerfIndicatorRepository PerfIndicatorRepository => new PerfIndicatorRepository(_context, _mapper);
         public async Task<bool> CompleteAsync()
         {
             return await _context.SaveChangesAsync() > 0;
