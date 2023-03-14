@@ -1,4 +1,4 @@
-# UniPASS
+# UniPASS [![Build Status](https://dev.azure.com/ab874s0626/UniPass/_apis/build/status/UniPass-Dev-CI?branchName=develop)](https://dev.azure.com/ab874s0626/UniPass/_build/latest?definitionId=2&branchName=develop)
 
 ### Setup
 
