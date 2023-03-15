@@ -1,6 +1,6 @@
 namespace API.Interfaces
 {
-    public class ICourseRepository
+    public interface ICourseRepository
     {
 
     }
