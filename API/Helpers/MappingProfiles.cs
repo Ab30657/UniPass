@@ -9,7 +9,8 @@ namespace API.Helpers
         public MappingProfiles()
         {
             CreateMap<RegisterDto, AppUser>();
-
+            CreateMap<PerfIndicatorDto, PerformanceIndicator>();
+            CreateMap<PerformanceIndicator, PerfIndicatorDto>();
             /////////////////////////////////
             /// Add necessary mappings here
             ////////////////////////////////
