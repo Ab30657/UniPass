@@ -1,5 +1,8 @@
+using API.DTOs;
 using API.Interfaces;
+using API.Models;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 namespace API.Data
 {
@@ -12,6 +15,14 @@ namespace API.Data
         {
             this._context = context;
             this._mapper = mapper;
+        }
+
+        //return await _context.Users.Where(x => x.UserName == username).ProjectTo<MemberDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+
+        public async void CreateCourse(CourseDto courseDto)
+        {
+            var course = _mapper.Map<Course>(courseDto);
+            await _context.Courses.AddAsync(course);
         }
     }
 }
