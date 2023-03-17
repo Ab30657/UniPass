@@ -171,7 +171,7 @@ function SignUp() {
         </form>
         <div className="text-center text-muted mt-3">
           Already have account?{' '}
-          <a href="./sign-in.html" tabIndex="-1">
+          <a href="./SignIn" tabIndex="-1">
             Sign in
           </a>
         </div>
