@@ -18,6 +18,12 @@ namespace API.Data
             this._mapper = mapper;
         }
 
+        //This should be similar to GetCoursesByStudentId
+        public async Task<IList<CourseDto>> GetCoursesByInstructorId(int id)
+        {
+            return await _context.Courses.Where(x => x.Teaches.Any(x => x.InstructorId == id)).ProjectTo<CourseDto>(_mapper.ConfigurationProvider).ToListAsync();
+        }
+
         //These might be useful later when we start on registering courses
         public async Task<IList<InstructorDto>> GetAllInstructors()
         {

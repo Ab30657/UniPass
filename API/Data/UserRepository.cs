@@ -56,5 +56,17 @@ namespace API.Data
             return await _context.Students.Where(y => y.Id == id).Include(x => x.AppUser).ProjectTo<StudentDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
         }
 
+        public async Task<Instructor> GetInstructorByUserIdAsync(int id)
+        {
+            return await _context.Instructors.Where(x => x.AppUserId == id).Include(x => x.AppUser).SingleOrDefaultAsync();
+        }
+        public async Task<Student> GetStudentByUserIdAsync(int id)
+        {
+            return await _context.Students.Where(x => x.AppUserId == id).Include(x => x.AppUser).SingleOrDefaultAsync();
+        }
+
+        // public Task<AppUser> GetUserById(int id)
+        // {
+        // }
     }
 }

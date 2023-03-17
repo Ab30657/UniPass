@@ -1,4 +1,5 @@
 using API.DTOs;
+using API.Models;
 
 namespace API.Interfaces
 {
@@ -10,6 +11,10 @@ namespace API.Interfaces
         Task<IList<InstructorDto>> GetAllInstructors();
         Task<StudentDto> GetStudentById(int id);
         Task<InstructorDto> GetInstructorById(int id);
+        // Task<AppUser> GetUserById(int id);
+        //might need later
+        Task<Instructor> GetInstructorByUserIdAsync(int id);
+        Task<Student> GetStudentByUserIdAsync(int id);
         void DeleteUser(int id);
     }
 }
