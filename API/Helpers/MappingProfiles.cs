@@ -9,6 +9,8 @@ namespace API.Helpers
         public MappingProfiles()
         {
             CreateMap<RegisterDto, AppUser>();
+            CreateMap<PerfIndicatorDto, PerformanceIndicator>();
+            CreateMap<PerformanceIndicator, PerfIndicatorDto>();
             CreateMap<Instructor, InstructorDto>()
                 .ForMember(x => x.FirstName, opt => opt.MapFrom(src => src.AppUser.FirstName))
                 .ForMember(x => x.LastName, opt => opt.MapFrom(src => src.AppUser.LastName));
