@@ -37,7 +37,7 @@ namespace API.Controllers
             return Ok();
         }
 
-        [HttpPut]
+        [HttpPut("Courses")]
         public async Task<ActionResult> EditCourse(UpdateCourseDto updateCourse)
         {
             var course = await _unitOfWork.CourseRepository.GetCourseById(updateCourse.Id);

@@ -10,6 +10,7 @@ namespace API.Helpers
         {
             CreateMap<RegisterDto, AppUser>();
             CreateMap<UpdateCourseDto, Course>();
+            CreateMap<CourseDto, Course>();
             /////////////////////////////////
             /// Add necessary mappings here
             ////////////////////////////////
