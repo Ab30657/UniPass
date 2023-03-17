@@ -40,7 +40,19 @@ namespace API.Controllers
             if (!result.Succeeded) return BadRequest(result.Errors);
 
             var roleResult = await _userManager.AddToRoleAsync(user, registerDto.Role);
-
+            //
+            //Add to tables
+            // Future add eror handling
+            if (registerDto.Role == "Student")
+            {
+                await _unitOfWork.UserRepository.AddStudentAsync(user.Id);
+            }
+            else if (registerDto.Role == "Instructor")
+            {
+                await _unitOfWork.UserRepository.AddInstructorAsync(user.Id);
+            }
+            if (!await _unitOfWork.CompleteAsync())
+                return BadRequest();
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
             return new UserDto
