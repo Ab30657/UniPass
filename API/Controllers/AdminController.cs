@@ -23,38 +23,38 @@ namespace API.Controllers
         // Your Actions here //
         // have consequences //
 
-        [HttpGet("GetAllStudentUsers")]
+        [HttpGet("Students")]
         public async Task<ActionResult<List<StudentDto>>> GetAllStudentUsers()
         {
             var students = await _unitOfWork.CourseRepository.GetAllStudents();
             return Ok(students);
         }
 
-        [HttpGet("GetAllInstructorUsers")]
+        [HttpGet("Instructors")]
         public async Task<ActionResult<List<InstructorDto>>> GetAllInstructorUsers()
         {
             var instructors = await _unitOfWork.CourseRepository.GetAllInstructors();
             return Ok(instructors);
         }
 
-        [HttpGet("GetStudentById")]
+        [HttpGet("Student/{id}")]
         public async Task<ActionResult<StudentDto>> GetStudentById(int id)
         {
             var student = await _unitOfWork.CourseRepository.GetStudentById(id);
             return Ok(student);
         }
 
-        [HttpGet("GetInstructorById")]
+        [HttpGet("Instructor/{id}")]
         public async Task<ActionResult<InstructorDto>> GetInstructorById(int id)
         {
             var instructor = await _unitOfWork.CourseRepository.GetInstructorById(id);
             return Ok(instructor);
         }
 
-        [HttpDelete("DeleteStudentUsers")]
-        public async Task<ActionResult> DeleteStudentUsers(List<int> ids)
+        [HttpDelete("Student/{id}")]
+        public async Task<ActionResult> DeleteStudentUsers(int id)
         {
-            _unitOfWork.CourseRepository.DeleteStudentUser(ids);
+            _unitOfWork.CourseRepository.DeleteStudentUser(id);
             var result = await _unitOfWork.CompleteAsync();
             if (result == false)
             {
@@ -63,10 +63,10 @@ namespace API.Controllers
             return Ok();
         }
 
-        [HttpDelete("DeleteInstructorUsers")]
-        public async Task<ActionResult> DeleteInstructorUsers(List<int> ids)
+        [HttpDelete("Instructor/{id}")]
+        public async Task<ActionResult> DeleteInstructorUsers(int id)
         {
-            _unitOfWork.CourseRepository.DeleteInstructorUser(ids);
+            _unitOfWork.CourseRepository.DeleteInstructorUser(id);
             var result = await _unitOfWork.CompleteAsync();
             if (result == false)
             {

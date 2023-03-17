@@ -9,7 +9,7 @@ namespace API.Interfaces
         Task<IList<InstructorDto>> GetAllInstructors();
         Task<StudentDto> GetStudentById(int id);
         Task<InstructorDto> GetInstructorById(int id);
-        void DeleteInstructorUser(List<int> ids);
-        void DeleteStudentUser(List<int> ids);
+        void DeleteInstructorUser(int id);
+        void DeleteStudentUser(int id);
     }
 }

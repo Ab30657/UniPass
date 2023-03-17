@@ -18,22 +18,18 @@ namespace API.Data
             this._mapper = mapper;
         }
 
-        public async void DeleteInstructorUser(List<int> ids)
+        public async void DeleteInstructorUser(int id)
         {
-            foreach (var id in ids)
-            {
-                var instructor = await _context.Instructors.FirstOrDefaultAsync(x => x.Id == id);
-                _context.Instructors.Remove(instructor);
-            }
+            var instructor = await _context.Instructors.FirstOrDefaultAsync(x => x.Id == id);
+            _context.Instructors.Remove(instructor);
+
         }
 
-        public async void DeleteStudentUser(List<int> ids)
+        public async void DeleteStudentUser(int id)
         {
-            foreach (var id in ids)
-            {
-                var student = await _context.Students.FirstOrDefaultAsync(x => x.Id == id);
-                _context.Students.Remove(student);
-            }
+            var student = await _context.Students.FirstOrDefaultAsync(x => x.Id == id);
+            _context.Students.Remove(student);
+
         }
 
         public async Task<IList<InstructorDto>> GetAllInstructors()
