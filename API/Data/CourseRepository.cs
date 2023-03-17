@@ -18,12 +18,17 @@ namespace API.Data
             this._mapper = mapper;
         }
 
-        //This should be similar to GetCoursesByStudentId
+        //This should be similar to GetCoursesByStudentId, probably incorporate semester id later
+        //** SEMESTER ID ** FEATURE IMPORTANT OR MAYBE JUST DON"T SHOW IT 
         public async Task<IList<CourseDto>> GetCoursesByInstructorId(int id)
         {
             return await _context.Courses.Where(x => x.Teaches.Any(x => x.InstructorId == id)).ProjectTo<CourseDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
+        public async Task<IList<CourseDto>> GetCoursesByStudentId(int id)
+        {
+            return await _context.Courses.Where(x => x.Takes.Any(x => x.StudentId == id)).ProjectTo<CourseDto>(_mapper.ConfigurationProvider).ToListAsync();
+        }
         //These might be useful later when we start on registering courses
         public async Task<IList<InstructorDto>> GetAllInstructors()
         {

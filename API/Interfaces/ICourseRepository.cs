@@ -10,5 +10,6 @@ namespace API.Interfaces
         Task<StudentDto> GetStudentById(int id);
         Task<InstructorDto> GetInstructorById(int id);
         Task<IList<CourseDto>> GetCoursesByInstructorId(int id);
+        Task<IList<CourseDto>> GetCoursesByStudentId(int id);
     }
 }
