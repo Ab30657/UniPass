@@ -3,6 +3,7 @@ using API.Interfaces;
 using API.Models;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
@@ -23,6 +24,16 @@ namespace API.Data
         {
             var course = _mapper.Map<Course>(courseDto);
             await _context.Courses.AddAsync(course);
+        }
+
+        public async Task<Course> GetCourseById(int id)
+        {
+            return await _context.Courses.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public void EditCourse(Course course)
+        {
+            _context.Entry(course).State = EntityState.Modified;
         }
     }
 }

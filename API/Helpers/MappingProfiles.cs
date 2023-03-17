@@ -9,7 +9,7 @@ namespace API.Helpers
         public MappingProfiles()
         {
             CreateMap<RegisterDto, AppUser>();
-            CreateMap<CourseDto, Course>();
+            CreateMap<UpdateCourseDto, Course>();
             /////////////////////////////////
             /// Add necessary mappings here
             ////////////////////////////////
