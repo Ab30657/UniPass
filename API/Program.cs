@@ -75,7 +75,7 @@ if (app.Environment.IsDevelopment())
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
         await context.Database.MigrateAsync();
-        await Seed.SeedUsersAsync(userManager, roleManager);
+        await Seed.SeedUsersAsync(userManager, roleManager, context);
     }
     app.UseHttpsRedirection();
     app.UseCors();

@@ -30,6 +30,7 @@ W
         public ICourseRepository CourseRepository => new CourseRepository(_context, _mapper);
         public IDepartmentRepository DepartmentRepository => new DepartmentRepository(_context, _mapper);
         public IPerfIndicatorRepository PerfIndicatorRepository => new PerfIndicatorRepository(_context, _mapper);
+        public IUserRepository UserRepository => new UserRepository(_context, _mapper);
         public async Task<bool> CompleteAsync()
         {
             return await _context.SaveChangesAsync() > 0;

@@ -10,7 +10,7 @@ namespace API.Interfaces
         ICourseRepository CourseRepository { get; }
         IDepartmentRepository DepartmentRepository { get; }
         IPerfIndicatorRepository PerfIndicatorRepository { get; }
-
+        IUserRepository UserRepository { get; }
         Task<bool> CompleteAsync();
     }
 }

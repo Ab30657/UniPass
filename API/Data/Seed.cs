@@ -7,7 +7,7 @@ namespace API.Data
 {
     public class Seed
     {
-        public static async Task SeedUsersAsync(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
+        public static async Task SeedUsersAsync(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, DataContext dataContext)
         {
             if (await userManager.Users.AnyAsync())
             {
@@ -29,13 +29,23 @@ namespace API.Data
                 await roleManager.CreateAsync(role);
             }
 
-            foreach (var user in users)
+            for (int i = 0; i < users.Count; ++i)
             {
+                var user = users[i];
                 user.UserName = user.UserName.ToLower();
                 await userManager.CreateAsync(user, "12345");
-                await userManager.AddToRoleAsync(user, "Student");
+                if (i % 2 == 0)
+                {
+                    await userManager.AddToRoleAsync(user, "Student");
+                    await dataContext.Students.AddAsync(new Student { AppUserId = user.Id });
+                }
+                else
+                {
+                    await userManager.AddToRoleAsync(user, "Instructor");
+                    await dataContext.Instructors.AddAsync(new Instructor { AppUserId = user.Id });
+                }
             }
-
+            await dataContext.SaveChangesAsync();
             var admin = new AppUser
             {
                 UserName = "admin",
