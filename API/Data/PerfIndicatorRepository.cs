@@ -22,9 +22,9 @@ namespace API.Data
             await _context.PerformanceIndicators.AddAsync(performanceIndicator);
         }
 
-        public async Task<IEnumerable<PerfIndicatorDto>> GetPerfIndicatorsAsync()
+        public async Task<IEnumerable<PerformanceIndicatorDto>> GetPerfIndicatorsAsync()
         {
-            return await _context.PerformanceIndicators.ProjectTo<PerfIndicatorDto>(_mapper.ConfigurationProvider).ToListAsync();
+            return await _context.PerformanceIndicators.ProjectTo<PerformanceIndicatorDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
         public async Task<PerformanceIndicator> GetPerformanceIndicatorByIdAsync(int id)

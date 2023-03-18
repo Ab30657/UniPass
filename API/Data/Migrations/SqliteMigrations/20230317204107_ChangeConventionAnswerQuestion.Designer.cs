@@ -3,6 +3,7 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations.SqliteMigrations
 {
     [DbContext(typeof(SqliteDataContext))]
-    partial class SqliteDataContextModelSnapshot : ModelSnapshot
+    [Migration("20230317204107_ChangeConventionAnswerQuestion")]
+    partial class ChangeConventionAnswerQuestion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.1");
@@ -344,7 +346,7 @@ namespace API.Data.Migrations.SqliteMigrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("TakeAssignments");
+                    b.ToTable("TakeAssignment");
                 });
 
             modelBuilder.Entity("API.Models.TakeQuestion", b =>
@@ -370,7 +372,7 @@ namespace API.Data.Migrations.SqliteMigrations
 
                     b.HasIndex("TakeAssignmentId");
 
-                    b.ToTable("TakeQuestions");
+                    b.ToTable("TakeQuestion");
                 });
 
             modelBuilder.Entity("API.Models.Takes", b =>

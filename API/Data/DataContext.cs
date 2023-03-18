@@ -24,6 +24,8 @@ namespace API.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<PerformanceIndicator> PerformanceIndicators { get; set; }
+        public DbSet<TakeAssignment> TakeAssignments { get; set; }
+        public DbSet<TakeQuestion> TakeQuestions { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }

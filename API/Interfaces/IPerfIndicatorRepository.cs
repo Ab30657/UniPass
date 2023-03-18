@@ -7,7 +7,7 @@ namespace API.Interfaces
     {
         void AddPerfIndicator(PerformanceIndicator performanceIndicator);
         void Update(PerformanceIndicator performanceIndicator);
-        Task<IEnumerable<PerfIndicatorDto>> GetPerfIndicatorsAsync();
+        Task<IEnumerable<PerformanceIndicatorDto>> GetPerfIndicatorsAsync();
         Task<PerformanceIndicator> GetPerformanceIndicatorByIdAsync(int id);
     }
 }
