@@ -23,6 +23,20 @@ namespace API.Data
         public async void CreateCourse(CourseDto courseDto)
         {
             var course = _mapper.Map<Course>(courseDto);
+            var instructor = _context.Instructors.FirstOrDefaultAsync(x => x.Id == courseDto.InstructorId);
+            var teaches = new Teaches
+            {
+                InstructorId = courseDto.InstructorId,
+                CourseId = courseDto.CourseId,
+                SemesterId = courseDto.SemesterId
+            };
+
+            _context.Attach(course);
+            course.Teaches.Add(teaches);
+
+            _context.Attach(instructor);
+            course.Teaches.Add(teaches);
+
             await _context.Courses.AddAsync(course);
         }
 
