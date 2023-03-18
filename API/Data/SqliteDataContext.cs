@@ -10,7 +10,7 @@ namespace API.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlite(_configuration.GetConnectionString("DefaultConnection"));
+            options.UseSqlite(_configuration.GetConnectionString("DefaultConnection")).UseLoggerFactory(LoggerFactory.Create(x => x.AddConsole()));
         }
     }
 }
