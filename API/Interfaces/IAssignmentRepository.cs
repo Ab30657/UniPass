@@ -6,7 +6,8 @@ namespace API.Interfaces
     public interface IAssignmentRepository
     {
         void Update(Assignment assignment);
-        Task<IEnumerable<AssignmentDto>> GetAssignmentsByCourseIdAsync(int courseId);
+        Task<IEnumerable<InstructorAssignmentDto>> GetAssignmentsByCourseIdAsync(int courseId);
+        Task<IEnumerable<StudentAssignmentDto>> GetAssignmentsForStudentAsync(int courseId);
         Task AddAssignmentAsync(Assignment assignment);
         Task AddAnswerAsync(Answer answer);
         Task AddQuestionAsync(Question question);

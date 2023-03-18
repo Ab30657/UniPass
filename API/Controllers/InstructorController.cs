@@ -21,7 +21,7 @@ namespace API.Controllers
         // Your Actions here //
         // have consequences //
         [HttpGet("Courses")]
-        public async Task<ActionResult<CourseDto>> GetCourses()
+        public async Task<ActionResult<IEnumerable<CourseDto>>> GetCourses()
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var instructor = await _unitOfWork.UserRepository.GetInstructorByUserIdAsync(userId);
@@ -30,11 +30,11 @@ namespace API.Controllers
         }
 
         [HttpGet("Courses/{courseId}/Materials")]
-        public async Task<ActionResult<AssignmentDto>> GetClassMaterials(int courseId)
+        public async Task<ActionResult<InstructorAssignmentDto>> GetClassMaterials(int courseId)
         {
             // var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             // var instructor = await _unitOfWork.UserRepository.GetInstructorByUserIdAsync(userId);
-            return _mapper.Map<AssignmentDto>(await _unitOfWork.AssignmentRepository.GetAssignmentsByCourseIdAsync(courseId));
+            return Ok(await _unitOfWork.AssignmentRepository.GetAssignmentsByCourseIdAsync(courseId));
         }
 
         [HttpPost("Courses/{courseId}/Materials")]

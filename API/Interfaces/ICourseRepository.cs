@@ -7,6 +7,7 @@ namespace API.Interfaces
     {
         Task<IList<StudentDto>> GetAllStudents();
         Task<IList<InstructorDto>> GetAllInstructors();
+        Task<Course> GetCourseForStudentAsync(int courseId);
         Task<StudentDto> GetStudentById(int id);
         Task<InstructorDto> GetInstructorById(int id);
         Task<IList<CourseDto>> GetCoursesByInstructorId(int id);

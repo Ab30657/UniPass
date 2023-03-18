@@ -44,9 +44,16 @@ namespace API.Data
             return await _context.Assignments.FindAsync(id);
         }
 
-        public async Task<IEnumerable<AssignmentDto>> GetAssignmentsByCourseIdAsync(int courseId)
+        public async Task<IEnumerable<InstructorAssignmentDto>> GetAssignmentsByCourseIdAsync(int courseId)
         {
-            return await _context.Assignments.Where(x => x.CourseId == courseId).ProjectTo<AssignmentDto>(_mapper.ConfigurationProvider).ToListAsync();
+            // if (role == "Student")
+            // return await _context.Assignments.Where(x => x.CourseId == courseId).ProjectTo<>(_mapper.ConfigurationProvider).ToListAsync();
+            return await _context.Assignments.Where(x => x.CourseId == courseId).ProjectTo<InstructorAssignmentDto>(_mapper.ConfigurationProvider).ToListAsync();
+        }
+
+        public async Task<IEnumerable<StudentAssignmentDto>> GetAssignmentsForStudentAsync(int courseId)
+        {
+            return await _context.Assignments.Where(x => x.CourseId == courseId).ProjectTo<StudentAssignmentDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
         public async Task<TakeQuestion> GetQuestionAttemptByTakeAssignmentIdAsync(int takeAssignmentId, int questionId)

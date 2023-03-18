@@ -29,6 +29,11 @@ namespace API.Data
         {
             return await _context.Courses.Where(x => x.Takes.Any(x => x.StudentId == id)).ProjectTo<CourseDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
+
+        public async Task<Course> GetCourseForStudentAsync(int courseId)
+        {
+            return await _context.Courses.FindAsync(courseId);
+        }
         //These might be useful later when we start on registering courses
         public async Task<IList<InstructorDto>> GetAllInstructors()
         {
