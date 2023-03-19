@@ -9,21 +9,50 @@ namespace API.Helpers
         public MappingProfiles()
         {
             CreateMap<RegisterDto, AppUser>();
-            CreateMap<PerfIndicatorDto, PerformanceIndicator>();
-            CreateMap<PerformanceIndicator, PerfIndicatorDto>();
+            CreateMap<PerformanceIndicatorDto, PerformanceIndicator>();
+            CreateMap<PerformanceIndicator, PerformanceIndicatorDto>();
             CreateMap<Instructor, InstructorDto>()
                 .ForMember(x => x.FirstName, opt => opt.MapFrom(src => src.AppUser.FirstName))
                 .ForMember(x => x.LastName, opt => opt.MapFrom(src => src.AppUser.LastName));
             CreateMap<Student, StudentDto>()
                 .ForMember(x => x.FirstName, opt => opt.MapFrom(src => src.AppUser.FirstName))
                 .ForMember(x => x.LastName, opt => opt.MapFrom(src => src.AppUser.LastName));
+            CreateMap<Assignment, InstructorAssignmentDto>()
+                .ForMember(x => x.Questions, opt => opt.MapFrom(y => y.Questions))
+                .ForMember(x => x.TakeAssignments, opt => opt.MapFrom(y => y.TakeAssignments));
+            CreateMap<Question, QuestionDto>()
+                .ForMember(x => x.PerformanceIndicators, opt => opt.MapFrom(src => src.QuestionPIs.Select(x => x.PerformanceIndicator)))
+                .ForMember(x => x.Answers, opt => opt.MapFrom(y => y.Answers));
+            CreateMap<Assignment, StudentAssignmentDto>()
+                .ForMember(x => x.Questions, opt => opt.MapFrom(y => y.Questions))
+                .ForMember(x => x.TakeAssignments, opt => opt.MapFrom(y => y.TakeAssignments));
+            CreateMap<Question, StudentQuestionDto>()
+                .ForMember(x => x.PerformanceIndicators, opt => opt.MapFrom(src => src.QuestionPIs.Select(x => x.PerformanceIndicator)));
+            CreateMap<Answer, AnswerDto>();
+            CreateMap<TakeAssignment, TakeAssignmentDto>()
+                .ForMember(x => x.TakeQuestions, opt => opt.MapFrom(y => y.TakeQuestions));
+            CreateMap<TakeQuestion, TakeQuestionDto>()
+                .ForMember(x => x.Correct, opt => opt.MapFrom(x => x.Answer.Correct))
+                .ForMember(x => x.AnswerText, opt => opt.MapFrom(x => x.Answer.AnswerText));
+            CreateMap<CreateAssignmentDto, Assignment>()
+                .ForMember(x => x.Questions, opt => opt.MapFrom(x => x.Questions));
+            CreateMap<CreateQuestionDto, Question>()
+                .ForMember(x => x.Answers, opt => opt.MapFrom(x => x.Answers))
+                .AfterMap((src, dest) =>
+                {
+                    dest.QuestionPIs = src.PerformanceIndicators.Select(x => new QuestionPI { PerformanceIndicatorId = x, Question = dest }).ToList();
+                });
+            // CreateMap<QuestionPIDto, QuestionPI>();
+            CreateMap<CreateAnswerDto, Answer>();
             CreateMap<UpdateCourseDto, Course>();
             CreateMap<CreateCourseDto, Course>();
             CreateMap<Course, CreateCourseDto>();
             CreateMap<Semester, SemesterDto>();
             CreateMap<Course, GetCourseDto>()
-                .ForMember(x => x.Instructor, opt => opt.MapFrom(src => src.Teaches.Select(x => x.Instructor).FirstOrDefault()))
-                .ForMember(x => x.Semester, opt => opt.MapFrom(x => x.Teaches.Select(x => x.Semester).FirstOrDefault()));
+                .ForMember(x => x.Instructors, opt => opt.MapFrom(src => src.Teaches.Select(x => x.Instructor)))
+                .ForMember(x => x.Semesters, opt => opt.MapFrom(x => x.Teaches.Select(x => x.Semester)))
+                .ForMember(x => x.Students, opt => opt.MapFrom(x => x.Takes.Select(x => x.Student)))
+                .ForMember(x => x.PerformanceIndicators, opt => opt.MapFrom(x => x.CoursePIs.Select(x => x.PerformanceIndicator)));
             CreateMap<TeachesDto, Teaches>();
             /////////////////////////////////
             /// Add necessary mappings here

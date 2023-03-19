@@ -10,6 +10,7 @@ namespace API.Interfaces
     {
         Task<IList<StudentDto>> GetAllStudents();
         Task<IList<InstructorDto>> GetAllInstructors();
+        Task<Course> GetCourseForStudentAsync(int courseId);
         Task<StudentDto> GetStudentById(int id);
         Task<InstructorDto> GetInstructorById(int id);
         void CreateCourse(CreateCourseDto courseDto);
@@ -19,5 +20,8 @@ namespace API.Interfaces
         Task<bool> StudentExists(int id);
         Task<bool> SemesterExists(int id);
         void EditCourse(CreateCourseDto courseDto);
+        Task<IList<GetCourseDto>> GetCoursesByInstructorId(int id);
+        Task<IList<GetCourseDto>> GetCoursesByStudentId(int id);
+        bool DoYouTeach(Instructor instructor, int courseId);
     }
 }

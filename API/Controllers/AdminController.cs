@@ -23,12 +23,12 @@ namespace API.Controllers
         }
 
         [HttpPost("PI")]
-        public async Task<ActionResult<PerfIndicatorDto>> AddIndicator([FromBody] string addPerfIndicatorDto)
+        public async Task<ActionResult<PerformanceIndicatorDto>> AddIndicator([FromBody] string addPerformanceIndicatorDto)
         {
-            if (String.IsNullOrEmpty(addPerfIndicatorDto)) return BadRequest("Performance Indicator cannot be null");
+            if (String.IsNullOrEmpty(addPerformanceIndicatorDto)) return BadRequest("Performance Indicator cannot be null");
             var performanceIndicator = new PerformanceIndicator
             {
-                Name = addPerfIndicatorDto
+                Name = addPerformanceIndicatorDto
             };
 
             _unitOfWork.PerfIndicatorRepository.AddPerfIndicator(performanceIndicator);
@@ -40,26 +40,26 @@ namespace API.Controllers
         }
 
         [HttpPut("PI")]
-        public async Task<ActionResult<PerfIndicatorDto>> UpdatePerformanceIndicator([FromBody] PerfIndicatorDto perfIndicatorDto)
+        public async Task<ActionResult<PerformanceIndicatorDto>> UpdatePerformanceIndicator([FromBody] PerformanceIndicatorDto PerformanceIndicatorDto)
         {
-            var perfIndicator = await _unitOfWork.PerfIndicatorRepository.GetPerformanceIndicatorByIdAsync(perfIndicatorDto.Id);
+            var perfIndicator = await _unitOfWork.PerfIndicatorRepository.GetPerformanceIndicatorByIdAsync(PerformanceIndicatorDto.Id);
             if (perfIndicator == null) return NotFound("Performance Indicator Not Found");
-            _mapper.Map(perfIndicatorDto, perfIndicator);
+            _mapper.Map(PerformanceIndicatorDto, perfIndicator);
             _unitOfWork.PerfIndicatorRepository.Update(perfIndicator);
             if (await _unitOfWork.CompleteAsync())
                 return Ok("Updated succesfully");
             return BadRequest("Performance Indicator Update failed");
         }
         [HttpGet("PI/{id}")]
-        public async Task<ActionResult<PerfIndicatorDto>> GetIndicator(int id)
+        public async Task<ActionResult<PerformanceIndicatorDto>> GetIndicator(int id)
         {
             var performanceIndicator = await _unitOfWork.PerfIndicatorRepository.GetPerformanceIndicatorByIdAsync(id);
             if (performanceIndicator == null) return BadRequest();
-            return Ok(_mapper.Map<PerfIndicatorDto>(performanceIndicator));
+            return Ok(_mapper.Map<PerformanceIndicatorDto>(performanceIndicator));
         }
 
         [HttpGet("PI")]
-        public async Task<ActionResult<IEnumerable<PerfIndicatorDto>>> GetAllIndicators()
+        public async Task<ActionResult<IEnumerable<PerformanceIndicatorDto>>> GetAllIndicators()
         {
             return Ok(await _unitOfWork.PerfIndicatorRepository.GetPerfIndicatorsAsync());
         }

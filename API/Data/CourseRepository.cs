@@ -22,6 +22,22 @@ namespace API.Data
             this._mapper = mapper;
         }
 
+        //This should be similar to GetCoursesByStudentId, probably incorporate semester id later
+        //** SEMESTER ID ** FEATURE IMPORTANT OR MAYBE JUST DON"T SHOW IT 
+        public async Task<IList<GetCourseDto>> GetCoursesByInstructorId(int id)
+        {
+            return await _context.Courses.Where(x => x.Teaches.Any(x => x.InstructorId == id)).ProjectTo<GetCourseDto>(_mapper.ConfigurationProvider).ToListAsync();
+        }
+
+        public async Task<IList<GetCourseDto>> GetCoursesByStudentId(int id)
+        {
+            return await _context.Courses.Where(x => x.Takes.Any(x => x.StudentId == id)).ProjectTo<GetCourseDto>(_mapper.ConfigurationProvider).ToListAsync();
+        }
+
+        public async Task<Course> GetCourseForStudentAsync(int courseId)
+        {
+            return await _context.Courses.FindAsync(courseId);
+        }
         //These might be useful later when we start on registering courses
         public async Task<IList<InstructorDto>> GetAllInstructors()
         {
@@ -110,6 +126,11 @@ namespace API.Data
                 return false;
             }
             return true;
+        }
+
+        public bool DoYouTeach(Instructor instructor, int courseId)
+        {
+            return instructor.Teaches.Where(x => x.InstructorId == instructor.Id && x.CourseId == courseId).FirstOrDefault() != null;
         }
     }
 }

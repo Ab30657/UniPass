@@ -9,5 +9,6 @@ namespace API.Models
         public Assignment Assignment { get; set; }
         public ICollection<TakeQuestion> TakeQuestions { get; set; }
         public ICollection<QuestionPI> QuestionPIs { get; set; }
+        public ICollection<Answer> Answers { get; set; }
     }
 }
