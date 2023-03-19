@@ -21,7 +21,7 @@ namespace API.Controllers
         // Your Actions here //
         // have consequences //
         [HttpGet("Courses")]
-        public async Task<ActionResult<IEnumerable<CourseDto>>> GetCourses()
+        public async Task<ActionResult<IEnumerable<GetCourseDto>>> GetCourses()
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var instructor = await _unitOfWork.UserRepository.GetInstructorByUserIdAsync(userId);

@@ -24,14 +24,14 @@ namespace API.Data
 
         //This should be similar to GetCoursesByStudentId, probably incorporate semester id later
         //** SEMESTER ID ** FEATURE IMPORTANT OR MAYBE JUST DON"T SHOW IT 
-        public async Task<IList<CourseDto>> GetCoursesByInstructorId(int id)
+        public async Task<IList<GetCourseDto>> GetCoursesByInstructorId(int id)
         {
-            return await _context.Courses.Where(x => x.Teaches.Any(x => x.InstructorId == id)).ProjectTo<CourseDto>(_mapper.ConfigurationProvider).ToListAsync();
+            return await _context.Courses.Where(x => x.Teaches.Any(x => x.InstructorId == id)).ProjectTo<GetCourseDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
-        public async Task<IList<CourseDto>> GetCoursesByStudentId(int id)
+        public async Task<IList<GetCourseDto>> GetCoursesByStudentId(int id)
         {
-            return await _context.Courses.Where(x => x.Takes.Any(x => x.StudentId == id)).ProjectTo<CourseDto>(_mapper.ConfigurationProvider).ToListAsync();
+            return await _context.Courses.Where(x => x.Takes.Any(x => x.StudentId == id)).ProjectTo<GetCourseDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
         public async Task<Course> GetCourseForStudentAsync(int courseId)

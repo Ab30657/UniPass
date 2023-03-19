@@ -20,7 +20,7 @@ namespace API.Controllers
         // have consequences //
 
         [HttpGet("Courses")]
-        public async Task<ActionResult<IEnumerable<CourseDto>>> GetCourses()
+        public async Task<ActionResult<IEnumerable<GetCourseDto>>> GetCourses()
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var student = await _unitOfWork.UserRepository.GetStudentByUserIdAsync(userId);
@@ -32,7 +32,7 @@ namespace API.Controllers
         public async Task<ActionResult> GetCourse(int courseId)
         {
             var course = await _unitOfWork.CourseRepository.GetCourseForStudentAsync(courseId);
-            var result = _mapper.Map<CourseDto>(course);
+            var result = _mapper.Map<GetCourseDto>(course);
             return Ok(result);
         }
 

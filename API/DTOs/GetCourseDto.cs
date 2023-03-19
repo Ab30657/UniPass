@@ -6,7 +6,9 @@ namespace API.DTOs
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public InstructorDto Instructor { get; set; }
-        public SemesterDto Semester { get; set; }
+        public ICollection<InstructorDto> Instructors { get; set; }
+        public ICollection<SemesterDto> Semesters { get; set; }
+        public ICollection<StudentDto> Students { get; set; }
+        public ICollection<PerformanceIndicatorDto> PerformanceIndicators { get; set; }
     }
 }

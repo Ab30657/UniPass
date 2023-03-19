@@ -20,7 +20,7 @@ namespace API.Interfaces
         Task<bool> StudentExists(int id);
         Task<bool> SemesterExists(int id);
         void EditCourse(CreateCourseDto courseDto);
-        Task<IList<CourseDto>> GetCoursesByInstructorId(int id);
-        Task<IList<CourseDto>> GetCoursesByStudentId(int id);
+        Task<IList<GetCourseDto>> GetCoursesByInstructorId(int id);
+        Task<IList<GetCourseDto>> GetCoursesByStudentId(int id);
     }
 }
