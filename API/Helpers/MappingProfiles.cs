@@ -50,6 +50,14 @@ namespace API.Helpers
             CreateMap<Course, CourseDto>()
                 .ForMember(x => x.Students, opt => opt.MapFrom(x => x.Takes.Select(x => x.Student)))
                 .ForMember(x => x.PerformanceIndicators, opt => opt.MapFrom(x => x.CoursePIs.Select(x => x.PerformanceIndicator)));
+            CreateMap<UpdateCourseDto, Course>();
+            CreateMap<CreateCourseDto, Course>();
+            CreateMap<Course, CreateCourseDto>();
+            CreateMap<Semester, SemesterDto>();
+            CreateMap<Course, GetCourseDto>()
+                .ForMember(x => x.Instructor, opt => opt.MapFrom(src => src.Teaches.Select(x => x.Instructor).FirstOrDefault()))
+                .ForMember(x => x.Semester, opt => opt.MapFrom(x => x.Teaches.Select(x => x.Semester).FirstOrDefault()));
+            CreateMap<TeachesDto, Teaches>();
             /////////////////////////////////
             /// Add necessary mappings here
             ////////////////////////////////

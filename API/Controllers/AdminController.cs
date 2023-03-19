@@ -1,13 +1,9 @@
-using API.Data;
 using API.DTOs;
 using API.Interfaces;
 using API.Models;
-using API.Models;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
@@ -144,5 +140,55 @@ namespace API.Controllers
         //     }
         //     return Ok();
         // }
+
+        [HttpPost("Courses")]
+        public async Task<ActionResult> CreateCourseEntity([FromBody] CreateCourseDto courseDto)
+        {
+            if (!(await _unitOfWork.CourseRepository.InstructorExists(courseDto.InstructorId)))
+            {
+                return BadRequest("Instructor does not exist.");
+            }
+
+            if (!(await _unitOfWork.CourseRepository.SemesterExists(courseDto.SemesterId)))
+            {
+                return BadRequest("Semester does not exist.");
+            }
+
+            _unitOfWork.CourseRepository.CreateCourse(courseDto);
+            var result = await _unitOfWork.CompleteAsync();
+
+            if (result == false)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
+        // Not required for now/ Dont't deal with it
+        // Right now
+        //
+        // [HttpPut("Courses")]
+        // public async Task<ActionResult> EditCourse(UpdateCourseDto updateCourse)
+        // {
+        //     var course = await _unitOfWork.CourseRepository.GetCourseById(updateCourse.Id);
+        //     _mapper.Map(updateCourse, course);
+        //     _unitOfWork.CourseRepository.EditCourse(course);
+
+        //     var result = await _unitOfWork.CompleteAsync();
+        //     if (result == false)
+        //     {
+        //         return BadRequest();
+        //     }
+        //     return Ok();
+        // }
+
+        [HttpGet("Courses/{id}")]
+        public async Task<ActionResult<GetCourseDto>> GetCourseById(int id)
+        {
+            var course = await _unitOfWork.CourseRepository.GetCourseByIdWithInstructors(id);
+            return Ok(course);
+        }
+
     }
 }
