@@ -146,10 +146,44 @@ namespace API.Controllers
         //     return Ok();
         // }
 
-        [HttpPost("CreateCourseEntity")]
-        public async Task<ActionResult> CreateCourseEntity(CourseDto courseDto)
+        [HttpPost("CreateCourse")]
+        public async Task<ActionResult> CreateCourseEntity([FromBody] CourseDto courseDto)
         {
+            if (!(await _unitOfWork.CourseRepository.InstructorExists(courseDto.InstructorId)))
+            {
+                return BadRequest("Instructor does not exist.");
+            }
+
+            if (!(await _unitOfWork.CourseRepository.SemesterExists(courseDto.SemesterId)))
+            {
+                return BadRequest("Semester does not exist.");
+            }
+
             _unitOfWork.CourseRepository.CreateCourse(courseDto);
+            var result = await _unitOfWork.CompleteAsync();
+
+            if (result == false)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
+
+        [HttpPost("Course")]
+        public async Task<ActionResult> AddInstructorToCourse([FromBody] TeachesDto teacheDto)
+        {
+            if (!(await _unitOfWork.CourseRepository.InstructorExists(teacheDto.InstructorId)))
+            {
+                return BadRequest("Instructor does not exist.");
+            }
+
+            if (!(await _unitOfWork.CourseRepository.SemesterExists(teacheDto.SemesterId)))
+            {
+                return BadRequest("Semester does not exist.");
+            }
+
+            _unitOfWork.CourseRepository.AddInstructorToCourse(teacheDto);
             var result = await _unitOfWork.CompleteAsync();
 
             if (result == false)
@@ -176,9 +210,9 @@ namespace API.Controllers
         }
 
         [HttpGet("Course/{id}")]
-        public async Task<ActionResult> GetCourseById(int id)
+        public async Task<ActionResult<GetCourseDto>> GetCourseById(int id)
         {
-            var course = await _unitOfWork.CourseRepository.GetCourseById(id);
+            var course = await _unitOfWork.CourseRepository.GetCourseByIdWithInstructors(id);
             return Ok(course);
         }
 

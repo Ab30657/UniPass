@@ -11,8 +11,14 @@ namespace API.Interfaces
         Task<IList<StudentDto>> GetAllStudents();
         Task<IList<InstructorDto>> GetAllInstructors();
         Task<StudentDto> GetStudentById(int id);
-        Task<InstructorDto> GetInstructorById(int id); void CreateCourse(CourseDto courseDto);
-        Task<Course> GetCourseById(int id);
-        void EditCourse(Course course);
+        Task<InstructorDto> GetInstructorById(int id);
+        void CreateCourse(CourseDto courseDto);
+        void AddInstructorToCourse(TeachesDto teachesDto);
+        Task<GetCourseDto> GetCourseByIdWithInstructors(int id);
+        Task<CourseDto> GetCourseById(int id);
+        Task<bool> InstructorExists(int id);
+        Task<bool> StudentExists(int id);
+        Task<bool> SemesterExists(int id);
+        void EditCourse(CourseDto courseDto);
     }
 }
