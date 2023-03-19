@@ -1,7 +1,11 @@
 using API.DTOs;
+using API.DTOs;
 using API.Interfaces;
 using API.Models;
+using API.Models;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,6 +45,71 @@ namespace API.Data
         public async Task<StudentDto> GetStudentById(int id)
         {
             return await _context.Students.Where(y => y.Id == id).Include(x => x.AppUser).ProjectTo<StudentDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+        }
+
+        //return await _context.Users.Where(x => x.UserName == username).ProjectTo<MemberDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+
+        public async void CreateCourse(CreateCourseDto courseDto)
+        {
+            var course = _mapper.Map<Course>(courseDto);
+            var instructor = await _context.Instructors.Include(x => x.Teaches).FirstOrDefaultAsync(x => x.Id == courseDto.InstructorId);
+            var teach = new Teaches
+            {
+                InstructorId = courseDto.InstructorId,
+                SemesterId = courseDto.SemesterId,
+                Course = course
+            };
+            await _context.Courses.AddAsync(course);
+            instructor.Teaches.Add(teach);
+        }
+
+        public async Task<Course> GetCourseById(int id)
+        {
+            return await _context.Courses.Where(x => x.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<GetCourseDto> GetCourseByIdWithInstructors(int id)
+        {
+            return await _context.Courses.Where(x => x.Id == id).ProjectTo<GetCourseDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+            // .Include(x => x.Teaches)
+            // .ThenInclude(x => (x.Semester))
+            // .ThenInclude(x => x.Instructor).ThenInclude(x => x.AppUser).FirstOrDefaultAsync();
+        }
+
+        public void EditCourse(CreateCourseDto courseDto)
+        {
+            var course = _mapper.Map<Course>(courseDto);
+            _context.Entry(course).State = EntityState.Modified;
+        }
+
+        public async Task<bool> InstructorExists(int id)
+        {
+            var instructor = await _context.Instructors.FirstOrDefaultAsync(x => x.Id == id);
+            if (instructor == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> StudentExists(int id)
+        {
+            var student = await _context.Students.FirstOrDefaultAsync(x => x.Id == id);
+            if (student == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> SemesterExists(int id)
+        {
+            var semester = await _context.Semesters.FirstOrDefaultAsync(x => x.Id == id);
+            if (semester == null)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
