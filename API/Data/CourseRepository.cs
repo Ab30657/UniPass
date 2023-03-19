@@ -72,22 +72,6 @@ namespace API.Data
             await _context.Courses.AddAsync(course);
         }
 
-        public async void AddInstructorToCourse(TeachesDto teachesDto)
-        {
-            var teach = _mapper.Map<Teaches>(teachesDto);
-
-            teach.Instructor = await _context.Instructors.FirstOrDefaultAsync(w => w.Id == teachesDto.InstructorId);
-
-            teach.Semester = await _context.Semesters.FirstOrDefaultAsync(x => x.Id == teachesDto.SemesterId);
-
-            var course = await _context.Courses.FirstOrDefaultAsync(y => y.Id == teachesDto.CourseId);
-            teach.Course = course;
-
-            _context.Attach(course);
-            course.Teaches = new HashSet<Teaches>();
-            course.Teaches.Add(teach);
-        }
-
         public async Task<CourseDto> GetCourseById(int id)
         {
             return await _context.Courses.ProjectTo<CourseDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(x => x.Id == id);

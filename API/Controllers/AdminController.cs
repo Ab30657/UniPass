@@ -170,30 +170,6 @@ namespace API.Controllers
             return Ok();
         }
 
-        [HttpPost("Course")]
-        public async Task<ActionResult> AddInstructorToCourse([FromBody] TeachesDto teacheDto)
-        {
-            if (!(await _unitOfWork.CourseRepository.InstructorExists(teacheDto.InstructorId)))
-            {
-                return BadRequest("Instructor does not exist.");
-            }
-
-            if (!(await _unitOfWork.CourseRepository.SemesterExists(teacheDto.SemesterId)))
-            {
-                return BadRequest("Semester does not exist.");
-            }
-
-            _unitOfWork.CourseRepository.AddInstructorToCourse(teacheDto);
-            var result = await _unitOfWork.CompleteAsync();
-
-            if (result == false)
-            {
-                return BadRequest();
-            }
-
-            return Ok();
-        }
-
         [HttpPut("Courses")]
         public async Task<ActionResult> EditCourse(UpdateCourseDto updateCourse)
         {

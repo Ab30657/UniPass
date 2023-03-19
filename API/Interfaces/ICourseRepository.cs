@@ -13,7 +13,6 @@ namespace API.Interfaces
         Task<StudentDto> GetStudentById(int id);
         Task<InstructorDto> GetInstructorById(int id);
         void CreateCourse(CourseDto courseDto);
-        void AddInstructorToCourse(TeachesDto teachesDto);
         Task<GetCourseDto> GetCourseByIdWithInstructors(int id);
         Task<CourseDto> GetCourseById(int id);
         Task<bool> InstructorExists(int id);
