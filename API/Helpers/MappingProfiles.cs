@@ -28,14 +28,12 @@ namespace API.Helpers
                 .ForMember(x => x.TakeAssignments, opt => opt.MapFrom(y => y.TakeAssignments));
             CreateMap<Question, StudentQuestionDto>()
                 .ForMember(x => x.PerformanceIndicators, opt => opt.MapFrom(src => src.QuestionPIs.Select(x => x.PerformanceIndicator)));
-
             CreateMap<Answer, AnswerDto>();
             CreateMap<TakeAssignment, TakeAssignmentDto>()
                 .ForMember(x => x.TakeQuestions, opt => opt.MapFrom(y => y.TakeQuestions));
             CreateMap<TakeQuestion, TakeQuestionDto>()
                 .ForMember(x => x.Correct, opt => opt.MapFrom(x => x.Answer.Correct))
                 .ForMember(x => x.AnswerText, opt => opt.MapFrom(x => x.Answer.AnswerText));
-
             CreateMap<CreateAssignmentDto, Assignment>()
                 .ForMember(x => x.Questions, opt => opt.MapFrom(x => x.Questions));
             CreateMap<CreateQuestionDto, Question>()

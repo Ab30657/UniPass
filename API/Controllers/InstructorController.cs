@@ -3,18 +3,18 @@ using API.DTOs;
 using API.Interfaces;
 using API.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    // [Authorize(Roles = "Instructor")]
     public class InstructorController : BaseApiController
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        public InstructorController(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+        public InstructorController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            this._httpContextAccessor = httpContextAccessor;
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
         }
@@ -23,17 +23,27 @@ namespace API.Controllers
         [HttpGet("Courses")]
         public async Task<ActionResult<IEnumerable<GetCourseDto>>> GetCourses()
         {
+            var x = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var instructor = await _unitOfWork.UserRepository.GetInstructorByUserIdAsync(userId);
             var courses = await _unitOfWork.CourseRepository.GetCoursesByInstructorId(instructor.Id);
             return Ok(courses);
         }
 
+        [HttpGet("Courses/{courseId}")]
+        public async Task<ActionResult> GetCourse(int courseId)
+        {
+            //add
+            var course = await _unitOfWork.CourseRepository.GetCourseByIdWithInstructors(courseId);
+            return Ok(course);
+        }
         [HttpGet("Courses/{courseId}/Materials")]
         public async Task<ActionResult<InstructorAssignmentDto>> GetClassMaterials(int courseId)
         {
-            // var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            // var instructor = await _unitOfWork.UserRepository.GetInstructorByUserIdAsync(userId);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var instructor = await _unitOfWork.UserRepository.GetInstructorByUserIdAsync(userId);
+            if (_unitOfWork.CourseRepository.DoYouTeach(instructor, courseId))
+                return BadRequest("You don't teach this course");
             return Ok(await _unitOfWork.AssignmentRepository.GetAssignmentsByCourseIdAsync(courseId));
         }
 

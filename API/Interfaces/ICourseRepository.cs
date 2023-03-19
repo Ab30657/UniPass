@@ -22,5 +22,6 @@ namespace API.Interfaces
         void EditCourse(CreateCourseDto courseDto);
         Task<IList<GetCourseDto>> GetCoursesByInstructorId(int id);
         Task<IList<GetCourseDto>> GetCoursesByStudentId(int id);
+        bool DoYouTeach(Instructor instructor, int courseId);
     }
 }

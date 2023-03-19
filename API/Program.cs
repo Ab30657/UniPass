@@ -37,14 +37,19 @@ else
     builder.Services.AddDbContext<DataContext>();
 }
 
-builder.Services.AddIdentity<AppUser, AppRole>(x =>
+builder.Services.AddIdentityCore<AppUser>(x =>
 {
     x.Password.RequireDigit = false;
     x.Password.RequiredLength = 1;
     x.Password.RequireLowercase = false;
     x.Password.RequireUppercase = false;
     x.Password.RequireNonAlphanumeric = false;
-}).AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
+})
+.AddRoles<AppRole>()
+.AddRoleManager<RoleManager<AppRole>>()
+.AddSignInManager<SignInManager<AppUser>>()
+.AddRoleValidator<RoleValidator<AppRole>>()
+.AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {

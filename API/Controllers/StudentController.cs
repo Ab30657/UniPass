@@ -31,9 +31,9 @@ namespace API.Controllers
         [HttpGet("Courses/{courseId}")]
         public async Task<ActionResult> GetCourse(int courseId)
         {
-            var course = await _unitOfWork.CourseRepository.GetCourseForStudentAsync(courseId);
-            var result = _mapper.Map<GetCourseDto>(course);
-            return Ok(result);
+            //add
+            var course = await _unitOfWork.CourseRepository.GetCourseByIdWithInstructors(courseId);
+            return Ok(course);
         }
 
         [HttpGet("Courses/{courseId}/Materials")]

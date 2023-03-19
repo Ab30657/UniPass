@@ -127,5 +127,10 @@ namespace API.Data
             }
             return true;
         }
+
+        public bool DoYouTeach(Instructor instructor, int courseId)
+        {
+            return instructor.Teaches.Where(x => x.InstructorId == instructor.Id && x.CourseId == courseId).FirstOrDefault() != null;
+        }
     }
 }
