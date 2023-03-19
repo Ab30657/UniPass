@@ -2,9 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.DTOs
 {
-    public class CourseDto
+    public class CreateCourseDto
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public int InstructorId { get; set; }
         public int SemesterId { get; set; }

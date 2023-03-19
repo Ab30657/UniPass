@@ -18,10 +18,12 @@ namespace API.Helpers
                 .ForMember(x => x.FirstName, opt => opt.MapFrom(src => src.AppUser.FirstName))
                 .ForMember(x => x.LastName, opt => opt.MapFrom(src => src.AppUser.LastName));
             CreateMap<UpdateCourseDto, Course>();
-            CreateMap<CourseDto, Course>();
-            CreateMap<Course, CourseDto>();
+            CreateMap<CreateCourseDto, Course>();
+            CreateMap<Course, CreateCourseDto>();
+            CreateMap<Semester, SemesterDto>();
             CreateMap<Course, GetCourseDto>()
-                .ForMember(x => x.Instructors, opt => opt.MapFrom(src => src.Teaches.Select(y => y.Instructor.AppUser.UserName)));
+                .ForMember(x => x.Instructor, opt => opt.MapFrom(src => src.Teaches.Select(x => x.Instructor).FirstOrDefault()))
+                .ForMember(x => x.Semester, opt => opt.MapFrom(x => x.Teaches.Select(x => x.Semester).FirstOrDefault()));
             CreateMap<TeachesDto, Teaches>();
             /////////////////////////////////
             /// Add necessary mappings here

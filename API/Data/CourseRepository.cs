@@ -49,40 +49,34 @@ namespace API.Data
 
         //return await _context.Users.Where(x => x.UserName == username).ProjectTo<MemberDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
 
-        public async void CreateCourse(CourseDto courseDto)
+        public async void CreateCourse(CreateCourseDto courseDto)
         {
             var course = _mapper.Map<Course>(courseDto);
-            var instructor = await _context.Instructors.FirstOrDefaultAsync(x => x.Id == courseDto.InstructorId);
-            var semester = await _context.Semesters.FirstOrDefaultAsync(y => y.Id == courseDto.SemesterId);
-
+            var instructor = await _context.Instructors.Include(x => x.Teaches).FirstOrDefaultAsync(x => x.Id == courseDto.InstructorId);
             var teach = new Teaches
             {
-                InstructorId = instructor.Id,
-                SemesterId = semester.Id,
-                CourseId = courseDto.Id,
-                Semester = semester,
-                Instructor = instructor,
+                InstructorId = courseDto.InstructorId,
+                SemesterId = courseDto.SemesterId,
                 Course = course
             };
-
-            _context.Attach(course);
-            course.Teaches = new HashSet<Teaches>();
-            course.Teaches.Add(teach);
-
             await _context.Courses.AddAsync(course);
+            instructor.Teaches.Add(teach);
         }
 
-        public async Task<CourseDto> GetCourseById(int id)
+        public async Task<Course> GetCourseById(int id)
         {
-            return await _context.Courses.ProjectTo<CourseDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Courses.Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<GetCourseDto> GetCourseByIdWithInstructors(int id)
         {
-            return await _context.Courses.ProjectTo<GetCourseDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Courses.Where(x => x.Id == id).ProjectTo<GetCourseDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+            // .Include(x => x.Teaches)
+            // .ThenInclude(x => (x.Semester))
+            // .ThenInclude(x => x.Instructor).ThenInclude(x => x.AppUser).FirstOrDefaultAsync();
         }
 
-        public void EditCourse(CourseDto courseDto)
+        public void EditCourse(CreateCourseDto courseDto)
         {
             var course = _mapper.Map<Course>(courseDto);
             _context.Entry(course).State = EntityState.Modified;

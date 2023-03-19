@@ -1,14 +1,9 @@
-using API.Data;
-using API.DTOs;
-using API.Data;
 using API.DTOs;
 using API.Interfaces;
 using API.Models;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
@@ -146,8 +141,8 @@ namespace API.Controllers
         //     return Ok();
         // }
 
-        [HttpPost("CreateCourse")]
-        public async Task<ActionResult> CreateCourseEntity([FromBody] CourseDto courseDto)
+        [HttpPost("Courses")]
+        public async Task<ActionResult> CreateCourseEntity([FromBody] CreateCourseDto courseDto)
         {
             if (!(await _unitOfWork.CourseRepository.InstructorExists(courseDto.InstructorId)))
             {
@@ -170,22 +165,25 @@ namespace API.Controllers
             return Ok();
         }
 
-        [HttpPut("Courses")]
-        public async Task<ActionResult> EditCourse(UpdateCourseDto updateCourse)
-        {
-            var course = await _unitOfWork.CourseRepository.GetCourseById(updateCourse.Id);
-            _mapper.Map(updateCourse, course);
-            _unitOfWork.CourseRepository.EditCourse(course);
+        // Not required for now/ Dont't deal with it
+        // Right now
+        //
+        // [HttpPut("Courses")]
+        // public async Task<ActionResult> EditCourse(UpdateCourseDto updateCourse)
+        // {
+        //     var course = await _unitOfWork.CourseRepository.GetCourseById(updateCourse.Id);
+        //     _mapper.Map(updateCourse, course);
+        //     _unitOfWork.CourseRepository.EditCourse(course);
 
-            var result = await _unitOfWork.CompleteAsync();
-            if (result == false)
-            {
-                return BadRequest();
-            }
-            return Ok();
-        }
+        //     var result = await _unitOfWork.CompleteAsync();
+        //     if (result == false)
+        //     {
+        //         return BadRequest();
+        //     }
+        //     return Ok();
+        // }
 
-        [HttpGet("Course/{id}")]
+        [HttpGet("Courses/{id}")]
         public async Task<ActionResult<GetCourseDto>> GetCourseById(int id)
         {
             var course = await _unitOfWork.CourseRepository.GetCourseByIdWithInstructors(id);
