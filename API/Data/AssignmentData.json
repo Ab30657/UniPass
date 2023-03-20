@@ -1,0 +1,176 @@
+{
+    "title": "string",
+    "semesterId": 1,
+    "questions": [
+        {
+            "questionText": "True?",
+            "fullMarks": 5,
+            "performanceIndicators": [
+                1
+            ],
+            "answers": [
+                {
+                    "answerText": "True",
+                    "correct": true
+                },
+                {
+                    "answerText": "False",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "questionText": "False?",
+            "fullMarks": 5,
+            "performanceIndicators": [
+                2
+            ],
+            "answers": [
+                {
+                    "answerText": "False",
+                    "correct": true
+                },
+                {
+                    "answerText": "True",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "questionText": "True?",
+            "fullMarks": 5,
+            "performanceIndicators": [
+                1
+            ],
+            "answers": [
+                {
+                    "answerText": "True",
+                    "correct": true
+                },
+                {
+                    "answerText": "False",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "questionText": "False?",
+            "fullMarks": 5,
+            "performanceIndicators": [
+                2
+            ],
+            "answers": [
+                {
+                    "answerText": "False",
+                    "correct": true
+                },
+                {
+                    "answerText": "True",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "questionText": "True?",
+            "fullMarks": 5,
+            "performanceIndicators": [
+                1
+            ],
+            "answers": [
+                {
+                    "answerText": "True",
+                    "correct": true
+                },
+                {
+                    "answerText": "False",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "questionText": "False?",
+            "fullMarks": 5,
+            "performanceIndicators": [
+                2
+            ],
+            "answers": [
+                {
+                    "answerText": "False",
+                    "correct": true
+                },
+                {
+                    "answerText": "True",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "questionText": "True?",
+            "fullMarks": 5,
+            "performanceIndicators": [
+                1
+            ],
+            "answers": [
+                {
+                    "answerText": "True",
+                    "correct": true
+                },
+                {
+                    "answerText": "False",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "questionText": "False?",
+            "fullMarks": 5,
+            "performanceIndicators": [
+                2
+            ],
+            "answers": [
+                {
+                    "answerText": "False",
+                    "correct": true
+                },
+                {
+                    "answerText": "True",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "questionText": "True?",
+            "fullMarks": 5,
+            "performanceIndicators": [
+                1
+            ],
+            "answers": [
+                {
+                    "answerText": "True",
+                    "correct": true
+                },
+                {
+                    "answerText": "False",
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "questionText": "False?",
+            "fullMarks": 5,
+            "performanceIndicators": [
+                2
+            ],
+            "answers": [
+                {
+                    "answerText": "False",
+                    "correct": true
+                },
+                {
+                    "answerText": "True",
+                    "correct": false
+                }
+            ]
+        }
+    ]
+}

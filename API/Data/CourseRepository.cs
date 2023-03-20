@@ -34,9 +34,11 @@ namespace API.Data
             return await _context.Courses.Where(x => x.Takes.Any(x => x.StudentId == id)).ProjectTo<GetCourseDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
-        public async Task<Course> GetCourseForStudentAsync(int courseId)
+        public async Task UpdateGradeForStudentCourse(int courseId, int studentId, int semesterId, int newAssignmentScore)
         {
-            return await _context.Courses.FindAsync(courseId);
+            var takes = await _context.Takes.Where(x => x.CourseId == courseId && x.StudentId == studentId && x.SemesterId == semesterId).FirstOrDefaultAsync();
+            var sum = await _context.Assignments.Where(x => x.CourseId == courseId && x.SemesterId == semesterId).SumAsync(x => x.FullMarks);
+            takes.Grade = (takes.Grade + newAssignmentScore) * 100 / sum;
         }
         //These might be useful later when we start on registering courses
         public async Task<IList<InstructorDto>> GetAllInstructors()
@@ -128,9 +130,9 @@ namespace API.Data
             return true;
         }
 
-        public bool DoYouTeach(Instructor instructor, int courseId)
+        public bool YouDontTeach(Instructor instructor, int courseId)
         {
-            return instructor.Teaches.Where(x => x.InstructorId == instructor.Id && x.CourseId == courseId).FirstOrDefault() != null;
+            return instructor.Teaches.Where(x => x.InstructorId == instructor.Id && x.CourseId == courseId).FirstOrDefault() == null;
         }
     }
 }

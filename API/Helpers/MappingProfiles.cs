@@ -8,6 +8,7 @@ namespace API.Helpers
     {
         public MappingProfiles()
         {
+
             CreateMap<RegisterDto, AppUser>();
             CreateMap<PerformanceIndicatorDto, PerformanceIndicator>();
             CreateMap<PerformanceIndicator, PerformanceIndicatorDto>();
@@ -54,6 +55,10 @@ namespace API.Helpers
                 .ForMember(x => x.Students, opt => opt.MapFrom(x => x.Takes.Select(x => x.Student)))
                 .ForMember(x => x.PerformanceIndicators, opt => opt.MapFrom(x => x.CoursePIs.Select(x => x.PerformanceIndicator)));
             CreateMap<TeachesDto, Teaches>();
+
+            CreateMap<CreateTakeAssignmentDto, TakeAssignment>()
+                .ForMember(x => x.TakeQuestions, opt => opt.MapFrom(x => x.TakeQuestions));
+            CreateMap<CreateTakeQuestionDto, TakeQuestion>();
             /////////////////////////////////
             /// Add necessary mappings here
             ////////////////////////////////

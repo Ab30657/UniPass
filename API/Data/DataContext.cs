@@ -3,6 +3,7 @@ using API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace API.Data
 {
@@ -27,9 +28,10 @@ namespace API.Data
         public DbSet<TakeAssignment> TakeAssignments { get; set; }
         public DbSet<TakeQuestion> TakeQuestions { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
+        public DbSet<PIScore> PIScores { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
-
+        public DbSet<Takes> Takes { get; set; }
         /////////////
         /// @deprecated includes old relationships 
         /////////////
@@ -37,9 +39,8 @@ namespace API.Data
         ///////////// 
         // public DbSet<AnswerAttempt> AnswerAttempt { get; set; }
         // public DbSet<CoursePI> CoursePI { get; set; }
-        // public DbSet<Teaches> Teaches { get; set; }
         // public DbSet<QuestionPI> QuestionPI { get; set; }
-        // public DbSet<Takes> Takes { get; set; }
+        // public DbSet<Teaches> Teaches { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -160,6 +161,18 @@ namespace API.Data
                 .HasOne(t => t.Assignment)
                 .WithMany(c => c.TakeAssignments)
                 .HasForeignKey(t => t.AssignmentId).IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<PIScore>().HasKey(x => new { x.TakeAssignmentId, x.PerformanceIndicatorId });
+            builder.Entity<PIScore>()
+                .HasOne(x => x.PerformanceIndicator)
+                .WithMany(x => x.PIScores)
+                .HasForeignKey(x => x.PerformanceIndicatorId).IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<PIScore>()
+                .HasOne(x => x.TakeAssignment)
+                .WithMany(x => x.PIScores)
+                .HasForeignKey(x => x.TakeAssignmentId).IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

@@ -29,9 +29,29 @@ namespace API.Data
             await _context.Assignments.AddAsync(assignment);
         }
 
+        public async Task AddAssignmentPIScoreAsync(PIScore piScore)
+        {
+            await _context.PIScores.AddAsync(piScore);
+        }
+
         public async Task AddQuestionAsync(Question question)
         {
             await _context.Questions.AddAsync(question);
+        }
+
+        public async Task AddTakeAssignmentAsync(TakeAssignment assignmentTake)
+        {
+            await _context.TakeAssignments.AddAsync(assignmentTake);
+        }
+
+        public async Task AddTakeQuestionAsync(TakeQuestion takequestion)
+        {
+            await _context.TakeQuestions.AddAsync(takequestion);
+        }
+
+        public async Task<Answer> GetAnswerByIdAsync(int answerId)
+        {
+            return await _context.Answers.Where(x => x.Id == answerId).FirstOrDefaultAsync();
         }
 
         public async Task<TakeAssignment> GetAssignmentAttemptByStudentIdAsync(int studentId, int assignmentId)
@@ -39,9 +59,9 @@ namespace API.Data
             return await _context.TakeAssignments.Where(x => x.AssignmentId == assignmentId && x.StudentId == studentId).FirstOrDefaultAsync();
         }
 
-        public async Task<Assignment> GetAssignmentByIdAsync(int id)
+        public async Task<StudentAssignmentDto> GetAssignmentByIdAsync(int id)
         {
-            return await _context.Assignments.FindAsync(id);
+            return await _context.Assignments.Where(x => x.Id == id).ProjectTo<StudentAssignmentDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<InstructorAssignmentDto>> GetAssignmentsByCourseIdAsync(int courseId)
@@ -59,6 +79,11 @@ namespace API.Data
         public async Task<TakeQuestion> GetQuestionAttemptByTakeAssignmentIdAsync(int takeAssignmentId, int questionId)
         {
             return await _context.TakeQuestions.Where(x => x.TakeAssignmentId == takeAssignmentId && x.QuestionId == questionId).FirstOrDefaultAsync();
+        }
+
+        public async Task<Question> GetQuestionByIdAsync(int questionId)
+        {
+            return await _context.Questions.Where(x => x.Id == questionId).Include(x => x.Answers).Include(x => x.QuestionPIs).FirstOrDefaultAsync();
         }
 
         public void Update(Assignment assignment)

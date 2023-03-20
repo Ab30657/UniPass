@@ -45,6 +45,8 @@ namespace API.Data
                     await dataContext.Instructors.AddAsync(new Instructor { AppUserId = user.Id });
                 }
             }
+            dataContext.Semesters.AddAsync(new Semester { Season = "Fall", StartDate = default, EndDate = default });
+            dataContext.PerformanceIndicators.AddRangeAsync(new PerformanceIndicator { Name = "Linked List" }, new PerformanceIndicator { Name = "Advanced Linked List" });
             await dataContext.SaveChangesAsync();
             var admin = new AppUser
             {
