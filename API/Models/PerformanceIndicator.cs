@@ -7,5 +7,6 @@ namespace API.Models
         public ICollection<CoursePI> CoursePIs { get; set; }
         public ICollection<QuestionPI> QuestionPIs { get; set; }
         public ICollection<PIScore> PIScores { get; set; }
+        public ICollection<AssignmentPI> AssignmentPIs { get; set; }
     }
 }

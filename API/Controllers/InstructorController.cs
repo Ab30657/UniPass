@@ -59,6 +59,7 @@ namespace API.Controllers
 
             //Now start inserting questions
             int fullMarks = 0;
+            Dictionary<int, int> dt = new Dictionary<int, int>(); //piid, fullmarks
             foreach (var question in assignment.Questions)
             {
                 question.Assignment = assignment;
@@ -70,8 +71,21 @@ namespace API.Controllers
                     await _unitOfWork.AssignmentRepository.AddAnswerAsync(answer);
                 }
                 fullMarks += question.FullMarks;
+                foreach (var pi in question.QuestionPIs)
+                {
+                    if (!dt.ContainsKey(pi.PerformanceIndicatorId))
+                        dt.Add(pi.PerformanceIndicatorId, 0);
+                    dt[pi.PerformanceIndicatorId] += question.FullMarks;
+                }
             }
             assignment.FullMarks = fullMarks;
+            foreach (var key in dt.Keys)
+            {
+                //add to coursePI the fullmarks for that PI
+                //later when compute score for TakesPIScore, this full marks is needed
+                //This also updates Assignment PI
+                await _unitOfWork.PerfIndicatorRepository.UpdateCoursePIFullMarksAsync(courseId, assignment, key, dt[key]);
+            }
             await _unitOfWork.AssignmentRepository.AddAssignmentAsync(assignment);
             if (await _unitOfWork.CompleteAsync())
                 return Ok("Successfully created");

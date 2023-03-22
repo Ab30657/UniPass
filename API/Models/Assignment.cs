@@ -11,5 +11,6 @@ namespace API.Models
         public Semester Semester { get; set; }
         public ICollection<Question> Questions { get; set; }
         public ICollection<TakeAssignment> TakeAssignments { get; set; }
+        public ICollection<AssignmentPI> AssignmentPIs { get; set; }
     }
 }

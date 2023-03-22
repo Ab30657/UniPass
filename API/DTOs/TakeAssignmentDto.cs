@@ -5,6 +5,6 @@ namespace API.DTOs
         public int Id { get; set; }
         public int Score { get; set; }
         public int StudentId { get; set; }
-        public ICollection<TakeQuestionDto> TakeQuestions { get; set; }
+        public ICollection<TakeQuestionWithAnswerDto> TakeQuestions { get; set; }
     }
 }

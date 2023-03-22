@@ -47,6 +47,26 @@ namespace API.Data
             }
             dataContext.Semesters.AddAsync(new Semester { Season = "Fall", StartDate = default, EndDate = default });
             dataContext.PerformanceIndicators.AddRangeAsync(new PerformanceIndicator { Name = "Linked List" }, new PerformanceIndicator { Name = "Advanced Linked List" });
+            var course = new Course { Title = "CSC" };
+            course.Teaches = new List<Teaches>{
+                new Teaches{
+                    Course = course,
+                    InstructorId=1, SemesterId=1
+                }
+            };
+            course.CoursePIs = new List<CoursePI>{
+                new CoursePI{
+                    Course = course,
+                    PerformanceIndicatorId=1
+                },
+                new CoursePI{
+                    Course = course,
+                    PerformanceIndicatorId=2
+                }
+            };
+            dataContext.Courses.AddAsync(course);
+
+            dataContext.Takes.AddAsync(new Takes { SemesterId = 1, StudentId = 1, CourseId = 1 });
             await dataContext.SaveChangesAsync();
             var admin = new AppUser
             {

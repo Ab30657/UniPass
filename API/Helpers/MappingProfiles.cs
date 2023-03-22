@@ -59,6 +59,16 @@ namespace API.Helpers
             CreateMap<CreateTakeAssignmentDto, TakeAssignment>()
                 .ForMember(x => x.TakeQuestions, opt => opt.MapFrom(x => x.TakeQuestions));
             CreateMap<CreateTakeQuestionDto, TakeQuestion>();
+            CreateMap<PIScore, PIScoreDto>()
+                .ForMember(x => x.PiTitle, opt => opt.MapFrom(x => x.PerformanceIndicator.Name));
+            CreateMap<TakeQuestion, TakeQuestionWithAnswerDto>()
+                .ForMember(x => x.Correct, opt => opt.MapFrom(x => x.Answer.Correct))
+                .ForMember(x => x.AnswerText, opt => opt.MapFrom(x => x.Answer.AnswerText))
+                .ForMember(x => x.CorrectAnswer, opt => opt.MapFrom(x => x.Question.Answers.Where(x => x.Correct).FirstOrDefault().AnswerText));
+            CreateMap<TakeAssignment, AssignmentAttemptGradeDto>()
+                .ForMember(x => x.Student, opt => opt.MapFrom(x => x.Student))
+                .ForMember(x => x.PIScores, opt => opt.MapFrom(x => x.PIScores))
+                .ForMember(x => x.TakeAssignment, opt => opt.MapFrom(x => x));
             /////////////////////////////////
             /// Add necessary mappings here
             ////////////////////////////////

@@ -21,5 +21,6 @@ namespace API.Interfaces
         Task<Question> GetQuestionByIdAsync(int questionId);
         Task<Answer> GetAnswerByIdAsync(int answerId);
         Task AddAssignmentPIScoreAsync(PIScore piScore);
+        Task<AssignmentAttemptGradeDto> GetTakeAssignmentByIdAsync(int id);
     }
 }

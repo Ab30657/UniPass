@@ -86,6 +86,11 @@ namespace API.Data
             return await _context.Questions.Where(x => x.Id == questionId).Include(x => x.Answers).Include(x => x.QuestionPIs).FirstOrDefaultAsync();
         }
 
+        public async Task<AssignmentAttemptGradeDto> GetTakeAssignmentByIdAsync(int id)
+        {
+            return await _context.TakeAssignments.Where(x => x.Id == id).ProjectTo<AssignmentAttemptGradeDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+        }
+
         public void Update(Assignment assignment)
         {
             _context.Entry<Assignment>(assignment).State = EntityState.Modified;

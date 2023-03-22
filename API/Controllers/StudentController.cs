@@ -51,7 +51,7 @@ namespace API.Controllers
         }
 
         [HttpPost("Courses/{courseId}/Materials/{assignmentId}")]
-        public async Task<ActionResult> SubmitAssignment(int courseId, int assignmentId, CreateTakeAssignmentDto createTakeAssignmentDto)
+        public async Task<ActionResult<AssignmentAttemptGradeDto>> SubmitAssignment(int courseId, int assignmentId, CreateTakeAssignmentDto createTakeAssignmentDto)
         {
             var x = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userId = int.Parse(x ?? "1");
@@ -64,7 +64,8 @@ namespace API.Controllers
             assignmentTake.AssignmentId = assignmentId;
             assignmentTake.StudentId = student.Id;
             int score = 0;
-            Dictionary<int, (int, int)> PIScores = new Dictionary<int, (int, int)>(); //PID, score
+
+            Dictionary<int, int> PIScores = new Dictionary<int, int>(); //PID, score
             foreach (var takequestion in assignmentTake.TakeQuestions)
             {
                 takequestion.TakeAssignment = assignmentTake;
@@ -79,8 +80,8 @@ namespace API.Controllers
                 foreach (var pi in questionPIs)
                 {
                     if (!PIScores.ContainsKey(pi))
-                        PIScores.Add(pi, (0, 0));
-                    PIScores[pi] = (attemptedAnswer.Correct ? (PIScores[pi].Item1 + question.FullMarks) : 0, PIScores[pi].Item2 + question.FullMarks);
+                        PIScores.Add(pi, 0);
+                    PIScores[pi] = (attemptedAnswer.Correct ? (PIScores[pi] + question.FullMarks) : 0);
                 }
             }
             foreach (var piId in PIScores.Keys)
@@ -88,18 +89,28 @@ namespace API.Controllers
                 var piScore = new PIScore
                 {
                     PerformanceIndicatorId = piId,
-                    Score = (PIScores[piId].Item1 * 100 / PIScores[piId].Item2),
+                    Score = PIScores[piId],
                     TakeAssignment = assignmentTake
                 };
+                //Addperfindicator score for the assignment
                 await _unitOfWork.AssignmentRepository.AddAssignmentPIScoreAsync(piScore);
+                //Now update all the overall performance indicator scores in TakesCoursePI
+                if (await _unitOfWork.PerfIndicatorRepository.CourseExistsAsync(courseId, piId) == false)
+                    return BadRequest("Invalid request for course pi. CoursePI 404");
+                await _unitOfWork.PerfIndicatorRepository.UpdateTakesCoursePIAsync(courseId, student.Id, assignment.SemesterId, piId, piScore.Score);
+
             }
             assignmentTake.Score = score;
 
             //Now update the overall grade for the student
             await _unitOfWork.CourseRepository.UpdateGradeForStudentCourse(courseId, student.Id, assignment.SemesterId, score);
+
             await _unitOfWork.AssignmentRepository.AddTakeAssignmentAsync(assignmentTake);
             if (await _unitOfWork.CompleteAsync())
-                return Ok();
+            {
+                var result = await _unitOfWork.AssignmentRepository.GetTakeAssignmentByIdAsync(assignmentTake.Id);
+                return Ok(result);
+            }
             return BadRequest("Failed to submit assignment");
         }
     }

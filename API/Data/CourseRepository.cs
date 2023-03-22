@@ -38,7 +38,7 @@ namespace API.Data
         {
             var takes = await _context.Takes.Where(x => x.CourseId == courseId && x.StudentId == studentId && x.SemesterId == semesterId).FirstOrDefaultAsync();
             var sum = await _context.Assignments.Where(x => x.CourseId == courseId && x.SemesterId == semesterId).SumAsync(x => x.FullMarks);
-            takes.Grade = (takes.Grade + newAssignmentScore) * 100 / sum;
+            takes.Grade += newAssignmentScore;
         }
         //These might be useful later when we start on registering courses
         public async Task<IList<InstructorDto>> GetAllInstructors()

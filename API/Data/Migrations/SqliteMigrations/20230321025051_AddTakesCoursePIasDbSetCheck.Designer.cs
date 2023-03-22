@@ -3,6 +3,7 @@ using System;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations.SqliteMigrations
 {
     [DbContext(typeof(SqliteDataContext))]
-    partial class SqliteDataContextModelSnapshot : ModelSnapshot
+    [Migration("20230321025051_AddTakesCoursePIasDbSetCheck")]
+    partial class AddTakesCoursePIasDbSetCheck
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.1");
@@ -186,24 +188,6 @@ namespace API.Data.Migrations.SqliteMigrations
                     b.HasIndex("SemesterId");
 
                     b.ToTable("Assignments");
-                });
-
-            modelBuilder.Entity("API.Models.AssignmentPI", b =>
-                {
-                    b.Property<int>("AssignmentId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("PerformanceIndicatorId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("FullScore")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("AssignmentId", "PerformanceIndicatorId");
-
-                    b.HasIndex("PerformanceIndicatorId");
-
-                    b.ToTable("AssignmentPIs");
                 });
 
             modelBuilder.Entity("API.Models.Course", b =>
@@ -629,25 +613,6 @@ namespace API.Data.Migrations.SqliteMigrations
                     b.Navigation("Semester");
                 });
 
-            modelBuilder.Entity("API.Models.AssignmentPI", b =>
-                {
-                    b.HasOne("API.Models.Assignment", "Assignment")
-                        .WithMany("AssignmentPIs")
-                        .HasForeignKey("AssignmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API.Models.PerformanceIndicator", "PerformanceIndicator")
-                        .WithMany("AssignmentPIs")
-                        .HasForeignKey("PerformanceIndicatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Assignment");
-
-                    b.Navigation("PerformanceIndicator");
-                });
-
             modelBuilder.Entity("API.Models.CoursePI", b =>
                 {
                     b.HasOne("API.Models.Course", "Course")
@@ -916,8 +881,6 @@ namespace API.Data.Migrations.SqliteMigrations
 
             modelBuilder.Entity("API.Models.Assignment", b =>
                 {
-                    b.Navigation("AssignmentPIs");
-
                     b.Navigation("Questions");
 
                     b.Navigation("TakeAssignments");
@@ -946,8 +909,6 @@ namespace API.Data.Migrations.SqliteMigrations
 
             modelBuilder.Entity("API.Models.PerformanceIndicator", b =>
                 {
-                    b.Navigation("AssignmentPIs");
-
                     b.Navigation("CoursePIs");
 
                     b.Navigation("PIScores");
