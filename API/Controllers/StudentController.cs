@@ -45,6 +45,9 @@ namespace API.Controllers
         [HttpPost("Courses/Register/{courseId}")]
         public async Task<ActionResult> RegisterForCourse(RegisterCourseDto rcDto)
         {
+            //Change this later with feature/take-assignment-grade
+            //We use the logged in student 
+            //Dont let the client determine who the student is
             if (!(await _unitOfWork.CourseRepository.CourseExistsById(rcDto.CourseId)))
             {
                 return BadRequest("Course does not exist.");

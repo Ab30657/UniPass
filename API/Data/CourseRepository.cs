@@ -151,6 +151,8 @@ namespace API.Data
         public async Task<bool> StudentAlreadyRegistered(int courseId, int studentId)
         {
             var student = await _context.Students.Include(w => w.Takes).FirstOrDefaultAsync(x => x.Id == studentId);
+
+            //Change this later when mergine feature/take-assignment-grade
             var course = student.Takes.FirstOrDefault(y => y.CourseId == courseId);
 
             if (course != null)
@@ -176,7 +178,7 @@ namespace API.Data
                 CourseId = rcDto.CourseId,
                 SemesterId = rcDto.SemesterId
             };
-
+            //Change this as well after feature/take-assignment-grade
             student.Takes.Add(taking);
         }
     }
