@@ -128,9 +128,56 @@ namespace API.Data
             return true;
         }
 
+        public async Task<bool> CourseExistsById(int id)
+        {
+            var course = await _context.Courses.FirstOrDefaultAsync(x => x.Id == id);
+            if (course == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> CourseExistsByTitle(string title)
+        {
+            var course = await _context.Courses.FirstOrDefaultAsync(x => x.Title == title);
+            if (course == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> StudentAlreadyRegistered(int courseId, int studentId)
+        {
+            var student = await _context.Students.Include(w => w.Takes).FirstOrDefaultAsync(x => x.Id == studentId);
+            var course = student.Takes.FirstOrDefault(y => y.CourseId == courseId);
+
+            if (course != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public bool DoYouTeach(Instructor instructor, int courseId)
         {
             return instructor.Teaches.Where(x => x.InstructorId == instructor.Id && x.CourseId == courseId).FirstOrDefault() != null;
+        }
+
+        public async void RegisterForCourse(RegisterCourseDto rcDto)
+        {
+            //var course = await _context.Courses.FirstOrDefaultAsync(x => x.Id == courseId);
+            var student = await _context.Students.Include(x => x.Takes).FirstOrDefaultAsync(x => x.Id == rcDto.StudentId);
+
+            var taking = new Takes
+            {
+                StudentId = rcDto.StudentId,
+                CourseId = rcDto.CourseId,
+                SemesterId = rcDto.SemesterId
+            };
+
+            student.Takes.Add(taking);
         }
     }
 }
