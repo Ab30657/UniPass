@@ -3,10 +3,12 @@ using API.DTOs;
 using API.Interfaces;
 using API.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize(Roles = "Student")]
     public class StudentController : BaseApiController
     {
 
@@ -23,7 +25,10 @@ namespace API.Controllers
         [HttpGet("Courses")]
         public async Task<ActionResult<IEnumerable<GetCourseDto>>> GetCourses()
         {
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            //This gets the currently logged in user claims from .NET Web API Middleware through HttpContext
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            // Uncomment the line below, to test manually, otherwise use postman tests
+            // var userId = int.Parse(x ?? "1");
             var student = await _unitOfWork.UserRepository.GetStudentByUserIdAsync(userId);
             var courses = await _unitOfWork.CourseRepository.GetCoursesByStudentId(student.Id);
             return Ok(courses);
@@ -53,8 +58,10 @@ namespace API.Controllers
         [HttpPost("Courses/{courseId}/Materials/{assignmentId}")]
         public async Task<ActionResult<AssignmentAttemptGradeDto>> SubmitAssignment(int courseId, int assignmentId, CreateTakeAssignmentDto createTakeAssignmentDto)
         {
-            var x = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = int.Parse(x ?? "1");
+            //This gets the currently logged in user claims from .NET Web API Middleware through HttpContext
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            // Uncomment the line below, to test manually, otherwise use postman tests
+            // var userId = int.Parse(x ?? "1");
             var student = await _unitOfWork.UserRepository.GetStudentByUserIdAsync(userId);
             var assignment = await _unitOfWork.AssignmentRepository.GetAssignmentByIdAsync(assignmentId);
             if (assignment == null)

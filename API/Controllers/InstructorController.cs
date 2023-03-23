@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    // [Authorize(Roles = "Instructor")]
+    [Authorize(Roles = "Instructor")]
     public class InstructorController : BaseApiController
     {
         private readonly IMapper _mapper;
@@ -31,8 +31,12 @@ namespace API.Controllers
         [HttpGet("Courses")]
         public async Task<ActionResult<IEnumerable<GetCourseDto>>> GetCourses()
         {
-            var x = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = int.Parse(x ?? "2");
+            //This gets the currently logged in user claims from .NET Web API Middleware through HttpContext
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            // Uncomment the line below, to test manually, otherwise use postman tests
+            // var userId = int.Parse(x ?? "1");
+            // var x = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            // var userId = int.Parse(x ?? "2");
             var instructor = await _unitOfWork.UserRepository.GetInstructorByUserIdAsync(userId);
             var courses = await _unitOfWork.CourseRepository.GetCoursesByInstructorId(instructor.Id);
             return Ok(courses);
@@ -50,8 +54,12 @@ namespace API.Controllers
         [HttpGet("Courses/{courseId}/Materials")]
         public async Task<ActionResult<InstructorAssignmentDto>> GetClassMaterials(int courseId)
         {
-            var x = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = int.Parse(x ?? "2");
+            //This gets the currently logged in user claims from .NET Web API Middleware through HttpContext
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            // Uncomment the line below, to test manually, otherwise use postman tests
+            // var userId = int.Parse(x ?? "1");
+            // var x = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            // var userId = int.Parse(x ?? "2");
             var instructor = await _unitOfWork.UserRepository.GetInstructorByUserIdAsync(userId);
             if (_unitOfWork.CourseRepository.YouDontTeach(instructor, courseId))
                 return BadRequest("You don't teach this course");
