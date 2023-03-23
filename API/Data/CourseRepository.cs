@@ -134,5 +134,11 @@ namespace API.Data
         {
             return instructor.Teaches.Where(x => x.InstructorId == instructor.Id && x.CourseId == courseId).FirstOrDefault() == null;
         }
+
+        public async Task<IList<StudentWithScoreDto>> GetStudentWithScoresAsync(int courseId, int semesterId)
+        {
+            var take = _context.Takes.Where(x => x.CourseId == courseId && x.SemesterId == semesterId).Include(x => x.TakesCoursePIs).ThenInclude(x => x.PerformanceIndicator).ToListAsync();
+            return await _context.Takes.Where(x => x.CourseId == courseId && x.SemesterId == semesterId).ProjectTo<StudentWithScoreDto>(_mapper.ConfigurationProvider).ToListAsync();
+        }
     }
 }

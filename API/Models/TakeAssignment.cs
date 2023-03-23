@@ -9,6 +9,6 @@ namespace API.Models
         public Student Student { get; set; }
         public Assignment Assignment { get; set; }
         public ICollection<TakeQuestion> TakeQuestions { get; set; }
-        public ICollection<PIScore> PIScores { get; set; }
+        public ICollection<TakeAssignmentPIScore> PIScores { get; set; }
     }
 }

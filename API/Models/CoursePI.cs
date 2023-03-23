@@ -8,6 +8,5 @@ namespace API.Models
         public int FullPIScore { get; set; }
         public Course Course { get; set; }
         public PerformanceIndicator PerformanceIndicator { get; set; }
-        public ICollection<TakesCoursePI> TakesCoursePIs { get; set; }
     }
 }

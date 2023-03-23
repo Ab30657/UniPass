@@ -20,6 +20,14 @@ namespace API.Controllers
         }
         // Your Actions here //
         // have consequences //
+
+        [HttpGet("Courses/{courseId}/StudentReports")]
+        public async Task<ActionResult<IEnumerable<StudentWithScoreDto>>> GetStudentsWithScore(int courseId, int semesterId)
+        {
+
+            return Ok(await _unitOfWork.CourseRepository.GetStudentWithScoresAsync(courseId, semesterId));
+        }
+
         [HttpGet("Courses")]
         public async Task<ActionResult<IEnumerable<GetCourseDto>>> GetCourses()
         {

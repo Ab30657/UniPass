@@ -59,7 +59,7 @@ namespace API.Helpers
             CreateMap<CreateTakeAssignmentDto, TakeAssignment>()
                 .ForMember(x => x.TakeQuestions, opt => opt.MapFrom(x => x.TakeQuestions));
             CreateMap<CreateTakeQuestionDto, TakeQuestion>();
-            CreateMap<PIScore, PIScoreDto>()
+            CreateMap<TakeAssignmentPIScore, PIScoreDto>()
                 .ForMember(x => x.PiTitle, opt => opt.MapFrom(x => x.PerformanceIndicator.Name));
             CreateMap<TakeQuestion, TakeQuestionWithAnswerDto>()
                 .ForMember(x => x.Correct, opt => opt.MapFrom(x => x.Answer.Correct))
@@ -69,6 +69,20 @@ namespace API.Helpers
                 .ForMember(x => x.Student, opt => opt.MapFrom(x => x.Student))
                 .ForMember(x => x.PIScores, opt => opt.MapFrom(x => x.PIScores))
                 .ForMember(x => x.TakeAssignment, opt => opt.MapFrom(x => x));
+            //Relate all PI Join tables to main PI tabler, but when making inserts 
+            //check the parent if it contains that PI
+            //for question - check Assignment PI
+            //for assignment - check CoursePI
+            //For course - check PI
+            // CreateMap<TakesCoursePI, PIScoreDto>()
+            //     .ForMember(x => x.)
+            CreateMap<TakesCoursePI, PIScoreDto>()
+                .ForMember(x => x.Score, opt => opt.MapFrom(x => x.Score))
+                .ForMember(x => x.PiTitle, opt => opt.MapFrom(x => x.PerformanceIndicator.Name));
+            CreateMap<Takes, StudentWithScoreDto>()
+                .ForMember(x => x.Student, opt => opt.MapFrom(x => x.Student))
+                .ForMember(x => x.TotalScore, opt => opt.MapFrom(x => x.Grade))
+                .ForMember(x => x.PerformanceIndicatorScores, opt => opt.MapFrom(x => x.TakesCoursePIs));
             /////////////////////////////////
             /// Add necessary mappings here
             ////////////////////////////////

@@ -74,6 +74,8 @@ namespace API.Controllers
                 takequestion.TakeAssignment = assignmentTake;
                 await _unitOfWork.AssignmentRepository.AddTakeQuestionAsync(takequestion);
                 var question = (await _unitOfWork.AssignmentRepository.GetQuestionByIdAsync(takequestion.QuestionId));
+                if (question == null)
+                    return BadRequest("QuestionId is invalid");
                 var questionPIs = question.QuestionPIs.Select(x => x.PerformanceIndicatorId).ToList();
                 var attemptedAnswer = (await _unitOfWork.AssignmentRepository.GetAnswerByIdAsync(takequestion.AnswerId));
                 if (attemptedAnswer.QuestionId != takequestion.QuestionId)
@@ -89,7 +91,7 @@ namespace API.Controllers
             }
             foreach (var piId in PIScores.Keys)
             {
-                var piScore = new PIScore
+                var piScore = new TakeAssignmentPIScore
                 {
                     PerformanceIndicatorId = piId,
                     Score = PIScores[piId],

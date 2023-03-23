@@ -1,6 +1,6 @@
 namespace API.Models
 {
-    public class PIScore
+    public class TakeAssignmentPIScore
     {
         public PerformanceIndicator PerformanceIndicator { get; set; }
         public int PerformanceIndicatorId { get; set; }

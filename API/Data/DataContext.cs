@@ -28,7 +28,7 @@ namespace API.Data
         public DbSet<TakeAssignment> TakeAssignments { get; set; }
         public DbSet<TakeQuestion> TakeQuestions { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
-        public DbSet<PIScore> PIScores { get; set; }
+        public DbSet<TakeAssignmentPIScore> PIScores { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Takes> Takes { get; set; }
@@ -166,28 +166,28 @@ namespace API.Data
                 .HasForeignKey(t => t.AssignmentId).IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<PIScore>().HasKey(x => new { x.TakeAssignmentId, x.PerformanceIndicatorId });
-            builder.Entity<PIScore>()
+            builder.Entity<TakeAssignmentPIScore>().HasKey(x => new { x.TakeAssignmentId, x.PerformanceIndicatorId });
+            builder.Entity<TakeAssignmentPIScore>()
                 .HasOne(x => x.PerformanceIndicator)
                 .WithMany(x => x.PIScores)
                 .HasForeignKey(x => x.PerformanceIndicatorId).IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
-            builder.Entity<PIScore>()
+            builder.Entity<TakeAssignmentPIScore>()
                 .HasOne(x => x.TakeAssignment)
                 .WithMany(x => x.PIScores)
                 .HasForeignKey(x => x.TakeAssignmentId).IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<TakesCoursePI>().HasKey(x => new { x.TakesId, x.CoursePIId });
+            builder.Entity<TakesCoursePI>().HasKey(x => new { x.TakesId, x.PerformanceIndicatorId });
             builder.Entity<TakesCoursePI>()
                 .HasOne(x => x.Takes)
                 .WithMany(x => x.TakesCoursePIs)
                 .HasForeignKey(x => x.TakesId)
                 .OnDelete(DeleteBehavior.Cascade);
             builder.Entity<TakesCoursePI>()
-                .HasOne(x => x.CoursePI)
+                .HasOne(x => x.PerformanceIndicator)
                 .WithMany(x => x.TakesCoursePIs)
-                .HasForeignKey(x => x.TakesId)
+                .HasForeignKey(x => x.PerformanceIndicatorId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<AssignmentPI>().HasKey(x => new { x.AssignmentId, x.PerformanceIndicatorId });

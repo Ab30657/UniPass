@@ -66,14 +66,14 @@ namespace API.Data
         {
             var coursePI = await _context.CoursePIs.Where(x => x.CourseId == courseId && x.PerformanceIndicatorId == piId).FirstOrDefaultAsync();
             var takes = await _context.Takes.Where(x => x.SemesterId == semesterId && x.CourseId == courseId && x.StudentId == studentId).FirstOrDefaultAsync();
-            var takesCoursePI = await _context.TakesCoursePIs.Where(x => x.CoursePIId == coursePI.Id && x.TakesId == takes.Id).FirstOrDefaultAsync();
+            var takesCoursePI = await _context.TakesCoursePIs.Where(x => x.PerformanceIndicatorId == piId && x.TakesId == takes.Id).FirstOrDefaultAsync();
             if (takesCoursePI == null)
             {
                 //Add
                 var takeCoursePI = new TakesCoursePI
                 {
                     TakesId = takes.Id,
-                    CoursePIId = coursePI.Id,
+                    PerformanceIndicatorId = piId,
                     Score = piScore
                 };
                 _context.TakesCoursePIs.AddAsync(takeCoursePI);
@@ -82,6 +82,7 @@ namespace API.Data
             {
                 //Update
                 takesCoursePI.Score += piScore;
+                _context.Entry<TakesCoursePI>(takesCoursePI).State = EntityState.Modified;
             }
         }
 

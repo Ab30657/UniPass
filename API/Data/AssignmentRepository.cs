@@ -29,7 +29,7 @@ namespace API.Data
             await _context.Assignments.AddAsync(assignment);
         }
 
-        public async Task AddAssignmentPIScoreAsync(PIScore piScore)
+        public async Task AddAssignmentPIScoreAsync(TakeAssignmentPIScore piScore)
         {
             await _context.PIScores.AddAsync(piScore);
         }

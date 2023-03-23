@@ -62,7 +62,12 @@ namespace API.Data
                 new CoursePI{
                     Course = course,
                     PerformanceIndicatorId=2
-                }
+                },
+                    new CoursePI{
+                        Course = course,
+                        PerformanceIndicatorId=3
+                    }
+
             };
             dataContext.Courses.AddAsync(course);
 
