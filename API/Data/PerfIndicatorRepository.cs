@@ -27,6 +27,11 @@ namespace API.Data
             return (await _context.CoursePIs.FirstOrDefaultAsync(x => x.CourseId == courseId && x.PerformanceIndicatorId == piId) != null);
         }
 
+        public async Task<bool> CourseHasPIAsync(int piId, int courseId)
+        {
+            return await _context.CoursePIs.AnyAsync(x => x.PerformanceIndicatorId == piId && courseId == x.CourseId);
+        }
+
         public async Task<IEnumerable<PerformanceIndicatorDto>> GetPerfIndicatorsAsync()
         {
             return await _context.PerformanceIndicators.ProjectTo<PerformanceIndicatorDto>(_mapper.ConfigurationProvider).ToListAsync();

@@ -58,7 +58,10 @@ namespace API.Controllers
             var student = await _unitOfWork.UserRepository.GetStudentByUserIdAsync(userId);
             var assignment = await _unitOfWork.AssignmentRepository.GetAssignmentByIdAsync(assignmentId);
             if (assignment == null)
-                return BadRequest();
+                return BadRequest("No such assignment");
+            var oldAssignmentTake = await _unitOfWork.AssignmentRepository.GetAssignmentAttemptByStudentIdAsync(student.Id, assignmentId);
+            if (oldAssignmentTake != null)
+                return BadRequest("You've already submitted the assignment");
             //courseId is to check if student is enrolled
             var assignmentTake = _mapper.Map<TakeAssignment>(createTakeAssignmentDto);
             assignmentTake.AssignmentId = assignmentId;

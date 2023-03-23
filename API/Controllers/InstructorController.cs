@@ -73,6 +73,8 @@ namespace API.Controllers
                 fullMarks += question.FullMarks;
                 foreach (var pi in question.QuestionPIs)
                 {
+                    if (!(await _unitOfWork.PerfIndicatorRepository.CourseHasPIAsync(pi.PerformanceIndicatorId, courseId)))
+                        return BadRequest("Invalid performance indicator involved.");
                     if (!dt.ContainsKey(pi.PerformanceIndicatorId))
                         dt.Add(pi.PerformanceIndicatorId, 0);
                     dt[pi.PerformanceIndicatorId] += question.FullMarks;

@@ -1,176 +1,426 @@
-{
-    "title": "string",
-    "semesterId": 1,
-    "questions": [
-        {
-            "questionText": "True?",
-            "fullMarks": 5,
-            "performanceIndicators": [
-                1
-            ],
-            "answers": [
-                {
-                    "answerText": "True",
-                    "correct": true
-                },
-                {
-                    "answerText": "False",
-                    "correct": false
-                }
-            ]
-        },
-        {
-            "questionText": "False?",
-            "fullMarks": 5,
-            "performanceIndicators": [
-                2
-            ],
-            "answers": [
-                {
-                    "answerText": "False",
-                    "correct": true
-                },
-                {
-                    "answerText": "True",
-                    "correct": false
-                }
-            ]
-        },
-        {
-            "questionText": "True?",
-            "fullMarks": 5,
-            "performanceIndicators": [
-                1
-            ],
-            "answers": [
-                {
-                    "answerText": "True",
-                    "correct": true
-                },
-                {
-                    "answerText": "False",
-                    "correct": false
-                }
-            ]
-        },
-        {
-            "questionText": "False?",
-            "fullMarks": 5,
-            "performanceIndicators": [
-                2
-            ],
-            "answers": [
-                {
-                    "answerText": "False",
-                    "correct": true
-                },
-                {
-                    "answerText": "True",
-                    "correct": false
-                }
-            ]
-        },
-        {
-            "questionText": "True?",
-            "fullMarks": 5,
-            "performanceIndicators": [
-                1
-            ],
-            "answers": [
-                {
-                    "answerText": "True",
-                    "correct": true
-                },
-                {
-                    "answerText": "False",
-                    "correct": false
-                }
-            ]
-        },
-        {
-            "questionText": "False?",
-            "fullMarks": 5,
-            "performanceIndicators": [
-                2
-            ],
-            "answers": [
-                {
-                    "answerText": "False",
-                    "correct": true
-                },
-                {
-                    "answerText": "True",
-                    "correct": false
-                }
-            ]
-        },
-        {
-            "questionText": "True?",
-            "fullMarks": 5,
-            "performanceIndicators": [
-                1
-            ],
-            "answers": [
-                {
-                    "answerText": "True",
-                    "correct": true
-                },
-                {
-                    "answerText": "False",
-                    "correct": false
-                }
-            ]
-        },
-        {
-            "questionText": "False?",
-            "fullMarks": 5,
-            "performanceIndicators": [
-                2
-            ],
-            "answers": [
-                {
-                    "answerText": "False",
-                    "correct": true
-                },
-                {
-                    "answerText": "True",
-                    "correct": false
-                }
-            ]
-        },
-        {
-            "questionText": "True?",
-            "fullMarks": 5,
-            "performanceIndicators": [
-                1
-            ],
-            "answers": [
-                {
-                    "answerText": "True",
-                    "correct": true
-                },
-                {
-                    "answerText": "False",
-                    "correct": false
-                }
-            ]
-        },
-        {
-            "questionText": "False?",
-            "fullMarks": 5,
-            "performanceIndicators": [
-                2
-            ],
-            "answers": [
-                {
-                    "answerText": "False",
-                    "correct": true
-                },
-                {
-                    "answerText": "True",
-                    "correct": false
-                }
-            ]
-        }
-    ]
-}
+[
+    {
+        "title": "string",
+        "semesterId": 1,
+        "questions": [
+            {
+                "questionText": "True?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    1
+                ],
+                "answers": [
+                    {
+                        "answerText": "True",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "False",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "False?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    2
+                ],
+                "answers": [
+                    {
+                        "answerText": "False",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "True",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "True?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    1
+                ],
+                "answers": [
+                    {
+                        "answerText": "True",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "False",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "False?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    2
+                ],
+                "answers": [
+                    {
+                        "answerText": "False",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "True",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "True?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    1
+                ],
+                "answers": [
+                    {
+                        "answerText": "True",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "False",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "False?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    2
+                ],
+                "answers": [
+                    {
+                        "answerText": "False",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "True",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "True?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    1
+                ],
+                "answers": [
+                    {
+                        "answerText": "True",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "False",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "False?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    2
+                ],
+                "answers": [
+                    {
+                        "answerText": "False",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "True",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "True?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    1
+                ],
+                "answers": [
+                    {
+                        "answerText": "True",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "False",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "False?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    2
+                ],
+                "answers": [
+                    {
+                        "answerText": "False",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "True",
+                        "correct": false
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Computer Science Exam",
+        "semesterId": 1,
+        "questions": [
+            {
+                "questionText": "Which of the following is an example of a high-level programming language?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    1
+                ],
+                "answers": [
+                    {
+                        "answerText": "Assembly",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Java",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "C",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Binary",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "Which data structure is used for FIFO access?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    2
+                ],
+                "answers": [
+                    {
+                        "answerText": "Stack",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Heap",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Queue",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "Tree",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "Which of the following is not an Object Oriented Programming Language?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    3
+                ],
+                "answers": [
+                    {
+                        "answerText": "Java",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "C++",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Python",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Assembly",
+                        "correct": true
+                    }
+                ]
+            },
+            {
+                "questionText": "Which of the following is a type of loop?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    1
+                ],
+                "answers": [
+                    {
+                        "answerText": "If",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "For",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "While",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Switch",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the name of the popular version control system used in software development?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    2
+                ],
+                "answers": [
+                    {
+                        "answerText": "GIT",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "SVN",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "CVS",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Mercurial",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the name of the programming paradigm that emphasizes the use of mathematical functions?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    3
+                ],
+                "answers": [
+                    {
+                        "answerText": "Object Oriented Programming",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Procedural Programming",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Functional Programming",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "Logical Programming",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What does CPU stand for?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    1
+                ],
+                "answers": [
+                    {
+                        "answerText": "Central Processing Unit",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "Computer Processing Unit",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Control Processing Unit",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Centralized Processing Unit",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the smallest unit of digital information?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    3
+                ],
+                "answers": [
+                    {
+                        "answerText": "Byte",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Bit",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "Nibble",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Megabyte",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What does RAM stand for?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    1
+                ],
+                "answers": [
+                    {
+                        "answerText": "Random Access Memory",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "Read Access Memory",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Reset Access Memory",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Recall Access Memory",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What does HTML stand for?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    1
+                ],
+                "answers": [
+                    {
+                        "answerText": "Hypertext Markup Language",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "Hyperlink Text Manipulation Language",
+                        "correct": false
+                    }
+                ]
+            }
+        ]
+    }
+]
