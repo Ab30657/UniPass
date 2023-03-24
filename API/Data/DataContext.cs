@@ -17,7 +17,7 @@ namespace API.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseNpgsql(_configuration.GetConnectionString("POSTGRESQLCONNSTR_DefaultConnection"));
+            options.UseNpgsql(_configuration.GetConnectionString("CUSTOMCONNSTR_DefaultConnection"));
         }
 
         public DbSet<Student> Students { get; set; }
