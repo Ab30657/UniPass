@@ -31,12 +31,16 @@ namespace API.Data
 
         public async Task<IList<GetCourseDto>> GetCoursesByStudentId(int id)
         {
+            //open to change later
+            //Takes is now available
             return await _context.Courses.Where(x => x.Takes.Any(x => x.StudentId == id)).ProjectTo<GetCourseDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
-        public async Task<Course> GetCourseForStudentAsync(int courseId)
+        public async Task UpdateGradeForStudentCourse(int courseId, int studentId, int semesterId, int newAssignmentScore)
         {
-            return await _context.Courses.FindAsync(courseId);
+            var takes = await _context.Takes.Where(x => x.CourseId == courseId && x.StudentId == studentId && x.SemesterId == semesterId).FirstOrDefaultAsync();
+            var sum = await _context.Assignments.Where(x => x.CourseId == courseId && x.SemesterId == semesterId).SumAsync(x => x.FullMarks);
+            takes.Grade += newAssignmentScore;
         }
         //These might be useful later when we start on registering courses
         public async Task<IList<InstructorDto>> GetAllInstructors()
@@ -128,6 +132,17 @@ namespace API.Data
             return true;
         }
 
+        public bool YouDontTeach(Instructor instructor, int courseId)
+        {
+            return instructor.Teaches.Where(x => x.InstructorId == instructor.Id && x.CourseId == courseId).FirstOrDefault() == null;
+        }
+
+        public async Task<IList<StudentWithScoreDto>> GetStudentWithScoresAsync(int courseId, int semesterId)
+        {
+            var take = _context.Takes.Where(x => x.CourseId == courseId && x.SemesterId == semesterId).Include(x => x.TakesCoursePIs).ThenInclude(x => x.PerformanceIndicator).ToListAsync();
+            return await _context.Takes.Where(x => x.CourseId == courseId && x.SemesterId == semesterId).ProjectTo<StudentWithScoreDto>(_mapper.ConfigurationProvider).ToListAsync();
+        }
+
         public async Task<bool> CourseExistsById(int id)
         {
             var course = await _context.Courses.FirstOrDefaultAsync(x => x.Id == id);
@@ -160,11 +175,6 @@ namespace API.Data
                 return true;
             }
             return false;
-        }
-
-        public bool DoYouTeach(Instructor instructor, int courseId)
-        {
-            return instructor.Teaches.Where(x => x.InstructorId == instructor.Id && x.CourseId == courseId).FirstOrDefault() != null;
         }
 
         public async void RegisterForCourse(RegisterCourseDto rcDto)

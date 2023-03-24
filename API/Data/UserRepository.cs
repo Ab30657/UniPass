@@ -58,7 +58,7 @@ namespace API.Data
 
         public async Task<Instructor> GetInstructorByUserIdAsync(int id)
         {
-            return await _context.Instructors.Where(x => x.AppUserId == id).Include(x => x.AppUser).SingleOrDefaultAsync();
+            return await _context.Instructors.Where(x => x.AppUserId == id).Include(x => x.AppUser).Include(x => x.Teaches).SingleOrDefaultAsync();
         }
         public async Task<Student> GetStudentByUserIdAsync(int id)
         {

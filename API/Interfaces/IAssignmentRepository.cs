@@ -11,10 +11,16 @@ namespace API.Interfaces
         Task AddAssignmentAsync(Assignment assignment);
         Task AddAnswerAsync(Answer answer);
         Task AddQuestionAsync(Question question);
-        Task<Assignment> GetAssignmentByIdAsync(int id);
+        Task<StudentAssignmentDto> GetAssignmentByIdAsync(int id);
         //Multiple assignment attempts are doable with this architecture
         //For now focus on just one submission
         Task<TakeAssignment> GetAssignmentAttemptByStudentIdAsync(int studentId, int assignmentId);
         Task<TakeQuestion> GetQuestionAttemptByTakeAssignmentIdAsync(int takeAssignmentId, int questionId);
+        Task AddTakeQuestionAsync(TakeQuestion takequestion);
+        Task AddTakeAssignmentAsync(TakeAssignment assignmentTake);
+        Task<Question> GetQuestionByIdAsync(int questionId);
+        Task<Answer> GetAnswerByIdAsync(int answerId);
+        Task AddAssignmentPIScoreAsync(TakeAssignmentPIScore piScore);
+        Task<AssignmentAttemptGradeDto> GetTakeAssignmentByIdAsync(int id);
     }
 }
