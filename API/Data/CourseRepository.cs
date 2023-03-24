@@ -31,6 +31,8 @@ namespace API.Data
 
         public async Task<IList<GetCourseDto>> GetCoursesByStudentId(int id)
         {
+            //open to change later
+            //Takes is now available
             return await _context.Courses.Where(x => x.Takes.Any(x => x.StudentId == id)).ProjectTo<GetCourseDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
@@ -139,6 +141,55 @@ namespace API.Data
         {
             var take = _context.Takes.Where(x => x.CourseId == courseId && x.SemesterId == semesterId).Include(x => x.TakesCoursePIs).ThenInclude(x => x.PerformanceIndicator).ToListAsync();
             return await _context.Takes.Where(x => x.CourseId == courseId && x.SemesterId == semesterId).ProjectTo<StudentWithScoreDto>(_mapper.ConfigurationProvider).ToListAsync();
+        }
+
+        public async Task<bool> CourseExistsById(int id)
+        {
+            var course = await _context.Courses.FirstOrDefaultAsync(x => x.Id == id);
+            if (course == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> CourseExistsByTitle(string title)
+        {
+            var course = await _context.Courses.FirstOrDefaultAsync(x => x.Title == title);
+            if (course == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> StudentAlreadyRegistered(int courseId, int studentId)
+        {
+            var student = await _context.Students.Include(w => w.Takes).FirstOrDefaultAsync(x => x.Id == studentId);
+
+            //Change this later when mergine feature/take-assignment-grade
+            var course = student.Takes.FirstOrDefault(y => y.CourseId == courseId);
+
+            if (course != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public async void RegisterForCourse(RegisterCourseDto rcDto)
+        {
+            //var course = await _context.Courses.FirstOrDefaultAsync(x => x.Id == courseId);
+            var student = await _context.Students.Include(x => x.Takes).FirstOrDefaultAsync(x => x.Id == rcDto.StudentId);
+
+            var taking = new Takes
+            {
+                StudentId = rcDto.StudentId,
+                CourseId = rcDto.CourseId,
+                SemesterId = rcDto.SemesterId
+            };
+            //Change this as well after feature/take-assignment-grade
+            student.Takes.Add(taking);
         }
     }
 }

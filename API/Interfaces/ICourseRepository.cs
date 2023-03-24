@@ -24,5 +24,9 @@ namespace API.Interfaces
         Task<IList<GetCourseDto>> GetCoursesByStudentId(int id);
         Task<IList<StudentWithScoreDto>> GetStudentWithScoresAsync(int courseId, int semesterId);
         bool YouDontTeach(Instructor instructor, int courseId);
+        void RegisterForCourse(RegisterCourseDto rcDto);
+        Task<bool> CourseExistsById(int id);
+        Task<bool> CourseExistsByTitle(string title);
+        Task<bool> StudentAlreadyRegistered(int courseId, int studentId);
     }
 }
