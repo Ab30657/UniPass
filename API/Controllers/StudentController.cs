@@ -41,5 +41,42 @@ namespace API.Controllers
         {
             return Ok(await _unitOfWork.AssignmentRepository.GetAssignmentsForStudentAsync(courseId));
         }
+
+        [HttpPost("Courses/Register/{courseId}")]
+        public async Task<ActionResult> RegisterForCourse(RegisterCourseDto rcDto)
+        {
+            //Change this later with feature/take-assignment-grade
+            //We use the logged in student 
+            //Dont let the client determine who the student is
+            if (!(await _unitOfWork.CourseRepository.CourseExistsById(rcDto.CourseId)))
+            {
+                return BadRequest("Course does not exist.");
+            }
+
+            if (!(await _unitOfWork.CourseRepository.StudentExists(rcDto.StudentId)))
+            {
+                return BadRequest("Student does not exist.");
+            }
+
+            if (!(await _unitOfWork.CourseRepository.SemesterExists(rcDto.SemesterId)))
+            {
+                return BadRequest("Semester does not exist.");
+            }
+
+            if (await _unitOfWork.CourseRepository.StudentAlreadyRegistered(rcDto.CourseId, rcDto.StudentId))
+            {
+                return BadRequest("Student is already registerd.");
+            }
+
+            _unitOfWork.CourseRepository.RegisterForCourse(rcDto);
+
+            var result = await _unitOfWork.CompleteAsync();
+            if (result == false)
+            {
+                return BadRequest("Register unsuccessful.");
+            }
+
+            return Ok("Register successful.");
+        }
     }
 }
