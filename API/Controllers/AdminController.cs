@@ -190,7 +190,7 @@ namespace API.Controllers
         // }
 
         [HttpGet("Courses/{id}")]
-        public async Task<ActionResult<GetCourseDto>> GetCourseById(int id)
+        public async Task<ActionResult<CourseDetailDto>> GetCourseById(int id)
         {
             var course = await _unitOfWork.CourseRepository.GetCourseByIdWithInstructors(id);
             return Ok(course);

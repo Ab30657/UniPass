@@ -22,8 +22,9 @@ namespace API.Controllers
         // Your Actions here //
         // have consequences //
 
+        //This method can use a different DTO to just get name
         [HttpGet("Courses")]
-        public async Task<ActionResult<IEnumerable<GetCourseDto>>> GetCourses()
+        public async Task<ActionResult<IEnumerable<CourseDetailDto>>> GetCourses()
         {
             //This gets the currently logged in user claims from .NET Web API Middleware through HttpContext
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -43,16 +44,18 @@ namespace API.Controllers
         }
 
         [HttpGet("Courses/{courseId}/Materials")]
-        public async Task<ActionResult<IList<StudentAssignmentDto>>> GetClassMaterials(int courseId)
+        public async Task<ActionResult<AssignmentDto>> GetClassMaterials(int courseId)
         {
-            return Ok(await _unitOfWork.AssignmentRepository.GetAssignmentsForStudentAsync(courseId));
+            return Ok(await _unitOfWork.AssignmentRepository.GetAssignmentsByCourseIdAsync(courseId));
         }
 
         [HttpGet("Courses/{courseId}/Materials/{assignmentId}")]
-        public async Task<ActionResult<StudentAssignmentDto>> GetClassMaterial(int courseId, int assignmentId)
+        public async Task<ActionResult<AssignmentDetailDto<StudentQuestionDto>>> GetClassMaterial(int courseId, int assignmentId)
         {
             //courseId is to check if student is enrolled in the course
-            return Ok(await _unitOfWork.AssignmentRepository.GetAssignmentByIdAsync(assignmentId));
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var student = await _unitOfWork.UserRepository.GetStudentByUserIdAsync(userId);
+            return Ok(await _unitOfWork.AssignmentRepository.GetAssignmentByIdWithAttemptsAsync(assignmentId, student.Id));
         }
 
         [HttpPost("Courses/{courseId}/Materials/{assignmentId}")]
