@@ -5,10 +5,11 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
-    // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : BaseApiController
     {
         private readonly IMapper _mapper;
@@ -141,7 +142,7 @@ namespace API.Controllers
         //     return Ok();
         // }
 
-        [HttpPost("Courses")]
+        [HttpPost("Courses/create")]
         public async Task<ActionResult> CreateCourseEntity([FromBody] CreateCourseDto courseDto)
         {
             if (!(await _unitOfWork.CourseRepository.InstructorExists(courseDto.InstructorId)))
@@ -152,6 +153,11 @@ namespace API.Controllers
             if (!(await _unitOfWork.CourseRepository.SemesterExists(courseDto.SemesterId)))
             {
                 return BadRequest("Semester does not exist.");
+            }
+
+            if (await _unitOfWork.CourseRepository.CourseExistsByTitle(courseDto.Title))
+            {
+                return BadRequest("Course already exists.");
             }
 
             _unitOfWork.CourseRepository.CreateCourse(courseDto);

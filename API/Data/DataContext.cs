@@ -3,6 +3,7 @@ using API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace API.Data
 {
@@ -16,7 +17,7 @@ namespace API.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseNpgsql(_configuration.GetConnectionString("POSTGRESQLCONNSTR_DefaultConnection"));
+            options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));
         }
 
         public DbSet<Student> Students { get; set; }
@@ -27,9 +28,13 @@ namespace API.Data
         public DbSet<TakeAssignment> TakeAssignments { get; set; }
         public DbSet<TakeQuestion> TakeQuestions { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
+        public DbSet<TakeAssignmentPIScore> PIScores { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
-
+        public DbSet<Takes> Takes { get; set; }
+        public DbSet<CoursePI> CoursePIs { get; set; }
+        public DbSet<TakesCoursePI> TakesCoursePIs { get; set; }
+        public DbSet<AssignmentPI> AssignmentPIs { get; set; }
         /////////////
         /// @deprecated includes old relationships 
         /////////////
@@ -37,9 +42,8 @@ namespace API.Data
         ///////////// 
         // public DbSet<AnswerAttempt> AnswerAttempt { get; set; }
         // public DbSet<CoursePI> CoursePI { get; set; }
-        // public DbSet<Teaches> Teaches { get; set; }
         // public DbSet<QuestionPI> QuestionPI { get; set; }
-        // public DbSet<Takes> Takes { get; set; }
+        // public DbSet<Teaches> Teaches { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -69,7 +73,7 @@ namespace API.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<Takes>().HasKey(x => new { x.StudentId, x.CourseId, x.SemesterId });
+            builder.Entity<Takes>().HasIndex(x => new { x.StudentId, x.CourseId, x.SemesterId }).IsUnique();
             builder.Entity<Takes>()
                 .HasOne(t => t.Student)
                 .WithMany(s => s.Takes)
@@ -106,7 +110,7 @@ namespace API.Data
                 .HasForeignKey(t => t.SemesterId).IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<CoursePI>().HasKey(k => new { k.CourseId, k.PerformanceIndicatorId });
+            builder.Entity<CoursePI>().HasIndex(k => new { k.CourseId, k.PerformanceIndicatorId }).IsUnique();
             builder.Entity<CoursePI>()
                 .HasOne(cp => cp.Course)
                 .WithMany(c => c.CoursePIs)
@@ -160,6 +164,42 @@ namespace API.Data
                 .HasOne(t => t.Assignment)
                 .WithMany(c => c.TakeAssignments)
                 .HasForeignKey(t => t.AssignmentId).IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<TakeAssignmentPIScore>().HasKey(x => new { x.TakeAssignmentId, x.PerformanceIndicatorId });
+            builder.Entity<TakeAssignmentPIScore>()
+                .HasOne(x => x.PerformanceIndicator)
+                .WithMany(x => x.PIScores)
+                .HasForeignKey(x => x.PerformanceIndicatorId).IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<TakeAssignmentPIScore>()
+                .HasOne(x => x.TakeAssignment)
+                .WithMany(x => x.PIScores)
+                .HasForeignKey(x => x.TakeAssignmentId).IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<TakesCoursePI>().HasKey(x => new { x.TakesId, x.PerformanceIndicatorId });
+            builder.Entity<TakesCoursePI>()
+                .HasOne(x => x.Takes)
+                .WithMany(x => x.TakesCoursePIs)
+                .HasForeignKey(x => x.TakesId)
+                .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<TakesCoursePI>()
+                .HasOne(x => x.PerformanceIndicator)
+                .WithMany(x => x.TakesCoursePIs)
+                .HasForeignKey(x => x.PerformanceIndicatorId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<AssignmentPI>().HasKey(x => new { x.AssignmentId, x.PerformanceIndicatorId });
+            builder.Entity<AssignmentPI>()
+                .HasOne(x => x.Assignment)
+                .WithMany(x => x.AssignmentPIs)
+                .HasForeignKey(x => x.AssignmentId)
+                .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<AssignmentPI>()
+                .HasOne(x => x.PerformanceIndicator)
+                .WithMany(x => x.AssignmentPIs)
+                .HasForeignKey(x => x.PerformanceIndicatorId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

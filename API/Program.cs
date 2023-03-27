@@ -15,13 +15,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddAutoMapper(typeof(MappingProfiles));
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(policy =>
-    {
-        policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().Build();
-    });
-});
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -30,10 +23,24 @@ builder.Services.AddSwaggerGen();
 
 if (builder.Environment.IsDevelopment())
 {
+    builder.Services.AddCors(options =>
+    {
+        options.AddDefaultPolicy(policy =>
+        {
+            policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().Build();
+        });
+    });
     builder.Services.AddDbContext<DataContext, SqliteDataContext>();
 }
 else
 {
+    builder.Services.AddCors(options =>
+    {
+        options.AddDefaultPolicy(policy =>
+        {
+            policy.WithOrigins("https://unipass-dev.azurewebsites.net").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().Build();
+        });
+    });
     builder.Services.AddDbContext<DataContext>();
 }
 
@@ -93,6 +100,7 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseHttpsRedirection();
+    app.UseCors();
     app.UseRouting();
     app.UseAuthentication();
     app.UseAuthorization();

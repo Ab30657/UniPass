@@ -8,6 +8,7 @@ namespace API.Helpers
     {
         public MappingProfiles()
         {
+
             CreateMap<RegisterDto, AppUser>();
             CreateMap<PerformanceIndicatorDto, PerformanceIndicator>();
             CreateMap<PerformanceIndicator, PerformanceIndicatorDto>();
@@ -54,6 +55,34 @@ namespace API.Helpers
                 .ForMember(x => x.Students, opt => opt.MapFrom(x => x.Takes.Select(x => x.Student)))
                 .ForMember(x => x.PerformanceIndicators, opt => opt.MapFrom(x => x.CoursePIs.Select(x => x.PerformanceIndicator)));
             CreateMap<TeachesDto, Teaches>();
+
+            CreateMap<CreateTakeAssignmentDto, TakeAssignment>()
+                .ForMember(x => x.TakeQuestions, opt => opt.MapFrom(x => x.TakeQuestions));
+            CreateMap<CreateTakeQuestionDto, TakeQuestion>();
+            CreateMap<TakeAssignmentPIScore, PIScoreDto>()
+                .ForMember(x => x.PiTitle, opt => opt.MapFrom(x => x.PerformanceIndicator.Name));
+            CreateMap<TakeQuestion, TakeQuestionWithAnswerDto>()
+                .ForMember(x => x.Correct, opt => opt.MapFrom(x => x.Answer.Correct))
+                .ForMember(x => x.AnswerText, opt => opt.MapFrom(x => x.Answer.AnswerText))
+                .ForMember(x => x.CorrectAnswer, opt => opt.MapFrom(x => x.Question.Answers.Where(x => x.Correct).FirstOrDefault().AnswerText));
+            CreateMap<TakeAssignment, AssignmentAttemptGradeDto>()
+                .ForMember(x => x.Student, opt => opt.MapFrom(x => x.Student))
+                .ForMember(x => x.PIScores, opt => opt.MapFrom(x => x.PIScores))
+                .ForMember(x => x.TakeAssignment, opt => opt.MapFrom(x => x));
+            //Relate all PI Join tables to main PI tabler, but when making inserts 
+            //check the parent if it contains that PI
+            //for question - check Assignment PI
+            //for assignment - check CoursePI
+            //For course - check PI
+            // CreateMap<TakesCoursePI, PIScoreDto>()
+            //     .ForMember(x => x.)
+            CreateMap<TakesCoursePI, PIScoreDto>()
+                .ForMember(x => x.Score, opt => opt.MapFrom(x => x.Score))
+                .ForMember(x => x.PiTitle, opt => opt.MapFrom(x => x.PerformanceIndicator.Name));
+            CreateMap<Takes, StudentWithScoreDto>()
+                .ForMember(x => x.Student, opt => opt.MapFrom(x => x.Student))
+                .ForMember(x => x.TotalScore, opt => opt.MapFrom(x => x.Grade))
+                .ForMember(x => x.PerformanceIndicatorScores, opt => opt.MapFrom(x => x.TakesCoursePIs));
             /////////////////////////////////
             /// Add necessary mappings here
             ////////////////////////////////
