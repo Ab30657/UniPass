@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Navigate, Route, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -26,6 +27,18 @@ function SignUp() {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
   const theme = createTheme();
+  const navigate = useNavigate();
+  const [isLoggedIn, setisLoggedIn] = useState(false);
+  useEffect(() => {
+    // Checking if user is not loggedIn
+    const token = Cookies.get('jwt');
+    if (token) {
+      setisLoggedIn(true);
+      navigate('/Homepage');
+    } else {
+      navigate('/signin');
+    }
+  }, [navigate, isLoggedIn]);
   const handleSubmit = (e) => {
     e.preventDefault();
     const requestOptions = {

@@ -27,7 +27,7 @@ function SignIn() {
     const token = Cookies.get('jwt');
     if (token) {
       setisLoggedIn(true);
-      navigate('/signin');
+      navigate('/Homepage');
     } else {
       navigate('/signin');
     }
