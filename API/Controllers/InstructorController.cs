@@ -111,5 +111,26 @@ namespace API.Controllers
 
         }
 
+        [HttpPost("Courses/{courseId}/AddPI")]
+        public async Task<ActionResult> AddPerformanceIndicicatorToCourse(int courseId, PerformanceIndicatorDto piDTO)
+        {
+            if (!(await _unitOfWork.CourseRepository.CourseExistsById(courseId)))
+            {
+                return BadRequest("Course does not exist.");
+            }
+            _unitOfWork.CourseRepository.AddPerformanceIndicatorToCourse(courseId, piDTO);
+            return Ok("Added successfully");
+        }
+
+        [HttpDelete("Courses/{courseId}/DeletePI")]
+        public async Task<ActionResult> DeletePerformanceIndicicatorFromCourse(CoursePIDto cpiDTO)
+        {
+            if (!(await _unitOfWork.CourseRepository.CourseExistsById(cpiDTO.CourseId)))
+            {
+                return BadRequest("Course does not exist.");
+            }
+            _unitOfWork.CourseRepository.DeletePerformanceIndicatorFromCourse(cpiDTO);
+            return Ok("Deleted successfully");
+        }
     }
 }
