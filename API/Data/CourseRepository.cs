@@ -191,5 +191,29 @@ namespace API.Data
             //Change this as well after feature/take-assignment-grade
             student.Takes.Add(taking);
         }
+
+
+        public async void AddPerformanceIndicatorToCourse(int courseId, PerformanceIndicatorDto piDTO)
+        {
+            var course = await _context.Courses.Include(x => x.CoursePIs).FirstOrDefaultAsync(x => x.Id == courseId);
+            var lastId = course.CoursePIs.OrderByDescending(x => x.Id).FirstOrDefault();
+
+            var coursePI = new CoursePI
+            {
+                Id = lastId.Id + 1,
+                CourseId = courseId,
+                PerformanceIndicatorId = piDTO.Id
+            };
+
+            course.CoursePIs.Add(coursePI);
+        }
+
+        public async void DeletePerformanceIndicatorFromCourse(CoursePIDto coursePIDto)
+        {
+            var course = await _context.Courses.Include(x => x.CoursePIs).FirstOrDefaultAsync(x => x.Id == coursePIDto.CourseId);
+            var coursePI = course.CoursePIs.FirstOrDefault(x => x.Id == coursePIDto.Id);
+
+            course.CoursePIs.Remove(coursePI);
+        }
     }
 }
