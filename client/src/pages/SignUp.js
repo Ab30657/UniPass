@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Navigate, Route, useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -16,8 +13,13 @@ import Container from '@mui/material/Container';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import useAuth from '../hooks/useAuth';
+import axios from '../api/axios';
+import jwt from 'jwt-decode';
+
+const LOGIN_URL = '/account/signup';
 
 function SignUp() {
   const [firstName, setFirstName] = useState('');
@@ -28,23 +30,13 @@ function SignUp() {
   const [role, setRole] = useState('');
   const theme = createTheme();
   const navigate = useNavigate();
-  const [isLoggedIn, setisLoggedIn] = useState(false);
-  useEffect(() => {
-    // Checking if user is not loggedIn
-    const token = Cookies.get('jwt');
-    if (token) {
-      setisLoggedIn(true);
-      navigate('/Homepage');
-    } else {
-      navigate('/signin');
-    }
-  }, [navigate, isLoggedIn]);
-  const handleSubmit = (e) => {
+  const { setAuth } = useAuth();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+    const response = await axios.post(
+      LOGIN_URL,
+      JSON.stringify({
         firstName,
         lastName,
         username,
@@ -52,18 +44,19 @@ function SignUp() {
         password,
         role,
       }),
-    };
-    console.log(requestOptions.body);
-    fetch(process.env.REACT_APP_API_URL + '/account/register', requestOptions)
-      .then((x) => x.json())
-      .then((user) => {
-        //register
-        console.log(user);
-        //JWT Token expires in 7 days, and is available to all paths of the site
-        Cookies.set('jwt', user.token, { expires: 7, path: '/' });
-        //save token to cache
-      });
-    // handle form submission logic here
+      {
+        headers: { 'Content-Type': 'application/json' },
+      },
+    );
+    // console.log(JSON.stringify(response?.data));
+    var roles = [];
+    const token = response?.data?.token;
+    const user = response?.data?.username;
+    const UserRoles = jwt(token).role;
+    Array.isArray(UserRoles) ? (roles = UserRoles) : roles.push(UserRoles);
+    setAuth({ user, roles, token });
+    localStorage.setItem('user', JSON.stringify({ user, token, roles }));
+    navigate('/Dashboard', { replace: true });
   };
   return (
     <ThemeProvider theme={theme}>
@@ -147,14 +140,6 @@ function SignUp() {
                   autoComplete="new-password"
                 />
               </Grid>
-              {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid> */}
               <Grid item xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">Role</InputLabel>
@@ -184,14 +169,13 @@ function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/SignIn" variant="body2">
+                <Link href="/LogIn" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
     </ThemeProvider>
   );

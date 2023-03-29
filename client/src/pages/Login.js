@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import Cookies from 'js-cookie';
-import { Navigate, Route, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,54 +13,39 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import useAuth from '../hooks/useAuth';
+import axios from '../api/axios';
+import jwt from 'jwt-decode';
 
-function SignIn() {
+const LOGIN_URL = '/account/login';
+
+function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const { setAuth } = useAuth();
   const navigate = useNavigate();
-  const [isLoggedIn, setisLoggedIn] = useState(false);
-  //   const [rememberMe, setRememberMe] = useState(false);
-
-  useEffect(() => {
-    // Checking if user is not loggedIn
-    const token = Cookies.get('jwt');
-    if (token) {
-      setisLoggedIn(true);
-      navigate('/Homepage');
-    } else {
-      navigate('/signin');
-    }
-  }, [navigate, isLoggedIn]);
   const theme = createTheme();
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-    };
-    fetch(process.env.REACT_APP_API_URL + '/account/login', requestOptions)
-      .then((x) => x.json())
-      .then((user) => {
-        //register
-        if (user) {
-          console.log(user);
-          //JWT Token expires in 7 days, and is available to all paths of the site
-          Cookies.set('jwt', user.token, { expires: 7, path: '/' });
-          navigate('/Homepage');
-        }
-        //save token to cache
-      });
-    // Send login request to server here
+    const response = await axios.post(
+      LOGIN_URL,
+      JSON.stringify({ username, password }),
+      {
+        headers: { 'Content-Type': 'application/json' },
+      },
+    );
+    // console.log(JSON.stringify(response?.data));
+    var roles = [];
+    const token = response?.data?.token;
+    const user = response?.data?.username;
+    const UserRoles = jwt(token).role;
+    Array.isArray(UserRoles) ? (roles = UserRoles) : roles.push(UserRoles);
+    setAuth({ user, roles, token });
+    localStorage.setItem('user', JSON.stringify({ user, token, roles }));
+    navigate('/Dashboard', { replace: true });
   };
 
-  return !isLoggedIn ? (
-    <></>
-  ) : (
+  return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -135,9 +119,8 @@ function SignIn() {
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>
   );
 }
-export default SignIn;
+export default Login;
