@@ -196,11 +196,9 @@ namespace API.Data
         public async void AddPerformanceIndicatorToCourse(int courseId, PerformanceIndicatorDto piDTO)
         {
             var course = await _context.Courses.Include(x => x.CoursePIs).FirstOrDefaultAsync(x => x.Id == courseId);
-            var lastId = course.CoursePIs.OrderByDescending(x => x.Id).FirstOrDefault();
 
             var coursePI = new CoursePI
             {
-                Id = lastId.Id + 1,
                 CourseId = courseId,
                 PerformanceIndicatorId = piDTO.Id
             };
