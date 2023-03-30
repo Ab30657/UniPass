@@ -191,5 +191,12 @@ namespace API.Data
             //Change this as well after feature/take-assignment-grade
             student.Takes.Add(taking);
         }
+
+        //create TakesDto and Project the list to it before returning
+        public async Task<List<Takes>> GetStudentsToACourse(int courseId)
+        {
+            var course = await _context.Courses.Include(x => x.Takes).FirstOrDefaultAsync(y => y.Id == courseId);
+            return (course.Takes.ToList());
+        }
     }
 }
