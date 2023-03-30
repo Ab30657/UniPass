@@ -111,26 +111,53 @@ namespace API.Controllers
 
         }
 
-        [HttpPost("Courses/{courseId}/AddPI")]
-        public async Task<ActionResult> AddPerformanceIndicicatorToCourse(int courseId, PerformanceIndicatorDto piDTO)
+        [HttpPatch("{courseId}/performance-indicators")]
+        public async Task<IActionResult> UpdateCoursePerformanceIndicators(int courseId, [FromBody] List<int> performanceIndicatorIds)
         {
-            if (!(await _unitOfWork.CourseRepository.CourseExistsById(courseId)))
+            var course = await _unitOfWork.CourseRepository.GetCourseById(courseId);
+
+            if (course == null)
             {
-                return BadRequest("Course does not exist.");
+                return NotFound($"Course with ID {courseId} not found.");
             }
-            _unitOfWork.CourseRepository.AddPerformanceIndicatorToCourse(courseId, piDTO);
-            return Ok("Added successfully");
+
+            // Get the existing performance indicators for the course
+            var existingPerformanceIndicators = course.CoursePIs.ToList();
+
+            // Add new performance indicators to the course
+            var newPerformanceIndicators = performanceIndicatorIds.Except(existingPerformanceIndicators.Select(pi => pi.Id));
+            foreach (var perfIndicatorId in newPerformanceIndicators)
+            {
+                var perfIndicator = await _unitOfWork.PerfIndicatorRepository.GetPerformanceIndicatorByIdAsync(perfIndicatorId);
+                if (perfIndicator != null)
+                {
+                    var cpi = new CoursePI
+                    {
+                        CourseId = courseId,
+                        PerformanceIndicatorId = perfIndicatorId
+                    };
+
+                    course.CoursePIs.Add(cpi);
+                }
+            }
+
+            // Remove existing performance indicators from the course
+            var removedPerformanceIndicators = existingPerformanceIndicators.Where(pi => !performanceIndicatorIds.Contains(pi.Id));
+            foreach (var perfIndicator in removedPerformanceIndicators)
+            {
+                course.CoursePIs.Remove(perfIndicator);
+            }
+
+            // Save changes to the database
+            if (await _unitOfWork.CompleteAsync())
+            {
+                return Ok();
+            }
+            else
+            {
+                return StatusCode(500, "An error occurred while saving changes to the database.");
+            }
         }
 
-        [HttpDelete("Courses/{courseId}/DeletePI")]
-        public async Task<ActionResult> DeletePerformanceIndicicatorFromCourse(CoursePIDto cpiDTO)
-        {
-            if (!(await _unitOfWork.CourseRepository.CourseExistsById(cpiDTO.CourseId)))
-            {
-                return BadRequest("Course does not exist.");
-            }
-            _unitOfWork.CourseRepository.DeletePerformanceIndicatorFromCourse(cpiDTO);
-            return Ok("Deleted successfully");
-        }
     }
 }

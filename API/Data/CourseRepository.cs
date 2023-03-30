@@ -193,25 +193,5 @@ namespace API.Data
         }
 
 
-        public async void AddPerformanceIndicatorToCourse(int courseId, PerformanceIndicatorDto piDTO)
-        {
-            var course = await _context.Courses.Include(x => x.CoursePIs).FirstOrDefaultAsync(x => x.Id == courseId);
-
-            var coursePI = new CoursePI
-            {
-                CourseId = courseId,
-                PerformanceIndicatorId = piDTO.Id
-            };
-
-            course.CoursePIs.Add(coursePI);
-        }
-
-        public async void DeletePerformanceIndicatorFromCourse(CoursePIDto coursePIDto)
-        {
-            var course = await _context.Courses.Include(x => x.CoursePIs).FirstOrDefaultAsync(x => x.Id == coursePIDto.CourseId);
-            var coursePI = course.CoursePIs.FirstOrDefault(x => x.Id == coursePIDto.Id);
-
-            course.CoursePIs.Remove(coursePI);
-        }
     }
 }
