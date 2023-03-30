@@ -111,10 +111,10 @@ namespace API.Controllers
 
         }
 
-        [HttpPatch("{courseId}/performance-indicators")]
+        [HttpPatch("Course/{courseId}/performance-indicators")]
         public async Task<IActionResult> UpdateCoursePerformanceIndicators(int courseId, [FromBody] List<int> performanceIndicatorIds)
         {
-            var course = await _unitOfWork.CourseRepository.GetCourseById(courseId);
+            var course = await _unitOfWork.CourseRepository.GetCourseByIdWithCoursePI(courseId);
 
             if (course == null)
             {
@@ -125,7 +125,7 @@ namespace API.Controllers
             var existingPerformanceIndicators = course.CoursePIs.ToList();
 
             // Add new performance indicators to the course
-            var newPerformanceIndicators = performanceIndicatorIds.Except(existingPerformanceIndicators.Select(pi => pi.Id));
+            var newPerformanceIndicators = performanceIndicatorIds.Except(existingPerformanceIndicators.Select(pi => pi.Id)).ToList();
             foreach (var perfIndicatorId in newPerformanceIndicators)
             {
                 var perfIndicator = await _unitOfWork.PerfIndicatorRepository.GetPerformanceIndicatorByIdAsync(perfIndicatorId);
