@@ -83,6 +83,10 @@ namespace API.Helpers
                 .ForMember(x => x.Student, opt => opt.MapFrom(x => x.Student))
                 .ForMember(x => x.TotalScore, opt => opt.MapFrom(x => x.Grade))
                 .ForMember(x => x.PerformanceIndicatorScores, opt => opt.MapFrom(x => x.TakesCoursePIs));
+            CreateMap<Takes, StudentDto>()
+                .ForMember(x => x.FirstName, opt => opt.MapFrom(x => x.Student.AppUser.FirstName))
+                .ForMember(x => x.LastName, opt => opt.MapFrom(x => x.Student.AppUser.LastName))
+                .ForMember(x => x.AppUserId, opt => opt.MapFrom(x => x.Student.AppUserId));
             /////////////////////////////////
             /// Add necessary mappings here
             ////////////////////////////////

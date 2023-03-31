@@ -162,5 +162,16 @@ namespace API.Controllers
             }
         }
 
+        [HttpGet("Course/{courseId}/students")]
+        public async Task<ActionResult<List<StudentDto>>> GetStudentsToACourse(int courseId, int semesterId)
+        {
+            var courseExists = await _unitOfWork.CourseRepository.CourseExistsById(courseId);
+            if (!courseExists)
+            {
+                return NotFound("Course does not exist.");
+            }
+            var students = await _unitOfWork.CourseRepository.GetStudentsToACourse(courseId, semesterId);
+            return Ok(students);
+        }
     }
 }
