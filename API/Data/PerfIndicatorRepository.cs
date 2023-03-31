@@ -50,7 +50,7 @@ namespace API.Data
         public async Task UpdateCoursePIFullMarksAsync(int courseId, Assignment assignment, int pid, int fullPoints)
         {
             var coursePI = await _context.CoursePIs.Where(x => x.PerformanceIndicatorId == pid && x.CourseId == courseId).FirstOrDefaultAsync();
-            coursePI.FullPIScore += fullPoints;
+            coursePI.PIFullMarks += fullPoints;
             var assignmentPI = new AssignmentPI
             {
                 Assignment = assignment,

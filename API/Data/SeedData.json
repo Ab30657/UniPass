@@ -124,5 +124,26 @@
         "UserName": "Socorro",
         "Email": "socorrofigueroa@furnitech.com",
         "Role": "Student"
+    },
+    {
+        "FirstName": "Wilkinson",
+        "LastName": " Franco",
+        "UserName": "franco",
+        "Email": "franco.wilkinson@gmail.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Greta",
+        "LastName": " Booker",
+        "UserName": "greta",
+        "Email": "greta.booker@icloud.com",
+        "Role": "Student"
+    },
+    {
+        "FirstName": "Lorraine",
+        "LastName": "Franklin",
+        "UserName": "lorraine",
+        "Email": "lorrainefranklin@yahoo.com",
+        "Role": "Instructor"
     }
 ]

@@ -29,7 +29,7 @@ namespace API.Controllers
         }
 
         [HttpGet("Courses")]
-        public async Task<ActionResult<IEnumerable<GetCourseDto>>> GetCourses()
+        public async Task<ActionResult<IEnumerable<CourseDto>>> GetCourses()
         {
             //This gets the currently logged in user claims from .NET Web API Middleware through HttpContext
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -52,7 +52,7 @@ namespace API.Controllers
 
         //Might need to modify this to only include data on the assignment, and not really the depth for questions, answers, and rest of the stuff
         [HttpGet("Courses/{courseId}/Materials")]
-        public async Task<ActionResult<InstructorAssignmentDto>> GetClassMaterials(int courseId)
+        public async Task<ActionResult<AssignmentDto>> GetClassMaterials(int courseId)
         {
             //This gets the currently logged in user claims from .NET Web API Middleware through HttpContext
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));

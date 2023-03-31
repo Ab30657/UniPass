@@ -6,12 +6,12 @@ namespace API.Interfaces
     public interface IAssignmentRepository
     {
         void Update(Assignment assignment);
-        Task<IEnumerable<InstructorAssignmentDto>> GetAssignmentsByCourseIdAsync(int courseId);
-        Task<IEnumerable<StudentAssignmentDto>> GetAssignmentsForStudentAsync(int courseId);
+        Task<IEnumerable<AssignmentDto>> GetAssignmentsByCourseIdAsync(int courseId);
         Task AddAssignmentAsync(Assignment assignment);
         Task AddAnswerAsync(Answer answer);
         Task AddQuestionAsync(Question question);
-        Task<StudentAssignmentDto> GetAssignmentByIdAsync(int id);
+        Task<Assignment> GetAssignmentByIdAsync(int id);
+        Task<AssignmentDetailDto<StudentQuestionDto>> GetAssignmentByIdWithAttemptsAsync(int id, int studentId);
         //Multiple assignment attempts are doable with this architecture
         //For now focus on just one submission
         Task<TakeAssignment> GetAssignmentAttemptByStudentIdAsync(int studentId, int assignmentId);
