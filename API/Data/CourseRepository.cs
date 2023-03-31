@@ -193,10 +193,10 @@ namespace API.Data
         }
 
         //create TakesDto and Project the list to it before returning
-        public async Task<List<Takes>> GetStudentsToACourse(int courseId)
+        public async Task<List<StudentDto>> GetStudentsToACourse(int courseId, int semesterId)
         {
-            var course = await _context.Courses.Include(x => x.Takes).FirstOrDefaultAsync(y => y.Id == courseId);
-            return (course.Takes.ToList());
+            var students = await _context.Takes.Where(x => x.CourseId == courseId && x.SemesterId == semesterId).ProjectTo<StudentDto>(_mapper.ConfigurationProvider).ToListAsync();
+            return (students);
         }
     }
 }

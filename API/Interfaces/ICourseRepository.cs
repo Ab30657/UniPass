@@ -28,5 +28,6 @@ namespace API.Interfaces
         Task<bool> CourseExistsById(int id);
         Task<bool> CourseExistsByTitle(string title);
         Task<bool> StudentAlreadyRegistered(int courseId, int studentId);
+        Task<List<StudentDto>> GetStudentsToACourse(int courseId, int semesterId);
     }
 }
