@@ -102,7 +102,7 @@ namespace API.Controllers
         //
         //Admin doesn't care about Student Id,Instructor Id
         //param is student id
-        [HttpGet("Student/{id}")]
+        [HttpGet("Students/{id}")]
         public async Task<ActionResult<StudentDto>> GetStudentById(int id)
         {
 
@@ -111,7 +111,7 @@ namespace API.Controllers
         }
 
         //Same as GetStudentById situation
-        [HttpGet("Instructor/{id}")]
+        [HttpGet("Instructors/{id}")]
         public async Task<ActionResult<InstructorDto>> GetInstructorById(int id)
         {
             var instructor = await _unitOfWork.UserRepository.GetInstructorById(id);
