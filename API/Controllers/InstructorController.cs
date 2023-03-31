@@ -162,7 +162,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet("Course/{courseId}/{semesterId}/students")]
+        [HttpGet("Course/{courseId}/students")]
         public async Task<ActionResult<List<StudentDto>>> GetStudentsToACourse(int courseId, int semesterId)
         {
             var courseExists = await _unitOfWork.CourseRepository.CourseExistsById(courseId);
