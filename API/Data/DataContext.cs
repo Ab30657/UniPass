@@ -32,6 +32,7 @@ namespace API.Data
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Takes> Takes { get; set; }
+        public DbSet<Teaches> Teaches { get; set; }
         public DbSet<CoursePI> CoursePIs { get; set; }
         public DbSet<TakesCoursePI> TakesCoursePIs { get; set; }
         public DbSet<AssignmentPI> AssignmentPIs { get; set; }

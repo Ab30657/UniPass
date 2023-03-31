@@ -24,7 +24,7 @@ namespace API.Controllers
 
         //This method can use a different DTO to just get name
         [HttpGet("Courses")]
-        public async Task<ActionResult<IEnumerable<CourseDetailDto>>> GetCourses()
+        public async Task<ActionResult<IEnumerable<CourseDto>>> GetCourses()
         {
             //This gets the currently logged in user claims from .NET Web API Middleware through HttpContext
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));

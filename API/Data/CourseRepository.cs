@@ -24,17 +24,18 @@ namespace API.Data
 
         //This should be similar to GetCoursesByStudentId, probably incorporate semester id later
         //** SEMESTER ID ** FEATURE IMPORTANT OR MAYBE JUST DON"T SHOW IT 
-        public async Task<IList<CourseDetailDto>> GetCoursesByInstructorId(int id)
+        public async Task<IList<CourseDto>> GetCoursesByInstructorId(int id)
         {
-            return await _context.Courses.Where(x => x.Teaches.Any(x => x.InstructorId == id)).ProjectTo<CourseDetailDto>(_mapper.ConfigurationProvider).ToListAsync();
+            //CourseDto rn contains Instructor list as well later remove it for instructorController
+            return await _context.Teaches.Where(x => x.InstructorId == id).Select(x => x.Course).ProjectTo<CourseDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
-        public async Task<IList<CourseDetailDto>> GetCoursesByStudentId(int id)
+        public async Task<IList<CourseDto>> GetCoursesByStudentId(int id)
         {
             //open to change later
             //Takes is now available
             //Think about semesterId
-            return await _context.Courses.Where(x => x.Takes.Any(x => x.StudentId == id)).ProjectTo<CourseDetailDto>(_mapper.ConfigurationProvider).ToListAsync();
+            return await _context.Takes.Where(x => x.StudentId == id).Select(x => x.Course).ProjectTo<CourseDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
         public async Task UpdateGradeForStudentCourse(int courseId, int studentId, int semesterId, int newAssignmentScore)
@@ -87,6 +88,10 @@ namespace API.Data
         public async Task<Course> GetCourseById(int id)
         {
             return await _context.Courses.Where(x => x.Id == id).FirstOrDefaultAsync();
+        }
+        public async Task<Course> GetCourseByIdWithCoursePI(int id)
+        {
+            return await _context.Courses.Where(x => x.Id == id).Include(y => y.CoursePIs).FirstOrDefaultAsync();
         }
 
         public async Task<CourseDetailDto> GetCourseByIdWithInstructors(int id)
@@ -191,5 +196,14 @@ namespace API.Data
             //Change this as well after feature/take-assignment-grade
             student.Takes.Add(taking);
         }
+
+        //create TakesDto and Project the list to it before returning
+        public async Task<List<StudentDto>> GetStudentsToACourse(int courseId, int semesterId)
+        {
+            var students = await _context.Takes.Where(x => x.CourseId == courseId && x.SemesterId == semesterId).ProjectTo<StudentDto>(_mapper.ConfigurationProvider).ToListAsync();
+            return (students);
+        }
+
+
     }
 }

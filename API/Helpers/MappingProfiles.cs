@@ -49,6 +49,8 @@ namespace API.Helpers
             CreateMap<UpdateCourseDto, Course>();
             CreateMap<CreateCourseDto, Course>();
             CreateMap<Course, CreateCourseDto>();
+            CreateMap<Course, CourseDto>()
+                .ForMember(x => x.Instructors, opt => opt.MapFrom(src => src.Teaches.Select(x => x.Instructor)));
             CreateMap<Semester, SemesterDto>();
             CreateMap<Course, CourseDetailDto>()
                 .ForMember(x => x.Instructors, opt => opt.MapFrom(src => src.Teaches.Select(x => x.Instructor)))
@@ -91,6 +93,10 @@ namespace API.Helpers
                 .ForMember(x => x.Student, opt => opt.MapFrom(x => x.Student))
                 .ForMember(x => x.FullMarks, opt => opt.MapFrom(x => x.Course.Assignments.Sum(x => x.FullMarks)))
                 .ForMember(x => x.PerformanceIndicatorScores, opt => opt.MapFrom(x => x.TakesCoursePIs));
+            CreateMap<Takes, StudentDto>()
+                .ForMember(x => x.FirstName, opt => opt.MapFrom(x => x.Student.AppUser.FirstName))
+                .ForMember(x => x.LastName, opt => opt.MapFrom(x => x.Student.AppUser.LastName))
+                .ForMember(x => x.AppUserId, opt => opt.MapFrom(x => x.Student.AppUserId));
             // CreateMap<Takes, CourseWithStudentScoresDto>()
             //     .ForMember(x => x.FullMarks, opt => opt.MapFrom(x => x.Course.Assignments.Sum(x => x.FullMarks)))
             //     .ForMember(x => x.PIFullMarksDtos, opt => opt.MapFrom(x => x.Course.CoursePIs))

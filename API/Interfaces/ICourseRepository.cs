@@ -20,13 +20,15 @@ namespace API.Interfaces
         Task<bool> StudentExists(int id);
         Task<bool> SemesterExists(int id);
         void EditCourse(CreateCourseDto courseDto);
-        Task<IList<CourseDetailDto>> GetCoursesByInstructorId(int id);
-        Task<IList<CourseDetailDto>> GetCoursesByStudentId(int id);
+        Task<IList<CourseDto>> GetCoursesByInstructorId(int id);
+        Task<IList<CourseDto>> GetCoursesByStudentId(int id);
         Task<IList<StudentWithScoreDto>> GetStudentWithScoresAsync(int courseId, int semesterId);
         bool YouDontTeach(Instructor instructor, int courseId);
         void RegisterForCourse(RegisterCourseDto rcDto);
         Task<bool> CourseExistsById(int id);
         Task<bool> CourseExistsByTitle(string title);
         Task<bool> StudentAlreadyRegistered(int courseId, int studentId);
+        Task<Course> GetCourseByIdWithCoursePI(int id);
+        Task<List<StudentDto>> GetStudentsToACourse(int courseId, int semesterId);
     }
 }
