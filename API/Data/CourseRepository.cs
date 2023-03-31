@@ -87,6 +87,10 @@ namespace API.Data
         {
             return await _context.Courses.Where(x => x.Id == id).FirstOrDefaultAsync();
         }
+        public async Task<Course> GetCourseByIdWithCoursePI(int id)
+        {
+            return await _context.Courses.Where(x => x.Id == id).Include(y => y.CoursePIs).FirstOrDefaultAsync();
+        }
 
         public async Task<GetCourseDto> GetCourseByIdWithInstructors(int id)
         {
@@ -198,5 +202,7 @@ namespace API.Data
             var students = await _context.Takes.Where(x => x.CourseId == courseId && x.SemesterId == semesterId).ProjectTo<StudentDto>(_mapper.ConfigurationProvider).ToListAsync();
             return (students);
         }
+
+
     }
 }

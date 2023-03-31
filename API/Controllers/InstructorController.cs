@@ -111,6 +111,57 @@ namespace API.Controllers
 
         }
 
+
+        //Later add functionality to change title, description
+        //Have a courseUpdateDto or similar
+        [HttpPut("Course/{courseId}")]
+        public async Task<IActionResult> UpdateCoursePerformanceIndicators(int courseId, [FromBody] List<int> performanceIndicatorIds)
+        {
+            var course = await _unitOfWork.CourseRepository.GetCourseByIdWithCoursePI(courseId);
+
+            if (course == null)
+            {
+                return NotFound($"Course with ID {courseId} not found.");
+            }
+
+            // Get the existing performance indicators for the course
+            var existingPerformanceIndicators = course.CoursePIs.ToList();
+
+            // Add new performance indicators to the course
+            var newPerformanceIndicators = performanceIndicatorIds.Except(existingPerformanceIndicators.Select(pi => pi.Id)).ToList();
+            foreach (var perfIndicatorId in newPerformanceIndicators)
+            {
+                var perfIndicator = await _unitOfWork.PerfIndicatorRepository.GetPerformanceIndicatorByIdAsync(perfIndicatorId);
+                if (perfIndicator != null)
+                {
+                    var cpi = new CoursePI
+                    {
+                        CourseId = courseId,
+                        PerformanceIndicatorId = perfIndicatorId
+                    };
+
+                    course.CoursePIs.Add(cpi);
+                }
+            }
+
+            // Remove existing performance indicators from the course
+            var removedPerformanceIndicators = existingPerformanceIndicators.Where(pi => !performanceIndicatorIds.Contains(pi.Id));
+            foreach (var perfIndicator in removedPerformanceIndicators)
+            {
+                course.CoursePIs.Remove(perfIndicator);
+            }
+
+            // Save changes to the database
+            if (await _unitOfWork.CompleteAsync())
+            {
+                return Ok("Updated successfully!");
+            }
+            else
+            {
+                return StatusCode(500, "An error occurred while saving changes to the database.");
+            }
+        }
+
         [HttpGet("Course/{courseId}/{semesterId}/students")]
         public async Task<ActionResult<List<StudentDto>>> GetStudentsToACourse(int courseId, int semesterId)
         {
