@@ -115,7 +115,7 @@ namespace API.Controllers
         //Later add functionality to change title, description
         //Have a courseUpdateDto or similar
         [HttpPut("Course/{courseId}")]
-        public async Task<IActionResult> UpdateCourse(int courseId, [FromBody] List<int> performanceIndicatorIds)
+        public async Task<IActionResult> UpdateCoursePerformanceIndicators(int courseId, [FromBody] List<int> performanceIndicatorIds)
         {
             var course = await _unitOfWork.CourseRepository.GetCourseByIdWithCoursePI(courseId);
 
