@@ -65,6 +65,10 @@ namespace API.Data
             return await _context.Students.Where(x => x.AppUserId == id).Include(x => x.AppUser).SingleOrDefaultAsync();
         }
 
+        public async Task<AppUser> GetUserByUsername(string username)
+        {
+            return await _context.Users.Where(x => x.UserName == username).FirstOrDefaultAsync();
+        }
         // public Task<AppUser> GetUserById(int id)
         // {
         // }

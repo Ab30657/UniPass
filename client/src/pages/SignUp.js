@@ -22,6 +22,12 @@ import jwt from 'jwt-decode';
 const LOGIN_URL = '/account/signup';
 
 function SignUp() {
+  const [user, setUser] = useState({
+    username: '',
+    name: '',
+    token: '',
+    role: [],
+  });
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
@@ -48,14 +54,14 @@ function SignUp() {
         headers: { 'Content-Type': 'application/json' },
       },
     );
-    // console.log(JSON.stringify(response?.data));
     var roles = [];
-    const token = response?.data?.token;
-    const user = response?.data?.username;
-    const UserRoles = jwt(token).role;
+    let user;
+    user = { ...response.data };
+    const UserRoles = jwt(user.token).role;
     Array.isArray(UserRoles) ? (roles = UserRoles) : roles.push(UserRoles);
-    setAuth({ user, roles, token });
-    localStorage.setItem('user', JSON.stringify({ user, token, roles }));
+    user = { ...user, roles: roles };
+    setAuth(user);
+    localStorage.setItem('user', JSON.stringify(user));
     navigate('/Dashboard', { replace: true });
   };
   return (
