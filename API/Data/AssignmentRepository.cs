@@ -31,7 +31,7 @@ namespace API.Data
 
         public async Task AddAssignmentPIScoreAsync(TakeAssignmentPIScore piScore)
         {
-            await _context.PIScores.AddAsync(piScore);
+            await _context.TakeAssignmentPIScores.AddAsync(piScore);
         }
 
         public async Task AddQuestionAsync(Question question)
@@ -59,21 +59,22 @@ namespace API.Data
             return await _context.TakeAssignments.Where(x => x.AssignmentId == assignmentId && x.StudentId == studentId).FirstOrDefaultAsync();
         }
 
-        public async Task<StudentAssignmentDto> GetAssignmentByIdAsync(int id)
+        public async Task<Assignment> GetAssignmentByIdAsync(int id)
         {
-            return await _context.Assignments.Where(x => x.Id == id).ProjectTo<StudentAssignmentDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+            return await _context.Assignments.Where(x => x.Id == id).FirstOrDefaultAsync();
         }
-
-        public async Task<IEnumerable<InstructorAssignmentDto>> GetAssignmentsByCourseIdAsync(int courseId)
+        public async Task<AssignmentDetailDto<StudentQuestionDto>> GetAssignmentByIdWithAttemptsAsync(int id, int studentId)
+        {
+            var studentAssignmentDto = await _context.Assignments.Where(x => x.Id == id).ProjectTo<AssignmentDetailDto<StudentQuestionDto>>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+            if (studentAssignmentDto != null)
+                studentAssignmentDto.TakeAssignments = await _context.TakeAssignments.Where(x => x.AssignmentId == id && x.StudentId == studentId).ProjectTo<TakeAssignmentDto>(_mapper.ConfigurationProvider).ToListAsync();
+            return studentAssignmentDto;
+        }
+        public async Task<IEnumerable<AssignmentDto>> GetAssignmentsByCourseIdAsync(int courseId)
         {
             // if (role == "Student")
             // return await _context.Assignments.Where(x => x.CourseId == courseId).ProjectTo<>(_mapper.ConfigurationProvider).ToListAsync();
-            return await _context.Assignments.Where(x => x.CourseId == courseId).ProjectTo<InstructorAssignmentDto>(_mapper.ConfigurationProvider).ToListAsync();
-        }
-
-        public async Task<IEnumerable<StudentAssignmentDto>> GetAssignmentsForStudentAsync(int courseId)
-        {
-            return await _context.Assignments.Where(x => x.CourseId == courseId).ProjectTo<StudentAssignmentDto>(_mapper.ConfigurationProvider).ToListAsync();
+            return await _context.Assignments.Where(x => x.CourseId == courseId).ProjectTo<AssignmentDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
         public async Task<TakeQuestion> GetQuestionAttemptByTakeAssignmentIdAsync(int takeAssignmentId, int questionId)

@@ -28,10 +28,11 @@ namespace API.Data
         public DbSet<TakeAssignment> TakeAssignments { get; set; }
         public DbSet<TakeQuestion> TakeQuestions { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
-        public DbSet<TakeAssignmentPIScore> PIScores { get; set; }
+        public DbSet<TakeAssignmentPIScore> TakeAssignmentPIScores { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
         public DbSet<Takes> Takes { get; set; }
+        public DbSet<Teaches> Teaches { get; set; }
         public DbSet<CoursePI> CoursePIs { get; set; }
         public DbSet<TakesCoursePI> TakesCoursePIs { get; set; }
         public DbSet<AssignmentPI> AssignmentPIs { get; set; }

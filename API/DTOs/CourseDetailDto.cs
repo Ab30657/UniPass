@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.DTOs
 {
-    public class GetCourseDto
+    public class CourseDetailDto
     {
         public int Id { get; set; }
         public string Title { get; set; }

@@ -29,7 +29,7 @@ namespace API.Controllers
         }
 
         [HttpGet("Courses")]
-        public async Task<ActionResult<IEnumerable<GetCourseDto>>> GetCourses()
+        public async Task<ActionResult<IEnumerable<CourseDto>>> GetCourses()
         {
             //This gets the currently logged in user claims from .NET Web API Middleware through HttpContext
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -52,7 +52,7 @@ namespace API.Controllers
 
         //Might need to modify this to only include data on the assignment, and not really the depth for questions, answers, and rest of the stuff
         [HttpGet("Courses/{courseId}/Materials")]
-        public async Task<ActionResult<InstructorAssignmentDto>> GetClassMaterials(int courseId)
+        public async Task<ActionResult<AssignmentDto>> GetClassMaterials(int courseId)
         {
             //This gets the currently logged in user claims from .NET Web API Middleware through HttpContext
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -111,5 +111,67 @@ namespace API.Controllers
 
         }
 
+
+        //Later add functionality to change title, description
+        //Have a courseUpdateDto or similar
+        [HttpPut("Course/{courseId}")]
+        public async Task<IActionResult> UpdateCoursePerformanceIndicators(int courseId, [FromBody] List<int> performanceIndicatorIds)
+        {
+            var course = await _unitOfWork.CourseRepository.GetCourseByIdWithCoursePI(courseId);
+
+            if (course == null)
+            {
+                return NotFound($"Course with ID {courseId} not found.");
+            }
+
+            // Get the existing performance indicators for the course
+            var existingPerformanceIndicators = course.CoursePIs.ToList();
+
+            // Add new performance indicators to the course
+            var newPerformanceIndicators = performanceIndicatorIds.Except(existingPerformanceIndicators.Select(pi => pi.Id)).ToList();
+            foreach (var perfIndicatorId in newPerformanceIndicators)
+            {
+                var perfIndicator = await _unitOfWork.PerfIndicatorRepository.GetPerformanceIndicatorByIdAsync(perfIndicatorId);
+                if (perfIndicator != null)
+                {
+                    var cpi = new CoursePI
+                    {
+                        CourseId = courseId,
+                        PerformanceIndicatorId = perfIndicatorId
+                    };
+
+                    course.CoursePIs.Add(cpi);
+                }
+            }
+
+            // Remove existing performance indicators from the course
+            var removedPerformanceIndicators = existingPerformanceIndicators.Where(pi => !performanceIndicatorIds.Contains(pi.Id));
+            foreach (var perfIndicator in removedPerformanceIndicators)
+            {
+                course.CoursePIs.Remove(perfIndicator);
+            }
+
+            // Save changes to the database
+            if (await _unitOfWork.CompleteAsync())
+            {
+                return Ok("Updated successfully!");
+            }
+            else
+            {
+                return StatusCode(500, "An error occurred while saving changes to the database.");
+            }
+        }
+
+        [HttpGet("Course/{courseId}/students")]
+        public async Task<ActionResult<List<StudentDto>>> GetStudentsToACourse(int courseId, int semesterId)
+        {
+            var courseExists = await _unitOfWork.CourseRepository.CourseExistsById(courseId);
+            if (!courseExists)
+            {
+                return NotFound("Course does not exist.");
+            }
+            var students = await _unitOfWork.CourseRepository.GetStudentsToACourse(courseId, semesterId);
+            return Ok(students);
+        }
     }
 }
