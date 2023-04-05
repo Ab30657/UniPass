@@ -1,3 +1,4 @@
+using System.Globalization;
 using API.Data;
 using API.DTOs;
 using API.Interfaces;
@@ -59,6 +60,7 @@ namespace API.Controllers
             {
                 Username = user.UserName,
                 Token = await _tokenService.CreateToken(user),
+                Name = user.FirstName + " " + user.LastName
                 // KnownAs = user.KnownAs,
                 // Gender = user.Gender
             };
@@ -72,10 +74,12 @@ namespace API.Controllers
             var result = await _signInManager
                 .CheckPasswordSignInAsync(user, loginDto.Password, false);
             if (!result.Succeeded) return Unauthorized();
+            TextInfo myTI = new CultureInfo("en-US", false).TextInfo;
             return new UserDto
             {
                 Username = user.UserName,
                 Token = await _tokenService.CreateToken(user),
+                Name = myTI.ToTitleCase(user.FirstName) + " " + myTI.ToTitleCase(user.LastName)
             };
 
         }
