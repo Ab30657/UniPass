@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -13,18 +13,19 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import useAuth from '../hooks/useAuth';
 import axios from '../api/axios';
 import jwt from 'jwt-decode';
+import AuthContext from '../context/AuthContext';
 
 const LOGIN_URL = '/account/login';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { setAuth } = useAuth();
+  const authContext = useContext(AuthContext);
   const navigate = useNavigate();
   const theme = createTheme();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const response = await axios.post(
@@ -40,9 +41,8 @@ function Login() {
     const UserRoles = jwt(user.token).role;
     Array.isArray(UserRoles) ? (roles = UserRoles) : roles.push(UserRoles);
     user = { ...user, roles: roles };
-    setAuth(user);
-    localStorage.setItem('user', JSON.stringify(user));
-    navigate('/Dashboard', { replace: true });
+    authContext.login(user);
+    // navigate('/Dashboard', { replace: true });
   };
 
   return (

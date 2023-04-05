@@ -6,9 +6,10 @@ import Layout from './pages/Layout';
 import RequireAuth from './components/RequireAuth';
 import Dashboard from './pages/Dashboard';
 import Missing from './pages/Missing';
-import { AuthProvider } from './context/AuthProvider';
+import AuthContext from './context/AuthContext';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColorModeContext, useMode } from './theme';
+import { useCallback, useEffect, useState } from 'react';
 
 const ROLES = {
   0: 'Admin',
@@ -18,10 +19,36 @@ const ROLES = {
 
 function App() {
   const [theme, colorMode] = useMode();
-  let user = localStorage.getItem('user');
-  user = JSON.parse(user);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+
+  const login = useCallback((user) => {
+    setUser(user);
+    localStorage.setItem('user', JSON.stringify(user));
+  }, []);
+
+  const logout = useCallback(() => {
+    setUser(null);
+    localStorage.removeItem('user');
+  }, []);
+
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem('user'));
+    if (storedData && storedData.token) {
+      login(storedData);
+    }
+  }, [login]);
+
+  //   let user = localStorage.getItem('user');
+  //   user = JSON.parse(user);
   return (
-    <AuthProvider user={user}>
+    <AuthContext.Provider
+      value={{
+        isLoggedIn: !!user,
+        user: user,
+        login: login,
+        logout: logout,
+      }}
+    >
       <ColorModeContext.Provider value={colorMode}>
         <ThemeProvider theme={theme}>
           <div className="app">
@@ -50,7 +77,7 @@ function App() {
           </div>
         </ThemeProvider>
       </ColorModeContext.Provider>
-    </AuthProvider>
+    </AuthContext.Provider>
   );
 }
 

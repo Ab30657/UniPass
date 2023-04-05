@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../context/AuthContext';
 import {
   Box,
   Divider,
@@ -9,20 +9,17 @@ import {
   Popover,
   Typography,
 } from '@mui/material';
-import useAuth from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open } = props;
-  const { auth, setAuth } = useAuth(AuthContext);
-  const { loggedIn, setLoggedIn } = useState(true);
+  const authContext = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleSignOut = useCallback(() => {
-    localStorage.removeItem('user');
-    setAuth(null);
+  const handleSignOut = () => {
+    authContext.logout();
     navigate('/login', { replace: true });
-  });
+  };
 
   return (
     <Popover
@@ -43,7 +40,7 @@ export const AccountPopover = (props) => {
       >
         <Typography variant="overline">Account</Typography>
         <Typography color="text.secondary" variant="body2">
-          {auth?.name}
+          {authContext?.user?.name}
         </Typography>
       </Box>
       <Divider />

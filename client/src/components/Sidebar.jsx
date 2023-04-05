@@ -9,7 +9,7 @@ import ContactsOutlinedIcon from '@mui/icons-material/ContactsOutlined';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import React, { useContext } from 'react';
-import AuthContext from '../context/AuthProvider';
+import AuthContext from '../context/AuthContext';
 import { Avatar } from '@mui/material';
 import { PushPinOutlined, SupervisorAccount } from '@mui/icons-material';
 
@@ -36,8 +36,7 @@ const Sidebar = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState('Dashboard');
-  const { auth } = useContext(AuthContext);
-  //   console.log('A:' + auth);
+  const { user } = useContext(AuthContext);
   return (
     <Box
       sx={{
@@ -77,7 +76,7 @@ const Sidebar = () => {
                 ml="15px"
               >
                 <Typography variant="h3" color={colors.grey[100]}>
-                  {auth?.roles[0]}
+                  {user?.roles[0]}
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />
@@ -102,12 +101,12 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: '10px 0 0 0' }}
                 >
-                  {auth?.name}
+                  {user?.name}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  {auth?.roles[0] === 'Admin'
+                  {user?.roles[0] === 'Admin'
                     ? 'Department Head MSU'
-                    : auth?.roles[0]}
+                    : user?.roles[0]}
                 </Typography>
               </Box>
             </Box>

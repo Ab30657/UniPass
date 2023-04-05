@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -15,9 +15,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import useAuth from '../hooks/useAuth';
 import axios from '../api/axios';
 import jwt from 'jwt-decode';
+import AuthContext from '../context/AuthContext';
 
 const LOGIN_URL = '/account/signup';
 
@@ -36,7 +36,7 @@ function SignUp() {
   const [role, setRole] = useState('');
   const theme = createTheme();
   const navigate = useNavigate();
-  const { setAuth } = useAuth();
+  const authContext = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,8 +60,7 @@ function SignUp() {
     const UserRoles = jwt(user.token).role;
     Array.isArray(UserRoles) ? (roles = UserRoles) : roles.push(UserRoles);
     user = { ...user, roles: roles };
-    setAuth(user);
-    localStorage.setItem('user', JSON.stringify(user));
+    authContext.login(user);
     navigate('/Dashboard', { replace: true });
   };
   return (
