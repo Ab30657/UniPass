@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Signup from './pages/SignUp';
 import Login from './pages/Login';
 import Layout from './pages/Layout';
-import RequireAuth from './pages/RequireAuth';
+import RequireAuth from './components/RequireAuth';
 import Dashboard from './pages/Dashboard';
 import Missing from './pages/Missing';
 import { AuthProvider } from './context/AuthProvider';
@@ -35,6 +35,7 @@ function App() {
                 path="signup"
                 element={user ? <Navigate to="/Dashboard" /> : <Signup />}
               />
+              <Route path="/" exact element={<Navigate to="/Dashboard" />} />
               <Route
                 element={
                   <RequireAuth allowedRoles={[ROLES[1], ROLES[2], ROLES[0]]} />

@@ -1,4 +1,4 @@
-import Header from './Header';
+import Header from '../components/Header';
 import { ArrowLeftOutlined } from '@mui/icons-material';
 import { Box, Button, Container, SvgIcon, Typography } from '@mui/material';
 import notfound from '../assets/error-404.png';
