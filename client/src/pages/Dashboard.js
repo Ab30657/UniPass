@@ -7,14 +7,6 @@ import LoadingContext from '../context/LoadingContext';
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  //   const { showLoading, hideLoading } = useContext(LoadingContext);
-  //   useEffect(() => {
-  //     showLoading();
-  //     const timer = setTimeout(function () {
-  //       console.log('Finished');
-  //       hideLoading();
-  //     }, 3000);
-  //   }, []);
   return (
     <Box m="20px">
       {/* HEADER */}
