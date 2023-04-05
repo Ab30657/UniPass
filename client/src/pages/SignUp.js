@@ -19,7 +19,7 @@ import axios from '../api/axios';
 import jwt from 'jwt-decode';
 import AuthContext from '../context/AuthContext';
 
-const LOGIN_URL = '/account/signup';
+const LOGIN_URL = '/account/register';
 
 function SignUp() {
   const [user, setUser] = useState({
@@ -61,7 +61,6 @@ function SignUp() {
     Array.isArray(UserRoles) ? (roles = UserRoles) : roles.push(UserRoles);
     user = { ...user, roles: roles };
     authContext.login(user);
-    navigate('/Dashboard', { replace: true });
   };
   return (
     <ThemeProvider theme={theme}>

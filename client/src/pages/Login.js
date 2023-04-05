@@ -42,7 +42,6 @@ function Login() {
     Array.isArray(UserRoles) ? (roles = UserRoles) : roles.push(UserRoles);
     user = { ...user, roles: roles };
     authContext.login(user);
-    // navigate('/Dashboard', { replace: true });
   };
 
   return (
