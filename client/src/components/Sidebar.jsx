@@ -90,7 +90,7 @@ const Sidebar = () => {
               <Box display="flex" justifyContent="center" alignItems="center">
                 <Avatar
                   alt="Cindy Baker"
-                  src="https://webapps.missouristate.edu/directory/upload/18945.jpg"
+                  src="https://media.tenor.com/eWKnmZdDjGAAAAAC/one-piece-one-piece1015.gif"
                   sx={{ width: 100, height: 100 }}
                 />
               </Box>
