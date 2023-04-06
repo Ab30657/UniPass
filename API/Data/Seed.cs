@@ -34,7 +34,7 @@ namespace API.Data
                 var user = users[i];
                 user.UserName = user.UserName.ToLower();
                 await userManager.CreateAsync(user, "12345");
-                if (i % 2 == 0)
+                if (i < 20)
                 {
                     await userManager.AddToRoleAsync(user, "Student");
                     await dataContext.Students.AddAsync(new Student { AppUserId = user.Id });
@@ -46,7 +46,13 @@ namespace API.Data
                 }
             }
             dataContext.Semesters.AddAsync(new Semester { Season = "Fall", StartDate = default, EndDate = default });
-            dataContext.PerformanceIndicators.AddRangeAsync(new PerformanceIndicator { Name = "Debugging" }, new PerformanceIndicator { Name = "Complexity Analysis" }, new PerformanceIndicator { Name = "System Design" });
+            dataContext.PerformanceIndicators.AddRangeAsync(new PerformanceIndicator { Name = "Debugging" },
+                new PerformanceIndicator { Name = "Complexity Analysis" },
+                new PerformanceIndicator { Name = "System Design" },
+                new PerformanceIndicator { Name = "Network protocols" },
+                new PerformanceIndicator { Name = "Network security" },
+                new PerformanceIndicator { Name = "Network architecture" }
+                );
             var course = new Course { Title = "CSC" };
             course.Teaches = new List<Teaches>{
                 new Teaches{
@@ -63,15 +69,26 @@ namespace API.Data
                     Course = course,
                     PerformanceIndicatorId=2
                 },
-                    new CoursePI{
-                        Course = course,
-                        PerformanceIndicatorId=3
-                    }
-
+                new CoursePI{
+                    Course = course,
+                    PerformanceIndicatorId=3
+                },
+                new CoursePI{
+                    Course = course,
+                    PerformanceIndicatorId=4
+                },
+                new CoursePI{
+                    Course = course,
+                    PerformanceIndicatorId=5
+                },
+                new CoursePI{
+                    Course = course,
+                    PerformanceIndicatorId=6
+                }
             };
             dataContext.Courses.AddAsync(course);
 
-            for (int i = 1; i < 10; ++i)
+            for (int i = 1; i <= 20; ++i)
             {
                 dataContext.Takes.AddAsync(new Takes { SemesterId = 1, StudentId = i, CourseId = 1 });
             }
@@ -80,9 +97,9 @@ namespace API.Data
             var admin = new AppUser
             {
                 UserName = "admin",
-                FirstName = "amar",
-                LastName = "b",
-                Email = "a@gmail.com",
+                FirstName = "Ajay",
+                LastName = "Katangur",
+                Email = "AjayKatangur@MissouriState.edu",
             };
 
             await userManager.CreateAsync(admin, "12345");

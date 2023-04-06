@@ -15,6 +15,7 @@ namespace API.Interfaces
         //might need later
         Task<Instructor> GetInstructorByUserIdAsync(int id);
         Task<Student> GetStudentByUserIdAsync(int id);
+        Task<AppUser> GetUserByUsername(string username);
         void DeleteUser(int id);
     }
 }

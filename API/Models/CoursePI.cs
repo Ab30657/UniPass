@@ -5,7 +5,7 @@ namespace API.Models
         public int Id { get; set; }
         public int CourseId { get; set; }
         public int PerformanceIndicatorId { get; set; }
-        public int FullPIScore { get; set; }
+        public int PIFullMarks { get; set; }
         public Course Course { get; set; }
         public PerformanceIndicator PerformanceIndicator { get; set; }
     }

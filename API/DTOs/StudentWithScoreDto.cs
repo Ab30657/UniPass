@@ -3,7 +3,8 @@ namespace API.DTOs
     public class StudentWithScoreDto
     {
         public StudentDto Student { get; set; }
-        public int TotalScore { get; set; } //Use this
+        public int Grade { get; set; }
+        public int FullMarks { get; set; }
         public ICollection<PIScoreDto> PerformanceIndicatorScores { get; set; }
     }
 }

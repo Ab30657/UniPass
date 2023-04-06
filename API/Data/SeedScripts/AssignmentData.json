@@ -1,0 +1,804 @@
+[
+    {
+        "title": "Computer Science General Exam",
+        "semesterId": 1,
+        "questions": [
+            {
+                "questionText": "Which of the following is an example of a high-level programming language?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    1
+                ],
+                "answers": [
+                    {
+                        "answerText": "Assembly",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Java",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "C",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Binary",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "Which data structure is used for FIFO access?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    2
+                ],
+                "answers": [
+                    {
+                        "answerText": "Stack",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Heap",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Queue",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "Tree",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "Which of the following is not an Object Oriented Programming Language?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    3
+                ],
+                "answers": [
+                    {
+                        "answerText": "Java",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "C++",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Python",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Assembly",
+                        "correct": true
+                    }
+                ]
+            },
+            {
+                "questionText": "Which of the following is a type of loop?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    1
+                ],
+                "answers": [
+                    {
+                        "answerText": "If",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "For",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "While",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Switch",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the name of the popular version control system used in software development?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    2
+                ],
+                "answers": [
+                    {
+                        "answerText": "GIT",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "SVN",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "CVS",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Mercurial",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the name of the programming paradigm that emphasizes the use of mathematical functions?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    3
+                ],
+                "answers": [
+                    {
+                        "answerText": "Object Oriented Programming",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Procedural Programming",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Functional Programming",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "Logical Programming",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What does CPU stand for?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    1
+                ],
+                "answers": [
+                    {
+                        "answerText": "Central Processing Unit",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "Computer Processing Unit",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Control Processing Unit",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Centralized Processing Unit",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the smallest unit of digital information?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    3
+                ],
+                "answers": [
+                    {
+                        "answerText": "Byte",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Bit",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "Nibble",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Megabyte",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What does RAM stand for?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    1
+                ],
+                "answers": [
+                    {
+                        "answerText": "Random Access Memory",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "Read Access Memory",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Reset Access Memory",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Recall Access Memory",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the full form of HTML?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    3
+                ],
+                "answers": [
+                    {
+                        "answerText": "Hypertext Markup Language",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "Hypertext Markup Library",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Hypermedia Markup Language",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Hypermedia Markup Library",
+                        "correct": false
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Data Structures and Algorithms Exam",
+        "semesterId": 1,
+        "questions": [
+            {
+                "questionText": "What is the time complexity of finding an element in a binary search tree?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    2
+                ],
+                "answers": [
+                    {
+                        "answerText": "O(1)",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "O(log n)",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "O(n)",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "O(n^2)",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is a stack?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    3
+                ],
+                "answers": [
+                    {
+                        "answerText": "A data structure that uses a LIFO (Last-In, First-Out) ordering",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "A data structure that uses a FIFO (First-In, First-Out) ordering",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "A data structure that stores elements in a sorted order",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "A data structure that stores elements in a binary tree",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the output of the following code snippet: \n int arr[] = {1, 2, 3, 4, 5};\n for (int i = 0; i < 5; i++) {\n for (int j = i+1; j < 5; j++) {\n if (arr[i] + arr[j] == 5) {\n cout << \"Found\" << endl;\n break;\n }\n }\n }",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    1,
+                    2
+                ],
+                "answers": [
+                    {
+                        "answerText": "Found\nFound",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Found",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "Compilation error",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Runtime error",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the worst-case time complexity of quicksort?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    2
+                ],
+                "answers": [
+                    {
+                        "answerText": "O(n log n)",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "O(n)",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "O(n^2)",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "O(log n)",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the time complexity of finding an element in a balanced binary search tree?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    2
+                ],
+                "answers": [
+                    {
+                        "answerText": "O(1)",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "O(n)",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "O(log n)",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "O(n log n)",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the difference between an array and a linked list?",
+                "fullMarks": 10,
+                "performanceIndicators": [
+                    3
+                ],
+                "answers": [
+                    {
+                        "answerText": "Arrays are a contiguous block of memory, while linked lists are not",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "Arrays are more efficient than linked lists",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Linked lists have a fixed size, while arrays do not",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Arrays allow for constant time insertions and deletions, while linked lists do not",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the output of the following code?\n\nfor (int i = 0; i < 5; i++) {\n for (int j = 0; j < i; j++) {\n System.out.print(j + \"\");\n }\n System.out.println();\n}",
+                "fullMarks": 10,
+                "performanceIndicators": [
+                    1,
+                    2
+                ],
+                "answers": [
+                    {
+                        "answerText": "0\n0 1\n0 1 2\n0 1 2 3\n0 1 2 3 4\n",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "0\n1 2\n3 4 5\n6 7 8 9\n10 11 12 13 14\n",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "0\n1 0\n2 1 0\n3 2 1 0\n4 3 2 1 0\n",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "0\n1\n2\n3\n4\n",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the output of the following code?\nfor (int i=0; i<5; i++) {\n System.out.println(i);\n if (i == 2) {\n break;\n }\n}\n",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    1,
+                    3
+                ],
+                "answers": [
+                    {
+                        "answerText": "0 1 2",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "0 1 2 3 4",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "0 1 2",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "2",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "Which of the following algorithms is used to find the shortest path in a graph with weighted edges?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    2,
+                    3
+                ],
+                "answers": [
+                    {
+                        "answerText": "Breadth First Search",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Depth First Search",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "Dijkstra's Algorithm",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "Prim's Algorithm",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the output of the following code? \n\n int a = 5; \n int b = a + 2 * a; \n printf(\"%d\", b);",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    1,
+                    3
+                ],
+                "answers": [
+                    {
+                        "answerText": "15",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "20",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "25",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "30",
+                        "correct": false
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Computer Networks Exam",
+        "semesterId": 1,
+        "questions": [
+            {
+                "questionText": "What is the maximum number of hosts that can be addressed using IPv6?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    4
+                ],
+                "answers": [
+                    {
+                        "answerText": "2^64",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "2^32",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "2^128",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "2^256",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the difference between TCP and UDP?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    4,
+                    5
+                ],
+                "answers": [
+                    {
+                        "answerText": "TCP is connection-oriented while UDP is connectionless",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "TCP is faster than UDP",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "UDP is more reliable than TCP",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "TCP is used for real-time applications while UDP is used for file transfer",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the purpose of a router?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    6
+                ],
+                "answers": [
+                    {
+                        "answerText": "To connect devices within a LAN",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "To connect a LAN to a WAN",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "To transmit data wirelessly",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "To store and forward data within a network",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the purpose of DNS?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    4,
+                    6
+                ],
+                "answers": [
+                    {
+                        "answerText": "To encrypt data during transmission",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "To resolve domain names to IP addresses",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "To manage network security",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "To connect LANs to WANs",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the maximum number of bits that can be used for a subnet mask in IPv4?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    5
+                ],
+                "answers": [
+                    {
+                        "answerText": "32",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "24",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "16",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "8",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the purpose of the Transport Layer in the OSI Model?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    4
+                ],
+                "answers": [
+                    {
+                        "answerText": "To control the flow of data over the network",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "To provide encryption for data on the network",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "To establish connections and ensure reliable data transfer between applications",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "To physically transmit data over the network",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "Which of the following is a secure way to remotely access a network?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    4,
+                    5
+                ],
+                "answers": [
+                    {
+                        "answerText": "Telnet",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "FTP",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "SSH",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "POP3",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the purpose of IP addresses?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    4,
+                    6
+                ],
+                "answers": [
+                    {
+                        "answerText": "To identify the physical location of a device on the network",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "To provide encryption for data on the network",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "To identify a device on the network and allow it to communicate with other devices",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "To physically transmit data over the network",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the purpose of ARP (Address Resolution Protocol)?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    4
+                ],
+                "answers": [
+                    {
+                        "answerText": "To map a MAC address to an IP address",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "To map an IP address to a MAC address",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "To establish a connection between two computers",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "To encrypt data being transmitted between two computers",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "questionText": "Which protocol is used for secure email communication?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    5
+                ],
+                "answers": [
+                    {
+                        "answerText": "SMTP",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "POP3",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "IMAP",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "S/MIME",
+                        "correct": true
+                    }
+                ]
+            },
+            {
+                "questionText": "What is the purpose of a firewall?",
+                "fullMarks": 5,
+                "performanceIndicators": [
+                    6
+                ],
+                "answers": [
+                    {
+                        "answerText": "To block all incoming and outgoing traffic",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "To monitor network traffic",
+                        "correct": false
+                    },
+                    {
+                        "answerText": "To filter and control network traffic",
+                        "correct": true
+                    },
+                    {
+                        "answerText": "To encrypt data being transmitted between two computers",
+                        "correct": false
+                    }
+                ]
+            }
+        ]
+    }
+]

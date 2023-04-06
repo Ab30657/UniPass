@@ -1,8 +1,8 @@
 namespace API.DTOs
 {
-    public class PIScoreDto
+    public class PIScoreDto : PerformanceIndicatorDto
     {
-        public string PiTitle { get; set; }
         public int Score { get; set; }
+        public int FullMarks { get; set; }
     }
 }
