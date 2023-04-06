@@ -454,4 +454,5 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 
 wwwroot/**
+Data/Migrations/PostgreSQLMigrations/**
 appsettings.json
