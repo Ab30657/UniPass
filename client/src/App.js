@@ -10,6 +10,10 @@ import AuthContext from './context/AuthContext';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColorModeContext, useMode } from './theme';
 import { useCallback, useEffect, useState } from 'react';
+import Students from './pages/Students';
+import Courses from './pages/Courses';
+import Instructors from './pages/Instructors';
+import PerformanceIndicators from './pages/PIs';
 
 const ROLES = {
   0: 'Admin',
@@ -70,6 +74,10 @@ function App() {
               >
                 <Route element={<Layout />}>
                   <Route path="/Dashboard" element={<Dashboard />} />
+                  <Route path="/Students" element={<Students />} />
+                  <Route path="/Courses" element={<Courses />} />
+                  <Route path="/Instructors" element={<Instructors />} />
+                  <Route path="/PIs" element={<PerformanceIndicators />} />
                 </Route>
                 <Route path="*" element={<Missing />} />
               </Route>

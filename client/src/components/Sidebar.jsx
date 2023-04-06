@@ -152,7 +152,7 @@ const Sidebar = () => {
 
             <Item
               title="Performance Indicators"
-              to="/PerformanceIndicators"
+              to="/PIs"
               icon={<PushPinOutlined />}
               selected={selected}
               setSelected={setSelected}
