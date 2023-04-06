@@ -203,7 +203,17 @@ namespace API.Data
             return (students);
         }
 
+        public async Task<List<StudentAssignmentGradesDto>> GetStudentGradesForAssignment(int assignmentId)
+        {
+            //under the assumption that only one attempt has been made for an assignment
+            var studentGrades = await _context.TakeAssignments.Where(x => x.AssignmentId == assignmentId).ProjectTo<StudentAssignmentGradesDto>(_mapper.ConfigurationProvider).ToListAsync();
+            return studentGrades;
+        }
 
-
+        public async Task<List<CourseDto>> GetAllCourses()
+        {
+            var courses = await _context.Courses.ProjectTo<CourseDto>(_mapper.ConfigurationProvider).ToListAsync();
+            return courses;
+        }
     }
 }
