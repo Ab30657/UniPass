@@ -16,6 +16,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from '../api/axios';
 import jwt from 'jwt-decode';
 import AuthContext from '../context/AuthContext';
+import LoadingContext from '../context/LoadingContext';
 
 const LOGIN_URL = '/account/login';
 
@@ -23,18 +24,21 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const authContext = useContext(AuthContext);
+  const { showLoading, hideLoading } = useContext(LoadingContext);
   const navigate = useNavigate();
   const theme = createTheme();
 
   const handleSubmit = async (event) => {
+    showLoading();
     event.preventDefault();
-    const response = await axios.post(
-      LOGIN_URL,
-      JSON.stringify({ username, password }),
-      {
+    const response = await axios
+      .post(LOGIN_URL, JSON.stringify({ username, password }), {
         headers: { 'Content-Type': 'application/json' },
-      },
-    );
+      })
+      .finally(() => {
+        // console.log('Hello, World!');
+        hideLoading();
+      });
     var roles = [];
     let user;
     user = { ...response.data };

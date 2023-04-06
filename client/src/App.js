@@ -10,6 +10,8 @@ import AuthContext from './context/AuthContext';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColorModeContext, useMode } from './theme';
 import { useCallback, useEffect, useState } from 'react';
+import LoadingProvider from './components/LoadingProvider';
+import Spinner from './components/Spinner';
 
 const ROLES = {
   0: 'Admin',
@@ -53,27 +55,32 @@ function App() {
         <ThemeProvider theme={theme}>
           <div className="app">
             <CssBaseline />
-            <Routes>
-              <Route
-                path="login"
-                element={user ? <Navigate to="/Dashboard" /> : <Login />}
-              />
-              <Route
-                path="signup"
-                element={user ? <Navigate to="/Dashboard" /> : <Signup />}
-              />
-              <Route path="/" exact element={<Navigate to="/Dashboard" />} />
-              <Route
-                element={
-                  <RequireAuth allowedRoles={[ROLES[1], ROLES[2], ROLES[0]]} />
-                }
-              >
-                <Route element={<Layout />}>
-                  <Route path="/Dashboard" element={<Dashboard />} />
+            <LoadingProvider>
+              <Spinner />
+              <Routes>
+                <Route
+                  path="login"
+                  element={user ? <Navigate to="/Dashboard" /> : <Login />}
+                />
+                <Route
+                  path="signup"
+                  element={user ? <Navigate to="/Dashboard" /> : <Signup />}
+                />
+                <Route path="/" exact element={<Navigate to="/Dashboard" />} />
+                <Route
+                  element={
+                    <RequireAuth
+                      allowedRoles={[ROLES[1], ROLES[2], ROLES[0]]}
+                    />
+                  }
+                >
+                  <Route element={<Layout />}>
+                    <Route path="/Dashboard" element={<Dashboard />} />
+                  </Route>
+                  <Route path="*" element={<Missing />} />
                 </Route>
-                <Route path="*" element={<Missing />} />
-              </Route>
-            </Routes>
+              </Routes>
+            </LoadingProvider>
           </div>
         </ThemeProvider>
       </ColorModeContext.Provider>
