@@ -8,20 +8,36 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import React, { useState, useEffect } from 'react';
 
 function createData(id: number, username: string, role: string) {
   return { id, username, role };
 }
 
-const rows = [
-  createData(1, 'Tony Astuhuaman', 'Admin'),
-  createData(1, 'Tony Astuhuaamant', 'Student'),
-  createData(1, 'Tony Astuhuaamant', 'Student'),
-  createData(1, 'Tony Astuhuaamant', 'Instructor'),
-];
 const Students = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const [rows, setRows] = useState([]);
+
+  const axiosPrivate = useAxiosPrivate();
+  useEffect(() => {
+    axiosPrivate
+      .get('https://localhost:7153/api/Admin/Users')
+      .then((response) => {
+        // handle successful response
+        console.log(response.data);
+        const data = response.data.map((user) =>
+          createData(user.id, user.username, user.role),
+        );
+        setRows(data);
+      })
+      .catch((error) => {
+        // handle error
+        console.error(error);
+      });
+  }, []);
 
   return (
     <Box m="20px">
@@ -42,7 +58,7 @@ const Students = () => {
             <TableBody>
               {rows.map((row) => (
                 <TableRow
-                  key={row.name}
+                  key={row.id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
