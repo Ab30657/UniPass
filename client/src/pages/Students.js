@@ -11,8 +11,8 @@ import Paper from '@mui/material/Paper';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import React, { useState, useEffect } from 'react';
 
-function createData(id: number, username: string, role: string) {
-  return { id, username, role };
+function createData(id: number, username: string, roles: string) {
+  return { id, username, roles };
 }
 
 const Students = () => {
@@ -29,7 +29,7 @@ const Students = () => {
         // handle successful response
         console.log(response.data);
         const data = response.data.map((user) =>
-          createData(user.id, user.username, user.role),
+          createData(user.id, user.username, user.roles),
         );
         setRows(data);
       })
@@ -65,7 +65,7 @@ const Students = () => {
                     {row.id}
                   </TableCell>
                   <TableCell align="right">{row.username}</TableCell>
-                  <TableCell align="right">{row.role}</TableCell>
+                  <TableCell align="right">{row.roles}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

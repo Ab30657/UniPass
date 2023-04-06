@@ -14,6 +14,8 @@ import Students from './pages/Students';
 import Courses from './pages/Courses';
 import Instructors from './pages/Instructors';
 import PerformanceIndicators from './pages/PIs';
+import LoadingProvider from './components/LoadingProvider';
+import Spinner from './components/Spinner';
 
 const ROLES = {
   0: 'Admin',
@@ -57,31 +59,36 @@ function App() {
         <ThemeProvider theme={theme}>
           <div className="app">
             <CssBaseline />
-            <Routes>
-              <Route
-                path="login"
-                element={user ? <Navigate to="/Dashboard" /> : <Login />}
-              />
-              <Route
-                path="signup"
-                element={user ? <Navigate to="/Dashboard" /> : <Signup />}
-              />
-              <Route path="/" exact element={<Navigate to="/Dashboard" />} />
-              <Route
-                element={
-                  <RequireAuth allowedRoles={[ROLES[1], ROLES[2], ROLES[0]]} />
-                }
-              >
-                <Route element={<Layout />}>
-                  <Route path="/Dashboard" element={<Dashboard />} />
-                  <Route path="/Students" element={<Students />} />
-                  <Route path="/Courses" element={<Courses />} />
-                  <Route path="/Instructors" element={<Instructors />} />
-                  <Route path="/PIs" element={<PerformanceIndicators />} />
+            <LoadingProvider>
+              <Spinner />
+              <Routes>
+                <Route
+                  path="login"
+                  element={user ? <Navigate to="/Dashboard" /> : <Login />}
+                />
+                <Route
+                  path="signup"
+                  element={user ? <Navigate to="/Dashboard" /> : <Signup />}
+                />
+                <Route path="/" exact element={<Navigate to="/Dashboard" />} />
+                <Route
+                  element={
+                    <RequireAuth
+                      allowedRoles={[ROLES[1], ROLES[2], ROLES[0]]}
+                    />
+                  }
+                >
+                  <Route element={<Layout />}>
+                    <Route path="/Dashboard" element={<Dashboard />} />
+                    <Route path="/Students" element={<Students />} />
+                    <Route path="/Courses" element={<Courses />} />
+                    <Route path="/Instructors" element={<Instructors />} />
+                    <Route path="/PIs" element={<PerformanceIndicators />} />
+                  </Route>
+                  <Route path="*" element={<Missing />} />
                 </Route>
-                <Route path="*" element={<Missing />} />
-              </Route>
-            </Routes>
+              </Routes>
+            </LoadingProvider>
           </div>
         </ThemeProvider>
       </ColorModeContext.Provider>

@@ -97,9 +97,9 @@ namespace API.Data
             var admin = new AppUser
             {
                 UserName = "admin",
-                FirstName = "Ajay",
-                LastName = "Katangur",
-                Email = "AjayKatangur@MissouriState.edu",
+                FirstName = "Monkey",
+                LastName = "D. Luffy",
+                Email = "monkeydluffy@pirateking.net",
             };
 
             await userManager.CreateAsync(admin, "12345");
