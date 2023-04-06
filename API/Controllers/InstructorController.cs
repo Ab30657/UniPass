@@ -173,5 +173,14 @@ namespace API.Controllers
             var students = await _unitOfWork.CourseRepository.GetStudentsToACourse(courseId, semesterId);
             return Ok(students);
         }
+
+        // [HttpGet("Course/{courseId}/{assignmentId}/grades")]
+        // public async Task<ActionResult<List<StudentGradesDto>>> GetStudentGrades(int courseId, int assignmentId) //int courseId? studentIds?
+        // {
+        //     var course = await _unitOfWork.CourseRepository.GetCourseById(courseId);
+        //     var assignment = await _unitOfWork.AssignmentRepository.GetAssignmentByIdAsync(assignmentId);
+
+        //     return Ok();
+        // }
     }
 }

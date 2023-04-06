@@ -97,6 +97,15 @@ namespace API.Helpers
                 .ForMember(x => x.FirstName, opt => opt.MapFrom(x => x.Student.AppUser.FirstName))
                 .ForMember(x => x.LastName, opt => opt.MapFrom(x => x.Student.AppUser.LastName))
                 .ForMember(x => x.AppUserId, opt => opt.MapFrom(x => x.Student.AppUserId));
+            CreateMap<TakeAssignment, StudentAssignmentGradesDto>()
+                .ForMember(x => x.Student, opt => opt.MapFrom(x => x.Student))
+                .ForMember(x => x.FullMarks, opt => opt.MapFrom(x => x.Score))
+                .ForMember(x => x.PerformanceIndicatorScores, opt => opt.MapFrom(x => x.PIScores));
+            CreateMap<TakeAssignmentPIScore, PIScoreDto>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(x => x.PerformanceIndicatorId))
+                .ForMember(x => x.Score, opt => opt.MapFrom(x => x.Score))
+                .ForMember(x => x.FullMarks, opt => opt.MapFrom(x => x.TakeAssignment.PIScores.Where(a => a.PerformanceIndicatorId == x.PerformanceIndicatorId).FirstOrDefault().Score))
+                .ForMember(x => x.Name, opt => opt.MapFrom(x => x.PerformanceIndicator.Name));
             // CreateMap<Takes, CourseWithStudentScoresDto>()
             //     .ForMember(x => x.FullMarks, opt => opt.MapFrom(x => x.Course.Assignments.Sum(x => x.FullMarks)))
             //     .ForMember(x => x.PIFullMarksDtos, opt => opt.MapFrom(x => x.Course.CoursePIs))
