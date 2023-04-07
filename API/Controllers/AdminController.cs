@@ -74,10 +74,11 @@ namespace API.Controllers
         [HttpGet("Users")]
         public async Task<ActionResult> GetAll()
         {
-            var users = await _userManager.Users.Include(x => x.UserRoles).ThenInclude(x => x.Role).OrderBy(x => x.UserName).Select(x => new
+            var users = await _userManager.Users.Include(x => x.UserRoles).ThenInclude(x => x.Role).OrderBy(x => x.Id).Select(x => new
             {
                 x.Id,
                 Username = x.UserName,
+                FullName = x.FirstName + " " + x.LastName,
                 Roles = x.UserRoles.Select(x => x.Role.Name).ToList()
             }).ToListAsync();
             return Ok(users);
