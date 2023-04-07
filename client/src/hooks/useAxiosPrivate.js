@@ -22,7 +22,7 @@ const useAxiosPrivate = () => {
     };
   }, [user]);
 
-//   return axiosPrivate;
-// };
+  return axiosPrivate;
+};
 
-// export default useAxiosPrivate;
+export default useAxiosPrivate;

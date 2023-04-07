@@ -197,5 +197,11 @@ namespace API.Controllers
             return Ok(course);
         }
 
+        [HttpGet("Courses")]
+        public async Task<ActionResult<List<CourseDto>>> GetAllCourses()
+        {
+            var courses = await _unitOfWork.CourseRepository.GetAllCourses();
+            return courses;
+        }
     }
 }

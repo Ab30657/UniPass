@@ -12,16 +12,21 @@ import {
   Typography,
 } from '@mui/material';
 import { ClassOutlined } from '@mui/icons-material';
+import { useTheme } from '@emotion/react';
+import { tokens } from '../theme';
+import { bgcolor } from '@mui/system';
 
 export const CourseCard = (props) => {
   const { course } = props;
-
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   return (
     <Card
       sx={{
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
+        backgroundColor: colors.primary[400],
       }}
     >
       <CardContent>
@@ -32,19 +37,22 @@ export const CourseCard = (props) => {
             pb: 3,
           }}
         >
-          <Avatar variant="square">
-            <ClassOutlined />
-          </Avatar>
+          <ClassOutlined
+            sx={{ color: colors.greenAccent[600], fontSize: '25px' }}
+          />
         </Box>
-        <Typography align="center" gutterBottom variant="h5">
+        <Typography
+          align="center"
+          color={colors.greenAccent[500]}
+          gutterBottom
+          variant="h3"
+        >
           {course.title}
         </Typography>
         <Typography align="center" variant="body1">
           Computer Science (CS) is the study of computers and computational
           systems. Computer scientists create systems that are correct,
-          reliable, and efficient.The department currently offers two track
-          options which are the Computer Science-Computer Science (CS-CS) and
-          Computer Science-Software Development (CS-SD).
+          reliable, and efficient.
         </Typography>
       </CardContent>
       <Box sx={{ flexGrow: 1 }} />
@@ -53,23 +61,32 @@ export const CourseCard = (props) => {
         alignItems="center"
         direction="row"
         justifyContent="space-between"
+        divider={<Divider orientation="vertical" flexItem />}
         spacing={2}
         sx={{ p: 2 }}
       >
         <Stack alignItems="center" direction="row" spacing={1}>
-          <SvgIcon color="action" fontSize="small">
-            <ClockIcon />
+          <SvgIcon fontSize="small">
+            <ClockIcon color={colors.greenAccent[400]} />
           </SvgIcon>
-          <Typography color="text.secondary" display="inline" variant="body2">
-            Updated 2hr ago
+          <Typography
+            color={colors.greenAccent[400]}
+            display="inline"
+            variant="body2"
+          >
+            Edit
           </Typography>
         </Stack>
         <Stack alignItems="center" direction="row" spacing={1}>
           <SvgIcon color="action" fontSize="small">
-            <ArrowDownOnSquareIcon />
+            <ArrowDownOnSquareIcon color={colors.redAccent[400]} />
           </SvgIcon>
-          <Typography color="text.secondary" display="inline" variant="body2">
-            {course.downloads} Downloads
+          <Typography
+            color={colors.redAccent[400]}
+            display="inline"
+            variant="body2"
+          >
+            Delete
           </Typography>
         </Stack>
       </Stack>

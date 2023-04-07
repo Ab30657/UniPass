@@ -15,7 +15,6 @@ import PerformanceIndicators from './pages/PIs';
 import LoadingProvider from './components/LoadingProvider';
 import Spinner from './components/Spinner';
 import Createcourse from './pages/Createcourse';
-import Courses from './pages/Courses';
 import Users from './pages/Users';
 import { createTheme } from './theme';
 
@@ -91,7 +90,6 @@ function App() {
                     <Route path="/PIs" element={<PerformanceIndicators />} />
                   </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[0]]} />}>
-                    <Route exact path="/Courses" element={<Courses />} />
                     <Route path="/Courses/New" element={<Createcourse />} />
                   </Route>
                 </Route>
