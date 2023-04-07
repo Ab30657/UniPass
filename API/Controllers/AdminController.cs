@@ -161,7 +161,7 @@ namespace API.Controllers
                 return BadRequest("Course already exists.");
             }
 
-            _unitOfWork.CourseRepository.CreateCourse(courseDto);
+            await _unitOfWork.CourseRepository.CreateCourse(courseDto);
             var result = await _unitOfWork.CompleteAsync();
 
             if (result == false)
