@@ -10,10 +10,14 @@ import AuthContext from './context/AuthContext';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColorModeContext, useMode } from './theme';
 import { useCallback, useEffect, useState } from 'react';
+import Courses from './pages/Courses';
+import PerformanceIndicators from './pages/PIs';
 import LoadingProvider from './components/LoadingProvider';
 import Spinner from './components/Spinner';
 import Createcourse from './pages/Createcourse';
 import Courses from './pages/Courses';
+import Users from './pages/Users';
+import { createTheme } from './theme';
 
 const ROLES = {
   0: 'Admin',
@@ -82,6 +86,9 @@ function App() {
                     }
                   >
                     <Route path="/Dashboard" element={<Dashboard />} />
+                    <Route path="/Users" element={<Users />} />
+                    <Route path="/Courses" element={<Courses />} />
+                    <Route path="/PIs" element={<PerformanceIndicators />} />
                   </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[0]]} />}>
                     <Route exact path="/Courses" element={<Courses />} />
