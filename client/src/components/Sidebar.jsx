@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ProSidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import { Box, IconButton, Typography, useTheme } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import 'react-pro-sidebar/dist/css/styles.css';
 import { tokens } from '../theme';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
@@ -14,11 +14,12 @@ import { Avatar } from '@mui/material';
 import { PushPinOutlined, SupervisorAccount } from '@mui/icons-material';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
+  const { pathname } = useLocation();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
     <MenuItem
-      active={selected === title}
+      active={pathname === to}
       style={{
         color: colors.grey[100],
       }}
@@ -35,7 +36,7 @@ const Sidebar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [selected, setSelected] = useState('Dashboard');
+  const [selected, setSelected] = useState();
   const { user } = useContext(AuthContext);
   return (
     <Box
@@ -136,19 +137,19 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Students"
-              to="/Students"
+              title="Users"
+              to="/Users"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
+            {/* <Item
               title="Instructors"
               to="/Instructors"
               icon={<SupervisorAccount />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
 
             <Item
               title="Performance Indicators"
