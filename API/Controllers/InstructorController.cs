@@ -174,7 +174,7 @@ namespace API.Controllers
             return Ok(students);
         }
 
-        [HttpGet("Course/Assignment/{assignmentId}/grades")]
+        [HttpGet("Assignment/{assignmentId}/grades")]
         public async Task<ActionResult<List<StudentAssignmentGradesDto>>> GetStudentGrades(int assignmentId)
         {
             var studentGrades = await _unitOfWork.CourseRepository.GetStudentGradesForAssignment(assignmentId);

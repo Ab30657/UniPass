@@ -103,7 +103,7 @@ namespace API.Controllers
                 {
                     if (!PIScores.ContainsKey(pi))
                         PIScores.Add(pi, 0);
-                    PIScores[pi] = (attemptedAnswer.Correct ? (PIScores[pi] + question.FullMarks) : 0);
+                    PIScores[pi] += (attemptedAnswer.Correct ? question.FullMarks : 0);
                 }
             }
             foreach (var piId in PIScores.Keys)
