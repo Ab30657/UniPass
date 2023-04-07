@@ -14,6 +14,7 @@ import Courses from './pages/Courses';
 import PerformanceIndicators from './pages/PIs';
 import LoadingProvider from './components/LoadingProvider';
 import Spinner from './components/Spinner';
+import Createcourse from './pages/Createcourse';
 import Users from './pages/Users';
 import { createTheme } from './theme';
 
@@ -70,23 +71,29 @@ function App() {
                   path="signup"
                   element={user ? <Navigate to="/Dashboard" /> : <Signup />}
                 />
-                <Route path="/" exact element={<Navigate to="/Dashboard" />} />
-                <Route
-                  element={
-                    <RequireAuth
-                      allowedRoles={[ROLES[1], ROLES[2], ROLES[0]]}
-                    />
-                  }
-                >
-                  <Route element={<Layout />}>
+                <Route element={<Layout />}>
+                  <Route
+                    path="/"
+                    exact
+                    element={<Navigate to="/Dashboard" />}
+                  />
+                  <Route
+                    element={
+                      <RequireAuth
+                        allowedRoles={[ROLES[1], ROLES[2], ROLES[0]]}
+                      />
+                    }
+                  >
                     <Route path="/Dashboard" element={<Dashboard />} />
                     <Route path="/Users" element={<Users />} />
                     <Route path="/Courses" element={<Courses />} />
-                    {/* <Route path="/Instructors" element={<Instructors />} /> */}
                     <Route path="/PIs" element={<PerformanceIndicators />} />
                   </Route>
-                  <Route path="*" element={<Missing />} />
+                  <Route element={<RequireAuth allowedRoles={[ROLES[0]]} />}>
+                    <Route path="/Courses/New" element={<Createcourse />} />
+                  </Route>
                 </Route>
+                <Route path="*" element={<Missing />} />
               </Routes>
             </LoadingProvider>
           </div>

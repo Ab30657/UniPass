@@ -161,7 +161,7 @@ namespace API.Controllers
                 return BadRequest("Course already exists.");
             }
 
-            _unitOfWork.CourseRepository.CreateCourse(courseDto);
+            await _unitOfWork.CourseRepository.CreateCourse(courseDto);
             var result = await _unitOfWork.CompleteAsync();
 
             if (result == false)
@@ -197,5 +197,11 @@ namespace API.Controllers
             return Ok(course);
         }
 
+        [HttpGet("Courses")]
+        public async Task<ActionResult<List<CourseDto>>> GetAllCourses()
+        {
+            var courses = await _unitOfWork.CourseRepository.GetAllCourses();
+            return courses;
+        }
     }
 }

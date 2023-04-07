@@ -71,7 +71,7 @@ namespace API.Data
 
         //return await _context.Users.Where(x => x.UserName == username).ProjectTo<MemberDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
 
-        public async void CreateCourse(CreateCourseDto courseDto)
+        public async Task CreateCourse(CreateCourseDto courseDto)
         {
             var course = _mapper.Map<Course>(courseDto);
             var instructor = await _context.Instructors.Include(x => x.Teaches).FirstOrDefaultAsync(x => x.Id == courseDto.InstructorId);
@@ -82,7 +82,7 @@ namespace API.Data
                 Course = course
             };
             await _context.Courses.AddAsync(course);
-            instructor.Teaches.Add(teach);
+            await _context.Teaches.AddAsync(teach);
         }
 
         public async Task<Course> GetCourseById(int id)
