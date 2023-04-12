@@ -1,18 +1,12 @@
 import { Box, Typography, useTheme } from '@mui/material';
 import { tokens } from '../theme';
 import Header from '../components/Header';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import React, { useState, useEffect, useContext } from 'react';
 import axios from '../api/axios';
 import LoadingContext from '../context/LoadingContext';
 import { DataGrid } from '@mui/x-data-grid';
+import { Stack } from '@mui/system';
 import {
   AdminPanelSettingsOutlined,
   LockOpenOutlined,
@@ -20,10 +14,6 @@ import {
 } from '@mui/icons-material';
 
 const GET_ALL_USERS_URL = 'admin/users';
-
-// function createData(id: number, username: string, roles: string) {
-//   return { id, username, roles };
-// }
 
 const Users = () => {
   const theme = useTheme();
@@ -86,7 +76,6 @@ const Users = () => {
       .get(GET_ALL_USERS_URL)
       .then((response) => {
         // handle successful response
-        // console.log(response.data);
         const data = response.data;
         setRows(data);
       })
@@ -95,14 +84,15 @@ const Users = () => {
         console.error(error);
       })
       .finally(() => {
-        // console.log('Hello, World!');
         hideLoading();
       });
   }, []);
 
   return (
     <Box m="20px">
-      <Header title="Users" subtitle="Manage all users" />
+      <Stack spacing={1}>
+        <Header title="Users" subtitle="Manage all users" />
+      </Stack>
       <Box
         m="40px 0 0 0"
         height="75vh"
