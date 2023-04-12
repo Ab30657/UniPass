@@ -230,7 +230,7 @@ namespace API.Data.Migrations.SqliteMigrations
                     b.Property<int>("CourseId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("FullPIScore")
+                    b.Property<int>("PIFullMarks")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("PerformanceIndicatorId")
@@ -393,7 +393,7 @@ namespace API.Data.Migrations.SqliteMigrations
 
                     b.HasIndex("PerformanceIndicatorId");
 
-                    b.ToTable("PIScores");
+                    b.ToTable("TakeAssignmentPIScores");
                 });
 
             modelBuilder.Entity("API.Models.TakeQuestion", b =>

@@ -5,45 +5,38 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace API.Data.Migrations.PostgreSQLMigrations
+namespace API.Data.Migrations.SqliteMigrations
 {
-    [DbContext(typeof(DataContext))]
-    [Migration("20230312235331_AddGradeToTakes")]
-    partial class AddGradeToTakes
+    [DbContext(typeof(SqliteDataContext))]
+    [Migration("20230325233107_RenameFields")]
+    partial class RenameFields
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.1")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
-
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.1");
 
             modelBuilder.Entity("API.Models.Answer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("AnswerText")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("AssignmentId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("Correct")
-                        .HasColumnType("boolean");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("QuestionId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -58,21 +51,19 @@ namespace API.Data.Migrations.PostgreSQLMigrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -87,64 +78,62 @@ namespace API.Data.Migrations.PostgreSQLMigrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("boolean");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("boolean");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("boolean");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -161,10 +150,10 @@ namespace API.Data.Migrations.PostgreSQLMigrations
             modelBuilder.Entity("API.Models.AppUserRole", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("RoleId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -177,19 +166,20 @@ namespace API.Data.Migrations.PostgreSQLMigrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("CourseId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("FullMarks")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("SemesterId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -200,17 +190,33 @@ namespace API.Data.Migrations.PostgreSQLMigrations
                     b.ToTable("Assignments");
                 });
 
+            modelBuilder.Entity("API.Models.AssignmentPI", b =>
+                {
+                    b.Property<int>("AssignmentId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PerformanceIndicatorId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("FullScore")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("AssignmentId", "PerformanceIndicatorId");
+
+                    b.HasIndex("PerformanceIndicatorId");
+
+                    b.ToTable("AssignmentPIs");
+                });
+
             modelBuilder.Entity("API.Models.Course", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -219,29 +225,37 @@ namespace API.Data.Migrations.PostgreSQLMigrations
 
             modelBuilder.Entity("API.Models.CoursePI", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("CourseId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PIFullMarks")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("PerformanceIndicatorId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
-                    b.HasKey("CourseId", "PerformanceIndicatorId");
+                    b.HasKey("Id");
 
                     b.HasIndex("PerformanceIndicatorId");
 
-                    b.ToTable("CoursePI");
+                    b.HasIndex("CourseId", "PerformanceIndicatorId")
+                        .IsUnique();
+
+                    b.ToTable("CoursePIs");
                 });
 
             modelBuilder.Entity("API.Models.Instructor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("AppUserId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -255,13 +269,11 @@ namespace API.Data.Migrations.PostgreSQLMigrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -272,19 +284,17 @@ namespace API.Data.Migrations.PostgreSQLMigrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("AssignmentId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("FullMarks")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("QuestionText")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -296,10 +306,10 @@ namespace API.Data.Migrations.PostgreSQLMigrations
             modelBuilder.Entity("API.Models.QuestionPI", b =>
                 {
                     b.Property<int>("QuestionId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("PerformanceIndicatorId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("QuestionId", "PerformanceIndicatorId");
 
@@ -312,19 +322,17 @@ namespace API.Data.Migrations.PostgreSQLMigrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Season")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -335,12 +343,10 @@ namespace API.Data.Migrations.PostgreSQLMigrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("AppUserId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -354,18 +360,16 @@ namespace API.Data.Migrations.PostgreSQLMigrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("AssignmentId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Score")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("StudentId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -373,25 +377,41 @@ namespace API.Data.Migrations.PostgreSQLMigrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("TakeAssignment");
+                    b.ToTable("TakeAssignments");
+                });
+
+            modelBuilder.Entity("API.Models.TakeAssignmentPIScore", b =>
+                {
+                    b.Property<int>("TakeAssignmentId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PerformanceIndicatorId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TakeAssignmentId", "PerformanceIndicatorId");
+
+                    b.HasIndex("PerformanceIndicatorId");
+
+                    b.ToTable("TakeAssignmentPIScores");
                 });
 
             modelBuilder.Entity("API.Models.TakeQuestion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("AnswerId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("QuestionId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("TakeAssignmentId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -401,42 +421,67 @@ namespace API.Data.Migrations.PostgreSQLMigrations
 
                     b.HasIndex("TakeAssignmentId");
 
-                    b.ToTable("TakeQuestion");
+                    b.ToTable("TakeQuestions");
                 });
 
             modelBuilder.Entity("API.Models.Takes", b =>
                 {
-                    b.Property<int>("StudentId")
-                        .HasColumnType("integer");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("CourseId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SemesterId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Grade")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
-                    b.HasKey("StudentId", "CourseId", "SemesterId");
+                    b.Property<int>("SemesterId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("CourseId");
 
                     b.HasIndex("SemesterId");
 
+                    b.HasIndex("StudentId", "CourseId", "SemesterId")
+                        .IsUnique();
+
                     b.ToTable("Takes");
+                });
+
+            modelBuilder.Entity("API.Models.TakesCoursePI", b =>
+                {
+                    b.Property<int>("TakesId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PerformanceIndicatorId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TakesId", "PerformanceIndicatorId");
+
+                    b.HasIndex("PerformanceIndicatorId");
+
+                    b.ToTable("TakesCoursePIs");
                 });
 
             modelBuilder.Entity("API.Models.Teaches", b =>
                 {
                     b.Property<int>("InstructorId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("CourseId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("SemesterId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("InstructorId", "CourseId", "SemesterId");
 
@@ -451,18 +496,16 @@ namespace API.Data.Migrations.PostgreSQLMigrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("RoleId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -475,18 +518,16 @@ namespace API.Data.Migrations.PostgreSQLMigrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -498,16 +539,16 @@ namespace API.Data.Migrations.PostgreSQLMigrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -519,16 +560,16 @@ namespace API.Data.Migrations.PostgreSQLMigrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Value")
-                        .HasColumnType("text");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
@@ -544,7 +585,7 @@ namespace API.Data.Migrations.PostgreSQLMigrations
                         .IsRequired();
 
                     b.HasOne("API.Models.Question", "Question")
-                        .WithMany()
+                        .WithMany("Answers")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -590,6 +631,25 @@ namespace API.Data.Migrations.PostgreSQLMigrations
                     b.Navigation("Course");
 
                     b.Navigation("Semester");
+                });
+
+            modelBuilder.Entity("API.Models.AssignmentPI", b =>
+                {
+                    b.HasOne("API.Models.Assignment", "Assignment")
+                        .WithMany("AssignmentPIs")
+                        .HasForeignKey("AssignmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Models.PerformanceIndicator", "PerformanceIndicator")
+                        .WithMany("AssignmentPIs")
+                        .HasForeignKey("PerformanceIndicatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Assignment");
+
+                    b.Navigation("PerformanceIndicator");
                 });
 
             modelBuilder.Entity("API.Models.CoursePI", b =>
@@ -682,6 +742,25 @@ namespace API.Data.Migrations.PostgreSQLMigrations
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("API.Models.TakeAssignmentPIScore", b =>
+                {
+                    b.HasOne("API.Models.PerformanceIndicator", "PerformanceIndicator")
+                        .WithMany("PIScores")
+                        .HasForeignKey("PerformanceIndicatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Models.TakeAssignment", "TakeAssignment")
+                        .WithMany("PIScores")
+                        .HasForeignKey("TakeAssignmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PerformanceIndicator");
+
+                    b.Navigation("TakeAssignment");
+                });
+
             modelBuilder.Entity("API.Models.TakeQuestion", b =>
                 {
                     b.HasOne("API.Models.Answer", "Answer")
@@ -734,6 +813,25 @@ namespace API.Data.Migrations.PostgreSQLMigrations
                     b.Navigation("Semester");
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("API.Models.TakesCoursePI", b =>
+                {
+                    b.HasOne("API.Models.PerformanceIndicator", "PerformanceIndicator")
+                        .WithMany("TakesCoursePIs")
+                        .HasForeignKey("PerformanceIndicatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Models.Takes", "Takes")
+                        .WithMany("TakesCoursePIs")
+                        .HasForeignKey("TakesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PerformanceIndicator");
+
+                    b.Navigation("Takes");
                 });
 
             modelBuilder.Entity("API.Models.Teaches", b =>
@@ -822,6 +920,8 @@ namespace API.Data.Migrations.PostgreSQLMigrations
 
             modelBuilder.Entity("API.Models.Assignment", b =>
                 {
+                    b.Navigation("AssignmentPIs");
+
                     b.Navigation("Questions");
 
                     b.Navigation("TakeAssignments");
@@ -845,13 +945,21 @@ namespace API.Data.Migrations.PostgreSQLMigrations
 
             modelBuilder.Entity("API.Models.PerformanceIndicator", b =>
                 {
+                    b.Navigation("AssignmentPIs");
+
                     b.Navigation("CoursePIs");
 
+                    b.Navigation("PIScores");
+
                     b.Navigation("QuestionPIs");
+
+                    b.Navigation("TakesCoursePIs");
                 });
 
             modelBuilder.Entity("API.Models.Question", b =>
                 {
+                    b.Navigation("Answers");
+
                     b.Navigation("QuestionPIs");
 
                     b.Navigation("TakeQuestions");
@@ -875,7 +983,14 @@ namespace API.Data.Migrations.PostgreSQLMigrations
 
             modelBuilder.Entity("API.Models.TakeAssignment", b =>
                 {
+                    b.Navigation("PIScores");
+
                     b.Navigation("TakeQuestions");
+                });
+
+            modelBuilder.Entity("API.Models.Takes", b =>
+                {
+                    b.Navigation("TakesCoursePIs");
                 });
 #pragma warning restore 612, 618
         }
