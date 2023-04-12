@@ -6,12 +6,14 @@ import Layout from './pages/Layout';
 import RequireAuth from './components/RequireAuth';
 import Dashboard from './pages/Dashboard';
 import Missing from './pages/Missing';
+import Editcourse from './pages/Editcourse';
 import AuthContext from './context/AuthContext';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColorModeContext, useMode } from './theme';
 import { useCallback, useEffect, useState } from 'react';
 import LoadingProvider from './components/LoadingProvider';
 import Spinner from './components/Spinner';
+import Createcourse from './pages/Createcourse';
 
 const ROLES = {
   0: 'Admin',
@@ -78,6 +80,8 @@ function App() {
                     <Route path="/Dashboard" element={<Dashboard />} />
                   </Route>
                   <Route path="*" element={<Missing />} />
+                  <Route path="/editcourse" element={<Editcourse />} />
+                  <Route path="/createcourse" element={<Createcourse />} />
                 </Route>
               </Routes>
             </LoadingProvider>
