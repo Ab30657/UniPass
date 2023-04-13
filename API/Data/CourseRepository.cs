@@ -215,5 +215,11 @@ namespace API.Data
             var courses = await _context.Courses.ProjectTo<CourseDto>(_mapper.ConfigurationProvider).ToListAsync();
             return courses;
         }
+
+        public async Task<StudentAssignmentGradesDto> GetStudentGradeForAssignmentById(int studentId, int assignmentId)
+        {
+            var studentGrade = await _context.TakeAssignments.Where(x => x.AssignmentId == assignmentId && x.StudentId == studentId).ProjectTo<StudentAssignmentGradesDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+            return studentGrade;
+        }
     }
 }
