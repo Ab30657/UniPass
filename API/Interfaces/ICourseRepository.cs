@@ -12,7 +12,7 @@ namespace API.Interfaces
         Task<IList<InstructorDto>> GetAllInstructors();
         Task<StudentDto> GetStudentById(int id);
         Task<InstructorDto> GetInstructorById(int id);
-        void CreateCourse(CreateCourseDto courseDto);
+        Task CreateCourse(CreateCourseDto courseDto);
         Task<CourseDetailDto> GetCourseByIdWithInstructors(int id);
         Task<Course> GetCourseById(int id);
         Task<bool> InstructorExists(int id);
@@ -30,5 +30,7 @@ namespace API.Interfaces
         Task<bool> StudentAlreadyRegistered(int courseId, int studentId);
         Task<Course> GetCourseByIdWithCoursePI(int id);
         Task<List<StudentDto>> GetStudentsToACourse(int courseId, int semesterId);
+        Task<List<StudentAssignmentGradesDto>> GetStudentGradesForAssignment(int assignmentId);
+        Task<List<CourseDto>> GetAllCourses();
     }
 }

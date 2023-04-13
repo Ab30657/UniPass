@@ -71,7 +71,7 @@ namespace API.Data
 
         //return await _context.Users.Where(x => x.UserName == username).ProjectTo<MemberDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
 
-        public async void CreateCourse(CreateCourseDto courseDto)
+        public async Task CreateCourse(CreateCourseDto courseDto)
         {
             var course = _mapper.Map<Course>(courseDto);
             var instructor = await _context.Instructors.Include(x => x.Teaches).FirstOrDefaultAsync(x => x.Id == courseDto.InstructorId);
@@ -82,7 +82,7 @@ namespace API.Data
                 Course = course
             };
             await _context.Courses.AddAsync(course);
-            instructor.Teaches.Add(teach);
+            await _context.Teaches.AddAsync(teach);
         }
 
         public async Task<Course> GetCourseById(int id)
@@ -197,13 +197,23 @@ namespace API.Data
             student.Takes.Add(taking);
         }
 
-        //create TakesDto and Project the list to it before returning
         public async Task<List<StudentDto>> GetStudentsToACourse(int courseId, int semesterId)
         {
             var students = await _context.Takes.Where(x => x.CourseId == courseId && x.SemesterId == semesterId).ProjectTo<StudentDto>(_mapper.ConfigurationProvider).ToListAsync();
             return (students);
         }
 
+        public async Task<List<StudentAssignmentGradesDto>> GetStudentGradesForAssignment(int assignmentId)
+        {
+            //under the assumption that only one attempt has been made for an assignment
+            var studentGrades = await _context.TakeAssignments.Where(x => x.AssignmentId == assignmentId).ProjectTo<StudentAssignmentGradesDto>(_mapper.ConfigurationProvider).ToListAsync();
+            return studentGrades;
+        }
 
+        public async Task<List<CourseDto>> GetAllCourses()
+        {
+            var courses = await _context.Courses.ProjectTo<CourseDto>(_mapper.ConfigurationProvider).ToListAsync();
+            return courses;
+        }
     }
 }

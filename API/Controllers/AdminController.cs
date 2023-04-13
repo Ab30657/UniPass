@@ -74,10 +74,11 @@ namespace API.Controllers
         [HttpGet("Users")]
         public async Task<ActionResult> GetAll()
         {
-            var users = await _userManager.Users.Include(x => x.UserRoles).ThenInclude(x => x.Role).OrderBy(x => x.UserName).Select(x => new
+            var users = await _userManager.Users.Include(x => x.UserRoles).ThenInclude(x => x.Role).OrderBy(x => x.Id).Select(x => new
             {
                 x.Id,
                 Username = x.UserName,
+                FullName = x.FirstName + " " + x.LastName,
                 Roles = x.UserRoles.Select(x => x.Role.Name).ToList()
             }).ToListAsync();
             return Ok(users);
@@ -160,7 +161,7 @@ namespace API.Controllers
                 return BadRequest("Course already exists.");
             }
 
-            _unitOfWork.CourseRepository.CreateCourse(courseDto);
+            await _unitOfWork.CourseRepository.CreateCourse(courseDto);
             var result = await _unitOfWork.CompleteAsync();
 
             if (result == false)
@@ -196,5 +197,11 @@ namespace API.Controllers
             return Ok(course);
         }
 
+        [HttpGet("Courses")]
+        public async Task<ActionResult<List<CourseDto>>> GetAllCourses()
+        {
+            var courses = await _unitOfWork.CourseRepository.GetAllCourses();
+            return courses;
+        }
     }
 }

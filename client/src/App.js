@@ -11,9 +11,14 @@ import AuthContext from './context/AuthContext';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColorModeContext, useMode } from './theme';
 import { useCallback, useEffect, useState } from 'react';
+import Courses from './pages/Courses';
+import PerformanceIndicators from './pages/PIs';
 import LoadingProvider from './components/LoadingProvider';
 import Spinner from './components/Spinner';
 import Createcourse from './pages/Createcourse';
+import Users from './pages/Users';
+//import { createTheme } from './theme';
+import CreatePIs from './pages/CreatePIs';
 
 const ROLES = {
   0: 'Admin',
@@ -68,21 +73,35 @@ function App() {
                   path="signup"
                   element={user ? <Navigate to="/Dashboard" /> : <Signup />}
                 />
-                <Route path="/" exact element={<Navigate to="/Dashboard" />} />
-                <Route
-                  element={
-                    <RequireAuth
-                      allowedRoles={[ROLES[1], ROLES[2], ROLES[0]]}
-                    />
-                  }
-                >
-                  <Route element={<Layout />}>
+                <Route element={<Layout />}>
+                  <Route
+                    path="/"
+                    exact
+                    element={<Navigate to="/Dashboard" />}
+                  />
+                  <Route
+                    element={
+                      <RequireAuth
+                        allowedRoles={[ROLES[1], ROLES[2], ROLES[0]]}
+                      />
+                    }
+                  >
                     <Route path="/Dashboard" element={<Dashboard />} />
+                    <Route path="/Users" element={<Users />} />
+                    <Route path="/Courses" element={<Courses />} />
+                    <Route path="/PIs" element={<PerformanceIndicators />} />
+                  </Route>
+                  <Route element={<RequireAuth allowedRoles={[ROLES[0]]} />}>
+                    <Route path="/Courses/New" element={<Createcourse />} />
+                  </Route>
+                  <Route element={<RequireAuth allowedRoles={[ROLES[0]]} />}>
+                    <Route path="/PIs/Create" element={<CreatePIs />} />
                   </Route>
                   <Route path="*" element={<Missing />} />
                   <Route path="/editcourse" element={<Editcourse />} />
                   <Route path="/createcourse" element={<Createcourse />} />
                 </Route>
+                <Route path="*" element={<Missing />} />
               </Routes>
             </LoadingProvider>
           </div>

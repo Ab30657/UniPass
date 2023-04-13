@@ -97,13 +97,23 @@ namespace API.Helpers
                 .ForMember(x => x.FirstName, opt => opt.MapFrom(x => x.Student.AppUser.FirstName))
                 .ForMember(x => x.LastName, opt => opt.MapFrom(x => x.Student.AppUser.LastName))
                 .ForMember(x => x.AppUserId, opt => opt.MapFrom(x => x.Student.AppUserId));
+            CreateMap<TakeAssignment, StudentAssignmentGradesDto>()
+                .ForMember(x => x.Student, opt => opt.MapFrom(x => x.Student))
+                .ForMember(x => x.FullMarks, opt => opt.MapFrom(x => x.Assignment.Questions.Sum(x => x.FullMarks)))
+                .ForMember(x => x.Grade, opt => opt.MapFrom(x => x.Score))
+                .ForMember(x => x.PerformanceIndicatorScores, opt => opt.MapFrom(x => x.PIScores));
+            CreateMap<TakeAssignmentPIScore, PIScoreDto>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(x => x.PerformanceIndicatorId))
+                .ForMember(x => x.Score, opt => opt.MapFrom(x => x.Score))
+                .ForMember(x => x.FullMarks, opt => opt.MapFrom(x => x.TakeAssignment.Assignment.AssignmentPIs.Where(a => a.PerformanceIndicatorId == x.PerformanceIndicatorId).FirstOrDefault().FullScore))
+                .ForMember(x => x.Name, opt => opt.MapFrom(x => x.PerformanceIndicator.Name));
             // CreateMap<Takes, CourseWithStudentScoresDto>()
             //     .ForMember(x => x.FullMarks, opt => opt.MapFrom(x => x.Course.Assignments.Sum(x => x.FullMarks)))
             //     .ForMember(x => x.PIFullMarksDtos, opt => opt.MapFrom(x => x.Course.CoursePIs))
             //     .ForMember(x => x.StudentWithScores, opt => opt.MapFrom(x => x));
             // /////////////////////////////////
             /// Add necessary mappings here
-            ////////////////////////////////
+            ////////////////////////////////    
 
             // CreateMap<UserFriend, FriendDto>()
             //     .ForMember(x => x.Username, opt => opt.MapFrom(src => src.ReqReceiverUser.UserName))

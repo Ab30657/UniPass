@@ -35,6 +35,13 @@ namespace API.Controllers
             return Ok(courses);
         }
 
+        [HttpGet("Courses/all")]
+        public async Task<ActionResult<List<CourseDto>>> GetAllCourses()
+        {
+            var courses = await _unitOfWork.CourseRepository.GetAllCourses();
+            return courses;
+        }
+
         [HttpGet("Courses/{courseId}")]
         public async Task<ActionResult> GetCourse(int courseId)
         {
@@ -59,12 +66,12 @@ namespace API.Controllers
         }
 
         [HttpPost("Courses/{courseId}/Materials/{assignmentId}")]
-        public async Task<ActionResult<AssignmentAttemptGradeDto>> SubmitAssignment(int courseId, int assignmentId, CreateTakeAssignmentDto createTakeAssignmentDto)
+        public async Task<ActionResult<AssignmentAttemptGradeDto>> SubmitAssignment(int courseId, int assignmentId, CreateTakeAssignmentDto createTakeAssignmentDto, int id)
         {
             //This gets the currently logged in user claims from .NET Web API Middleware through HttpContext
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            //var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             // Uncomment the line below, to test manually, otherwise use postman tests
-            // var userId = int.Parse(x ?? "1");
+            var userId = id;
             var student = await _unitOfWork.UserRepository.GetStudentByUserIdAsync(userId);
             var assignment = await _unitOfWork.AssignmentRepository.GetAssignmentByIdAsync(assignmentId);
             if (assignment == null)
@@ -96,7 +103,7 @@ namespace API.Controllers
                 {
                     if (!PIScores.ContainsKey(pi))
                         PIScores.Add(pi, 0);
-                    PIScores[pi] = (attemptedAnswer.Correct ? (PIScores[pi] + question.FullMarks) : 0);
+                    PIScores[pi] += (attemptedAnswer.Correct ? question.FullMarks : 0);
                 }
             }
             foreach (var piId in PIScores.Keys)
