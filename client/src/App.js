@@ -4,21 +4,21 @@ import Signup from './pages/SignUp';
 import Login from './pages/Login';
 import Layout from './pages/Layout';
 import RequireAuth from './components/RequireAuth';
-import Dashboard from './pages/Dashboard';
+import Dashboard from './pages/admin/Dashboard';
 import Missing from './pages/Missing';
-import Editcourse from './pages/Editcourse';
+import Editcourse from './pages/instructor/EditCourse';
 import AuthContext from './context/AuthContext';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColorModeContext, useMode } from './theme';
 import { useCallback, useEffect, useState } from 'react';
-import Courses from './pages/Courses';
-import PerformanceIndicators from './pages/PIs';
+import Courses from './pages/admin/Courses';
+import PerformanceIndicators from './pages/admin/PIs';
 import LoadingProvider from './components/LoadingProvider';
 import Spinner from './components/Spinner';
-import Createcourse from './pages/Createcourse';
-import Users from './pages/Users';
+import Createcourse from './pages/admin/Createcourse';
+import Users from './pages/admin/Users';
 //import { createTheme } from './theme';
-import CreatePIs from './pages/CreatePIs';
+import CreatePIs from './pages/admin/CreatePIs';
 
 const ROLES = {
   0: 'Admin',
@@ -93,12 +93,11 @@ function App() {
                   </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[0]]} />}>
                     <Route path="/Courses/New" element={<Createcourse />} />
-                  </Route>
-                  <Route element={<RequireAuth allowedRoles={[ROLES[0]]} />}>
                     <Route path="/PIs/Create" element={<CreatePIs />} />
                   </Route>
-                  <Route path="*" element={<Missing />} />
-                  <Route path="/editcourse" element={<Editcourse />} />
+                  <Route element={<RequireAuth allowedRoles={[ROLES[0]]} />}>
+                    <Route path="/Courses/:courseId" element={<Editcourse />} />
+                  </Route>
                   <Route path="/createcourse" element={<Createcourse />} />
                 </Route>
                 <Route path="*" element={<Missing />} />

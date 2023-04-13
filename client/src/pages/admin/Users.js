@@ -1,10 +1,10 @@
 import { Box, Typography, useTheme } from '@mui/material';
-import { tokens } from '../theme';
-import Header from '../components/Header';
-import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import { tokens } from '../../theme';
+import Header from '../../components/Header';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import React, { useState, useEffect, useContext } from 'react';
-import axios from '../api/axios';
-import LoadingContext from '../context/LoadingContext';
+import axios from '../../api/axios';
+import LoadingContext from '../../context/LoadingContext';
 import { DataGrid } from '@mui/x-data-grid';
 import { Stack } from '@mui/system';
 import {
