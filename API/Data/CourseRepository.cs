@@ -215,5 +215,10 @@ namespace API.Data
             var courses = await _context.Courses.ProjectTo<CourseDto>(_mapper.ConfigurationProvider).ToListAsync();
             return courses;
         }
+
+        public async Task<StudentWithScoreDto> GetAStudentWithScoresAsyncById(int courseId, int semesterId, int studentId)
+        {
+            return await _context.Takes.Where(x => x.CourseId == courseId && x.SemesterId == semesterId && x.StudentId == studentId).ProjectTo<StudentWithScoreDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+        }
     }
 }

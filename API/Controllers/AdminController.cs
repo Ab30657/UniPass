@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class AdminController : BaseApiController
     {
         private readonly IMapper _mapper;
@@ -202,6 +202,18 @@ namespace API.Controllers
         {
             var courses = await _unitOfWork.CourseRepository.GetAllCourses();
             return courses;
+        }
+
+        [HttpGet("Courses/{courseId}/StudentReports")]
+        public async Task<ActionResult<IEnumerable<StudentWithScoreDto>>> GetStudentsWithScore(int courseId, int semesterId)
+        {
+            return Ok(await _unitOfWork.CourseRepository.GetStudentWithScoresAsync(courseId, semesterId));
+        }
+
+        [HttpGet("Courses/{courseId}/{studentId}/StudentReports")]
+        public async Task<ActionResult<IEnumerable<StudentWithScoreDto>>> GetAStudentWithScoreById(int courseId, int semesterId, int studentId)
+        {
+            return Ok(await _unitOfWork.CourseRepository.GetAStudentWithScoresAsyncById(courseId, semesterId, studentId));
         }
     }
 }

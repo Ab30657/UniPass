@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Authorize(Roles = "Instructor")]
+    //[Authorize(Roles = "Instructor")]
     public class InstructorController : BaseApiController
     {
         private readonly IMapper _mapper;
