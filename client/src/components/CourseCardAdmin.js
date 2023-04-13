@@ -78,7 +78,7 @@ export const CourseCard = (props) => {
               display="inline"
               variant="body2"
             >
-              Edit
+              View
             </Typography>
           </Button>
         </Stack>

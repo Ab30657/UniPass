@@ -82,18 +82,6 @@ export const CourseCard = (props) => {
             </Typography>
           </Button>
         </Stack>
-        <Stack alignItems="center" direction="row" spacing={1}>
-          <SvgIcon color="action" fontSize="small">
-            <ArrowDownOnSquareIcon color={colors.redAccent[400]} />
-          </SvgIcon>
-          <Typography
-            color={colors.redAccent[400]}
-            display="inline"
-            variant="body2"
-          >
-            Delete
-          </Typography>
-        </Stack>
       </Stack>
     </Card>
   );

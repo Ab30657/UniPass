@@ -65,16 +65,11 @@ const Editcourse = () => {
   }, []);
 
   const handleSubmit = async (e) => {
+    e.preventDefault();
     showLoading();
-    // e.preventDefault();
     console.log();
     const response = axiosPrivate
-      .put(
-        UPDATE_COURSE + courseId,
-        JSON.stringify({
-          performanceIndicatorIds: Pi,
-        }),
-      )
+      .put(UPDATE_COURSE + courseId, Pi)
       .then((response) => {
         // handle successful response
         // console.log(response.data);

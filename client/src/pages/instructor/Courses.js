@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import { Container, Stack } from '@mui/system';
 import { Button, Grid, SvgIcon, Typography } from '@mui/material';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
-import { CourseCard } from '../../components/CourseCardAdmin';
+import { CourseCard } from '../../components/CourseCardInstructor';
 import { useTheme } from '@emotion/react';
 import { tokens } from '../../theme';
 import Header from '../../components/Header';
@@ -47,7 +47,10 @@ const Courses = () => {
           <Stack spacing={3}>
             <Stack direction="row" justifyContent="space-between" spacing={4}>
               <Stack spacing={1}>
-                <Header title="Courses" subtitle="Manage all courses" />
+                <Header
+                  title="Courses"
+                  subtitle="List of courses you are teaching"
+                />
               </Stack>
               <div>
                 <Button
