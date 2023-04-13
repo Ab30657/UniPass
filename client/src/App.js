@@ -18,6 +18,7 @@ import Createcourse from './pages/Createcourse';
 import Users from './pages/Users';
 //import { createTheme } from './theme';
 import CreatePIs from './pages/CreatePIs';
+import AssignmentsStudents from './pages/Assignments_Students';
 
 const ROLES = {
   0: 'Admin',
@@ -87,8 +88,13 @@ function App() {
                   >
                     <Route path="/Dashboard" element={<Dashboard />} />
                     <Route path="/Users" element={<Users />} />
+
                     <Route path="/Courses" element={<Courses />} />
                     <Route path="/PIs" element={<PerformanceIndicators />} />
+                    <Route
+                      path="/Courses/Assignment"
+                      element={<AssignmentsStudents />}
+                    />
                   </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[0]]} />}>
                     <Route path="/Courses/New" element={<Createcourse />} />
