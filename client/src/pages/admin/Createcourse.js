@@ -8,11 +8,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useTheme } from '@emotion/react';
-import { tokens } from '../theme';
+import { tokens } from '../../theme';
 import { useNavigate } from 'react-router-dom';
-import LoadingContext from '../context/LoadingContext';
-import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import Header from '../components/Header';
+import LoadingContext from '../../context/LoadingContext';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import Header from '../../components/Header';
 
 const POST_NEW_COURSE_URL = 'admin/courses/create';
 const GET_ALL_INSTRUCTORS_URL = 'admin/instructors';

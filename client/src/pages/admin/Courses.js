@@ -1,37 +1,36 @@
-import { Box } from '@mui/material';
-import { tokens } from '../theme';
-import Header from '../components/Header';
+// import * as React from 'react';
 import React, { useContext, useEffect, useState } from 'react';
+import Box from '@mui/material/Box';
 import { Container, Stack } from '@mui/system';
-import { Button, SvgIcon } from '@mui/material';
+import { Button, Grid, SvgIcon, Typography } from '@mui/material';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
+import { CourseCard } from '../../components/CourseCardAdmin';
 import { useTheme } from '@emotion/react';
-import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import LoadingContext from '../context/LoadingContext';
+import { tokens } from '../../theme';
+import Header from '../../components/Header';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import LoadingContext from '../../context/LoadingContext';
 import { useNavigate } from 'react-router-dom';
-import { DataGrid } from '@mui/x-data-grid';
-import EditPIs from './EditPIs';
 
-const GET_ALL_PI_URL = 'admin/PI';
-
-const PerformanceIndicators = () => {
-  const [PIs, setPI] = useState([]);
+const GET_ALL_COURSES_URL = 'admin/courses';
+const Courses = () => {
+  const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const axiosPrivate = useAxiosPrivate();
   const { showLoading, hideLoading } = useContext(LoadingContext);
-  //console.log('PIS', PIs);
   useEffect(() => {
     showLoading();
 
     const response = axiosPrivate
-      .get(GET_ALL_PI_URL)
+      .get(GET_ALL_COURSES_URL)
       .then((response) => {
         // handle successful response
         console.log(response.data);
+
         const data = response.data;
-        setPI(data);
+        setCourses(data);
       })
       .catch((error) => {
         // handle error
@@ -42,23 +41,6 @@ const PerformanceIndicators = () => {
         hideLoading();
       });
   }, []);
-
-  const columns = [
-    { field: 'id', headerName: 'ID', width: 9 },
-    { field: 'name', headerName: 'Name', width: 150, editable: true },
-    {
-      field: 'actions',
-      headerName: 'Actions',
-      type: 'actions',
-      renderCell: (params) => <EditPIs />,
-    },
-  ];
-
-  const rows = PIs.map((pi) => ({
-    id: pi.id,
-    name: pi.name,
-  }));
-
   return (
     <>
       <Box m="20px">
@@ -66,14 +48,11 @@ const PerformanceIndicators = () => {
           <Stack spacing={3}>
             <Stack direction="row" justifyContent="space-between" spacing={4}>
               <Stack spacing={1}>
-                <Header
-                  title="Performance Indicators"
-                  subtitle="Manage all Performance Indicators"
-                />
+                <Header title="Courses" subtitle="Manage all courses" />
               </Stack>
               <div>
                 <Button
-                  onClick={() => navigate('Create')}
+                  onClick={() => navigate('New')}
                   startIcon={
                     <SvgIcon fontSize="small">
                       <PlusIcon />
@@ -92,27 +71,13 @@ const PerformanceIndicators = () => {
                 </Button>
               </div>
             </Stack>
-            <Box sx={{ height: 400, width: '100%' }}>
-              <DataGrid
-                columns={columns}
-                rows={rows}
-                initialState={{
-                  pagination: {
-                    paginationModel: {
-                      pageSize: 5,
-                    },
-                  },
-                }}
-                pageSizeOptions={[5, 10, 20]}
-                checkboxSelection
-                disableRowSelectionOnClick
-                /*
-                getRowSpacing={(params) => ({
-                  top: params.isFirstVisible ? 0 : 5,
-                  bottom: params.isLastVisible ? 0 : 5,
-                })}*/
-              />
-            </Box>
+            <Grid gap={0} container spacing={1}>
+              {courses.map((course) => (
+                <Grid xs={12} md={6} lg={4} item key={course.id}>
+                  <CourseCard course={course} />
+                </Grid>
+              ))}
+            </Grid>
             <Box
               sx={{
                 display: 'flex',
@@ -126,4 +91,4 @@ const PerformanceIndicators = () => {
   );
 };
 
-export default PerformanceIndicators;
+export default Courses;
