@@ -4,6 +4,7 @@ import ClockIcon from '@heroicons/react/24/solid/ClockIcon';
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardContent,
   Divider,
@@ -14,11 +15,13 @@ import {
 import { ClassOutlined } from '@mui/icons-material';
 import { useTheme } from '@emotion/react';
 import { tokens } from '../theme';
-import { bgcolor } from '@mui/system';
+import { bgcolor, width } from '@mui/system';
+import { useNavigate } from 'react-router-dom';
 
 export const CourseCard = (props) => {
   const { course } = props;
   const theme = useTheme();
+  const navigate = useNavigate();
   const colors = tokens(theme.palette.mode);
   return (
     <Card
@@ -66,16 +69,18 @@ export const CourseCard = (props) => {
         sx={{ p: 2 }}
       >
         <Stack alignItems="center" direction="row" spacing={1}>
-          <SvgIcon fontSize="small">
-            <ClockIcon color={colors.greenAccent[400]} />
-          </SvgIcon>
-          <Typography
-            color={colors.greenAccent[400]}
-            display="inline"
-            variant="body2"
-          >
-            Edit
-          </Typography>
+          <Button onClick={() => navigate(`${course.id}`)}>
+            <SvgIcon fontSize="small">
+              <ClockIcon color={colors.greenAccent[400]} />
+            </SvgIcon>
+            <Typography
+              color={colors.greenAccent[400]}
+              display="inline"
+              variant="body2"
+            >
+              View
+            </Typography>
+          </Button>
         </Stack>
         <Stack alignItems="center" direction="row" spacing={1}>
           <SvgIcon color="action" fontSize="small">
