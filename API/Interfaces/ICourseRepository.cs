@@ -33,5 +33,6 @@ namespace API.Interfaces
         Task<List<StudentAssignmentGradesDto>> GetStudentGradesForAssignment(int assignmentId);
         Task<List<CourseDto>> GetAllCourses();
         Task<StudentWithScoreDto> GetAStudentWithScoresAsyncById(int courseId, int semesterId, int studentId);
+        Task<StudentAssignmentGradesDto> GetStudentGradeForAssignmentById(int studentId, int assignmentId);
     }
 }
