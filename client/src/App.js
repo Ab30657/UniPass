@@ -6,7 +6,7 @@ import Layout from './pages/Layout';
 import RequireAuth from './components/RequireAuth';
 import Dashboard from './pages/Dashboard';
 import Missing from './pages/Missing';
-import Editcourse from './pages/Editcourse';
+import Editcourse from './pages/editCourse';
 import AuthContext from './context/AuthContext';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColorModeContext, useMode } from './theme';
