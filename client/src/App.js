@@ -98,6 +98,8 @@ function App() {
                   <Route element={<RequireAuth allowedRoles={[ROLES[0]]} />}>
                     <Route path="/Courses/:courseId" element={<Editcourse />} />
                   </Route>
+                  <Route path="*" element={<Missing />} />
+                  <Route path="/editcourse" element={<Editcourse />} />
                   <Route path="/createcourse" element={<Createcourse />} />
                 </Route>
                 <Route path="*" element={<Missing />} />
