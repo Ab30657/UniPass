@@ -29,7 +29,7 @@ const PerformanceIndicators = () => {
       .get(GET_ALL_PI_URL)
       .then((response) => {
         // handle successful response
-        console.log(response.data);
+        // console.log(response.data);
         const data = response.data;
         setPI(data);
       })

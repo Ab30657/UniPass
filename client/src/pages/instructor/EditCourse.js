@@ -30,7 +30,7 @@ const Editcourse = () => {
   const axiosPrivate = useAxiosPrivate();
 
   const getStyles = (piId, piList, customTheme) => {
-    console.log(piList.includes(piId));
+    // console.log(piList.includes(piId));
     return {
       fontWeight: piList.includes(piId)
         ? theme.typography.fontWeightBold
@@ -67,7 +67,7 @@ const Editcourse = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     showLoading();
-    console.log();
+    // console.log();
     const response = axiosPrivate
       .put(UPDATE_COURSE + courseId, Pi)
       .then((response) => {
