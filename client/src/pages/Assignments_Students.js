@@ -38,7 +38,7 @@ const AssignmentsStudents = () => {
       .get(GET_STUDENT_ASSIGNMENT_URL)
       .then((response) => {
         // handle successful response
-        console.log(response.data);
+        //console.log(response.data);
         const data = response.data;
         setAssignment(data);
       })
@@ -53,7 +53,7 @@ const AssignmentsStudents = () => {
 
   const rows = Assignment.map((material) => ({
     id: material.id,
-    title: material.name,
+    title: material.title,
     semesterId: material.semesterId,
     courseId: material.courseId,
   }));
@@ -65,15 +65,18 @@ const AssignmentsStudents = () => {
           <Stack spacing={3}>
             <Stack direction="row" justifyContent="space-between" spacing={4}>
               <Stack spacing={1}>
-                <Header title="Assignment" subtitle="insert material" />
+                <Header
+                  title="Assignment"
+                  subtitle={`Course ID: ${Assignment.courseId}`}
+                />
               </Stack>
             </Stack>
             <Box sx={{ height: 400, width: '100%' }}>
               <List sx={style} component="nav" aria-label="mailbox folders">
-                {rows.map((row) => (
-                  <div key={row.id}>
+                {Assignment.map((material) => (
+                  <div key={material.id}>
                     <ListItem button>
-                      <ListItemText primary={row.title} />
+                      <ListItemText primary={material.title} />
                     </ListItem>
                     <Divider />
                   </div>
