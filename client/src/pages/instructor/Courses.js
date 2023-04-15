@@ -52,26 +52,6 @@ const Courses = () => {
                   subtitle="List of courses you are teaching"
                 />
               </Stack>
-              <div>
-                <Button
-                  onClick={() => navigate('New')}
-                  startIcon={
-                    <SvgIcon fontSize="small">
-                      <PlusIcon />
-                    </SvgIcon>
-                  }
-                  sx={{
-                    backgroundColor: colors.blueAccent[700],
-                    color: colors.grey[100],
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                    padding: '10px 20px',
-                    boxShadow: 5,
-                  }}
-                >
-                  Add
-                </Button>
-              </div>
             </Stack>
             <Grid gap={0} container spacing={1}>
               {courses.map((course) => (
