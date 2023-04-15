@@ -13,6 +13,7 @@ import { ColorModeContext, useMode } from './theme';
 import { useCallback, useEffect, useState } from 'react';
 import AdminCourses from './pages/admin/Courses';
 import InstructorCourses from './pages/instructor/Courses';
+import AllCourses from './pages/student/AllCourses';
 import PerformanceIndicators from './pages/admin/PIs';
 import LoadingProvider from './components/LoadingProvider';
 import Spinner from './components/Spinner';
@@ -21,6 +22,7 @@ import Users from './pages/admin/Users';
 //import { createTheme } from './theme';
 import CreatePIs from './pages/admin/CreatePIs';
 import { RequestPageRounded } from '@mui/icons-material';
+import { EnrolledCourses } from './pages/student/EnrolledCourses';
 
 const ROLES = {
   0: 'Admin',
@@ -110,6 +112,10 @@ function App() {
                   </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
                     <Route path="/Courses/:courseId" element={<Editcourse />} />
+                  </Route>
+                  <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
+                    <Route path="/DepartmentCourses" element={<AllCourses />} />
+                    <Route path="/Courses" element={<EnrolledCourses />} />
                   </Route>
                   <Route path="/createcourse" element={<Createcourse />} />
                 </Route>
