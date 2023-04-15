@@ -52,11 +52,6 @@ const Editcourse = () => {
         const piData = reqPiData.data;
         // console.log(piData);
         setAllPIs(piData);
-        //
-        var currentPIs = allPIs.filter((x) =>
-          course.performanceIndicators.includes((y) => y.id !== x.id),
-        );
-        // console.log(currentPIs);
         setPi(data.performanceIndicators.map((x) => x.id));
       })
       .finally(() => {

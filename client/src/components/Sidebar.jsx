@@ -11,7 +11,11 @@ import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import React, { useContext } from 'react';
 import AuthContext from '../context/AuthContext';
 import { Avatar } from '@mui/material';
-import { PushPinOutlined, SupervisorAccount } from '@mui/icons-material';
+import {
+  Bookmarks,
+  PushPinOutlined,
+  SupervisorAccount,
+} from '@mui/icons-material';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const { pathname } = useLocation();
@@ -161,7 +165,7 @@ const Sidebar = () => {
                 <Item
                   title="All Courses"
                   to="/DepartmentCourses"
-                  icon={<ContactsOutlinedIcon />}
+                  icon={<Bookmarks />}
                   selected={selected}
                   setSelected={setSelected}
                 />
