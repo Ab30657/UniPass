@@ -16,6 +16,8 @@ import LoadingProvider from './components/LoadingProvider';
 import Spinner from './components/Spinner';
 import Createcourse from './pages/Createcourse';
 import Users from './pages/Users';
+import ListAssignment from './pages/ListAssignment';
+import CreateAssignment from './pages/CreateAssignment';
 //import { createTheme } from './theme';
 import CreatePIs from './pages/CreatePIs';
 
@@ -89,6 +91,14 @@ function App() {
                     <Route path="/Users" element={<Users />} />
                     <Route path="/Courses" element={<Courses />} />
                     <Route path="/PIs" element={<PerformanceIndicators />} />
+                    <Route
+                      path="/ListAssignment"
+                      element={<ListAssignment />}
+                    />
+                    <Route
+                      path="/CreateAssignment"
+                      element={<CreateAssignment />}
+                    />
                   </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[0]]} />}>
                     <Route path="/Courses/New" element={<Createcourse />} />
