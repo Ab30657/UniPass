@@ -3,11 +3,14 @@ import { Container, Stack } from '@mui/system';
 import Box from '@mui/material/Box';
 import Header from '../components/Header';
 import TextField from '@mui/material/TextField';
-import { Button, Grid, SvgIcon, Typography } from '@mui/material';
+import { Button, Grid, SvgIcon, Typography, MenuItem } from '@mui/material';
 import { useTheme } from '@emotion/react';
 import IconButton from '@mui/material/IconButton';
 import RemoveIcon from '@mui/icons-material/Remove';
+import InputLabel from '@mui/material/InputLabel';
 import AddIcon from '@mui/icons-material/Add';
+import Select from '@mui/material/Select';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import { tokens } from '../theme';
 const CreateAssignment = () => {
   const theme = useTheme();
@@ -15,12 +18,38 @@ const CreateAssignment = () => {
   const [question, setQuestion] = useState([
     { Description: '', Option1: '', Option2: '', Option3: '', Option4: '' },
   ]);
+  const [Pi, setPi] = useState([]);
   const handleChange = (index, event) => {
     const values = [...question];
     values[index][event.target.name] = event.target.value;
     setQuestion(values);
-    // console.log(index, event.target.name);
   };
+  const piName = [
+    {
+      id: 0,
+      name: 'name0',
+    },
+    {
+      id: 1,
+      name: 'name1',
+    },
+    {
+      id: 2,
+      name: 'name2',
+    },
+    {
+      id: 3,
+      name: 'name3',
+    },
+    {
+      id: 4,
+      name: 'name4',
+    },
+    {
+      id: 5,
+      name: 'name5',
+    },
+  ];
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Question', question);
@@ -95,6 +124,34 @@ const CreateAssignment = () => {
                 fullWidth
                 onChange={(event) => handleChange(index, event)}
               ></TextField>
+              <InputLabel
+                id="demo-multiple-name-label"
+                style={{ color: colors.greenAccent[500] }}
+              >
+                Pi
+              </InputLabel>
+              <Select
+                // labelId="demo-multiple-name-label"
+                // id="demo-multiple-name"
+                multiple
+                value={Pi}
+                onChange={(e) => setPi(e.target.value)}
+                fullWidth
+                input={<OutlinedInput label="Pi" />}
+                // fullWidth
+              >
+                {piName.map((description) => {
+                  return (
+                    <MenuItem
+                      key={description.id}
+                      value={description.id}
+                      style={{ color: colors.grey[100] }}
+                    >
+                      {description.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
               <Stack direction="row" spacing={5}>
                 <IconButton onClick={() => handleRemove(index)}>
                   <RemoveIcon />
