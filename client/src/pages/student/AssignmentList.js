@@ -1,14 +1,14 @@
 import { Box } from '@mui/material';
-import { tokens } from '../theme';
-import Header from '../components/Header';
+import { tokens } from '../../theme';
+import Header from '../../components/Header';
 import React, { useContext, useEffect, useState } from 'react';
 import { Container, Stack } from '@mui/system';
 import { Button, SvgIcon } from '@mui/material';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import { useTheme } from '@emotion/react';
-import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import LoadingContext from '../context/LoadingContext';
-import { useNavigate } from 'react-router-dom';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import LoadingContext from '../../context/LoadingContext';
+import { useNavigate, Link } from 'react-router-dom';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -24,7 +24,7 @@ const style = {
   bgcolor: 'background.paper',
 };
 
-const AssignmentsStudents = () => {
+const AssignmentList = () => {
   const [Assignment, setAssignment] = useState([]);
   const [Courses, setCourses] = useState([]);
   const navigate = useNavigate();
@@ -91,9 +91,11 @@ const AssignmentsStudents = () => {
               <List sx={style} component="nav" aria-label="mailbox folders">
                 {Assignment.map((material) => (
                   <div key={material.id}>
-                    <ListItem button>
-                      <ListItemText primary={material.title} />
-                    </ListItem>
+                    <Link to={`/Courses/Assignment/Quiz/${material.id}`}>
+                      <ListItem button>
+                        <ListItemText primary={material.title} />
+                      </ListItem>
+                    </Link>
                     <Divider />
                   </div>
                 ))}
@@ -112,4 +114,4 @@ const AssignmentsStudents = () => {
   );
 };
 
-export default AssignmentsStudents;
+export default AssignmentList;

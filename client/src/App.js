@@ -20,8 +20,9 @@ import Createcourse from './pages/admin/Createcourse';
 import Users from './pages/admin/Users';
 //import { createTheme } from './theme';
 import CreatePIs from './pages/admin/CreatePIs';
-import AssignmentsStudents from './pages/Assignments_Students';
+import AssignmentList from './pages/student/AssignmentList';
 import { RequestPageRounded } from '@mui/icons-material';
+import TakeAssignment from './pages/student/TakeAssignment';
 
 const ROLES = {
   0: 'Admin',
@@ -95,7 +96,11 @@ function App() {
                     <Route path="/PIs" element={<PerformanceIndicators />} />
                     <Route
                       path="/Courses/Assignment"
-                      element={<AssignmentsStudents />}
+                      element={<AssignmentList />}
+                    />
+                    <Route
+                      path="/Courses/Assignment/Quiz/:quizId"
+                      element={<TakeAssignment />}
                     />
                   </Route>
                   <Route
