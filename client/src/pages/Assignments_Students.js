@@ -17,6 +17,7 @@ import { AssistWalker } from '@mui/icons-material';
 import Grid from '@mui/material/Grid';
 
 const GET_STUDENT_ASSIGNMENT_URL = 'Student/Courses/1/Materials';
+const GET__ALL_COURSES_URL = 'Student/Courses';
 const style = {
   width: '100%',
   maxWidth: 900,
@@ -25,6 +26,7 @@ const style = {
 
 const AssignmentsStudents = () => {
   const [Assignment, setAssignment] = useState([]);
+  const [Courses, setCourses] = useState([]);
   const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -33,6 +35,19 @@ const AssignmentsStudents = () => {
 
   useEffect(() => {
     showLoading();
+
+    const res = axiosPrivate
+      .get(GET__ALL_COURSES_URL)
+      .then((res) => {
+        const data = res.data;
+        setCourses(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+      .finally(() => {
+        hideLoading();
+      });
 
     const response = axiosPrivate
       .get(GET_STUDENT_ASSIGNMENT_URL)
@@ -50,6 +65,7 @@ const AssignmentsStudents = () => {
         hideLoading();
       });
   }, []);
+  //console.log(Courses);
 
   const rows = Assignment.map((material) => ({
     id: material.id,
