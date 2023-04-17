@@ -63,7 +63,7 @@ const CreateAssignment = () => {
       {
         questionText: '',
         fullMarks: 0,
-        performanceIndicators: [0],
+        performanceIndicators: [],
         answers: [{ answerText: '', correct: true }],
       },
     ]);
