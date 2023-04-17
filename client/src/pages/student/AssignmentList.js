@@ -8,7 +8,7 @@ import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import { useTheme } from '@emotion/react';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import LoadingContext from '../../context/LoadingContext';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -25,6 +25,7 @@ const style = {
 };
 
 const AssignmentList = () => {
+  const { courseId } = useParams();
   const [Assignment, setAssignment] = useState([]);
   const [Courses, setCourses] = useState([]);
   const navigate = useNavigate();

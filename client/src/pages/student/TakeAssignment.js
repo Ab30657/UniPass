@@ -10,8 +10,10 @@ import {
   Button,
 } from '@mui/material';
 import { Box } from '@mui/system';
+import { useParams } from 'react-router-dom';
 
 const TakeAssignment = () => {
+  const { courseId, assignmentId } = useParams();
   const [quizData] = useState([
     {
       question: 'What is the capital of France?',
