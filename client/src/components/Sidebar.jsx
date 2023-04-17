@@ -11,11 +11,16 @@ import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import React, { useContext } from 'react';
 import AuthContext from '../context/AuthContext';
 import { Avatar } from '@mui/material';
-import { PushPinOutlined, SupervisorAccount } from '@mui/icons-material';
+import {
+  Bookmarks,
+  PushPinOutlined,
+  SupervisorAccount,
+} from '@mui/icons-material';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const { pathname } = useLocation();
   const theme = useTheme();
+  const { user } = useContext(AuthContext);
   const colors = tokens(theme.palette.mode);
   return (
     <MenuItem
@@ -129,35 +134,61 @@ const Sidebar = () => {
             >
               Data
             </Typography>
-            <Item
-              title="Courses"
-              to="/Courses"
-              icon={<AutoStoriesIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Users"
-              to="/Users"
-              icon={<ContactsOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            {/* <Item
-              title="Instructors"
-              to="/Instructors"
-              icon={<SupervisorAccount />}
-              selected={selected}
-              setSelected={setSelected}
-            /> */}
+            {user?.roles[0] === 'Admin' && (
+              <>
+                <Item
+                  title="Courses"
+                  to="/Courses"
+                  icon={<AutoStoriesIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                <Item
+                  title="Users"
+                  to="/Users"
+                  icon={<ContactsOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
 
-            <Item
-              title="Performance Indicators"
-              to="/PIs"
-              icon={<PushPinOutlined />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+                <Item
+                  title="Performance Indicators"
+                  to="/PIs"
+                  icon={<PushPinOutlined />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              </>
+            )}
+            {user?.roles[0] === 'Student' && (
+              <>
+                <Item
+                  title="All Courses"
+                  to="/DepartmentCourses"
+                  icon={<Bookmarks />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                <Item
+                  title="Your Courses"
+                  to="/Courses"
+                  icon={<ContactsOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              </>
+            )}
+            {user?.roles[0] === 'Instructor' && (
+              <>
+                <Item
+                  title="Your Courses"
+                  to="/Courses"
+                  icon={<ContactsOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              </>
+            )}
           </Box>
         </Menu>
       </ProSidebar>

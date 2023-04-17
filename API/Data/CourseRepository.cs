@@ -182,14 +182,14 @@ namespace API.Data
             return false;
         }
 
-        public async void RegisterForCourse(RegisterCourseDto rcDto)
+        public async void RegisterForCourse(RegisterCourseDto rcDto, int studentId)
         {
             //var course = await _context.Courses.FirstOrDefaultAsync(x => x.Id == courseId);
-            var student = await _context.Students.Include(x => x.Takes).FirstOrDefaultAsync(x => x.Id == rcDto.StudentId);
+            var student = await _context.Students.Include(x => x.Takes).FirstOrDefaultAsync(x => x.Id == studentId);
 
             var taking = new Takes
             {
-                StudentId = rcDto.StudentId,
+                StudentId = studentId,
                 CourseId = rcDto.CourseId,
                 SemesterId = rcDto.SemesterId
             };

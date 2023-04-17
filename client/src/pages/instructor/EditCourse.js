@@ -30,7 +30,7 @@ const Editcourse = () => {
   const axiosPrivate = useAxiosPrivate();
 
   const getStyles = (piId, piList, customTheme) => {
-    console.log(piList.includes(piId));
+    // console.log(piList.includes(piId));
     return {
       fontWeight: piList.includes(piId)
         ? theme.typography.fontWeightBold
@@ -52,11 +52,6 @@ const Editcourse = () => {
         const piData = reqPiData.data;
         // console.log(piData);
         setAllPIs(piData);
-        //
-        var currentPIs = allPIs.filter((x) =>
-          course.performanceIndicators.includes((y) => y.id !== x.id),
-        );
-        // console.log(currentPIs);
         setPi(data.performanceIndicators.map((x) => x.id));
       })
       .finally(() => {
@@ -67,7 +62,7 @@ const Editcourse = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     showLoading();
-    console.log();
+    // console.log();
     const response = axiosPrivate
       .put(UPDATE_COURSE + courseId, Pi)
       .then((response) => {
@@ -182,12 +177,8 @@ const Editcourse = () => {
           }}
           onClick={handleSubmit}
           type="submit"
-          // fullWidth
           variant="contained"
           size="large"
-          // sx={ {color: colors.grey[100],}}}
-          // fullWidth
-          // sx={{ mt: 3, mb: 2 }}
         >
           Save Changes
         </Button>

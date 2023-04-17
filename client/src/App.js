@@ -13,16 +13,20 @@ import { ColorModeContext, useMode } from './theme';
 import { useCallback, useEffect, useState } from 'react';
 import AdminCourses from './pages/admin/Courses';
 import InstructorCourses from './pages/instructor/Courses';
+import AllCourses from './pages/student/AllCourses';
 import PerformanceIndicators from './pages/admin/PIs';
 import LoadingProvider from './components/LoadingProvider';
 import Spinner from './components/Spinner';
 import Createcourse from './pages/admin/Createcourse';
 import Users from './pages/admin/Users';
+import ListAssignment from './pages/ListAssignment';
+import CreateAssignment from './pages/CreateAssignment';
 //import { createTheme } from './theme';
 import CreatePIs from './pages/admin/CreatePIs';
 import AssignmentList from './pages/student/AssignmentList';
 import { RequestPageRounded } from '@mui/icons-material';
 import TakeAssignment from './pages/student/TakeAssignment';
+import { EnrolledCourses } from './pages/student/EnrolledCourses';
 
 const ROLES = {
   0: 'Admin',
@@ -94,6 +98,7 @@ function App() {
 
                     {/* //<Route path="/Courses" element={<Courses />} />*/}
                     <Route path="/PIs" element={<PerformanceIndicators />} />
+
                     <Route
                       path="/Courses/Assignment"
                       element={<AssignmentList />}
@@ -127,12 +132,48 @@ function App() {
                       <Route path="/Courses" element={<AdminCourses />} />
                     )}
                   </Route>
+                  <Route
+                    element={
+                      <RequireAuth allowedRoles={[ROLES[0], ROLES[1]]} />
+                    }
+                  >
+                    {user?.roles[0] === ROLES[1] && (
+                      <Route path="/Courses" element={<InstructorCourses />} />
+                    )}
+                    {user?.roles[0] === ROLES[0] && (
+                      <Route path="/Courses" element={<AdminCourses />} />
+                    )}
+                  </Route>
+                  <Route
+                    element={
+                      <RequireAuth allowedRoles={[ROLES[0], ROLES[1]]} />
+                    }
+                  >
+                    {user?.roles[0] === ROLES[1] && (
+                      <Route path="/Courses" element={<InstructorCourses />} />
+                    )}
+                    {user?.roles[0] === ROLES[0] && (
+                      <Route path="/Courses" element={<AdminCourses />} />
+                    )}
+                  </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[0]]} />}>
                     <Route path="/Courses/New" element={<Createcourse />} />
                     <Route path="/PIs/Create" element={<CreatePIs />} />
                   </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
                     <Route path="/Courses/:courseId" element={<Editcourse />} />
+                    <Route
+                      path="/Courses/:courseId/View"
+                      element={<ListAssignment />}
+                    />
+                    <Route
+                      path="Courses/:courseId/View/Materials/New"
+                      element={<CreateAssignment />}
+                    />
+                  </Route>
+                  <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
+                    <Route path="/DepartmentCourses" element={<AllCourses />} />
+                    <Route path="/Courses" element={<EnrolledCourses />} />
                   </Route>
                   <Route path="/createcourse" element={<Createcourse />} />
                 </Route>

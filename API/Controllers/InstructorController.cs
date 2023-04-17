@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    //[Authorize(Roles = "Instructor")]
+    [Authorize(Roles = "Instructor")]
     public class InstructorController : BaseApiController
     {
         private readonly IMapper _mapper;
@@ -192,6 +192,12 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<PerformanceIndicatorDto>>> GetAllIndicators()
         {
             return Ok(await _unitOfWork.PerfIndicatorRepository.GetPerfIndicatorsAsync());
+        }
+
+        [HttpGet("Courses/{courseId}/PI")]
+        public async Task<ActionResult<IEnumerable<PerformanceIndicatorDto>>> GetCourseIndicator(int courseId)
+        {
+            return Ok(await _unitOfWork.PerfIndicatorRepository.GetPerfIndicatorsForCourse(courseId));
         }
     }
 }
