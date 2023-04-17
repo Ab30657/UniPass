@@ -95,14 +95,6 @@ function App() {
                     <Route path="/Users" element={<Users />} />
                     {/* <Route path="/Courses" element={<Courses />} /> */}
                     <Route path="/PIs" element={<PerformanceIndicators />} />
-                    <Route
-                      path="/ListAssignment"
-                      element={<ListAssignment />}
-                    />
-                    <Route
-                      path="/CreateAssignment"
-                      element={<CreateAssignment />}
-                    />
                   </Route>
                   <Route
                     element={
@@ -134,6 +126,14 @@ function App() {
                   </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
                     <Route path="/Courses/:courseId" element={<Editcourse />} />
+                    <Route
+                      path="/Courses/:courseId/View"
+                      element={<ListAssignment />}
+                    />
+                    <Route
+                      path="Courses/:courseId/View/Materials/New"
+                      element={<CreateAssignment />}
+                    />
                   </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
                     <Route path="/DepartmentCourses" element={<AllCourses />} />

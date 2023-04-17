@@ -37,6 +37,10 @@ namespace API.Data
             return await _context.PerformanceIndicators.ProjectTo<PerformanceIndicatorDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
+        public async Task<IEnumerable<PerformanceIndicatorDto>> GetPerfIndicatorsForCourse(int courseId)
+        {
+            return await _context.CoursePIs.Where(x => x.CourseId == courseId).ProjectTo<PerformanceIndicatorDto>(_mapper.ConfigurationProvider).ToListAsync();
+        }
         public async Task<PerformanceIndicator> GetPerformanceIndicatorByIdAsync(int id)
         {
             return await _context.PerformanceIndicators.Where(x => x.Id == id).SingleOrDefaultAsync();

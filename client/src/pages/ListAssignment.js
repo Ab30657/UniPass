@@ -1,25 +1,49 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { Container, Stack } from '@mui/system';
-import { Button, Grid, SvgIcon, Typography } from '@mui/material';
+import { Button, CardActions, Grid, SvgIcon, Typography } from '@mui/material';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
 import { tokens } from '../theme';
 import Header from '../components/Header';
 import { ClassOutlined } from '@mui/icons-material';
 import { Avatar, Card, CardContent, Divider } from '@mui/material';
+import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import LoadingContext from '../context/LoadingContext';
+
+const GET_ALL_ASSIGNMENTS_URL = 'instructor/courses/';
 
 const ListAssignment = () => {
-  const [assignment, setAssignment] = useState('');
+  //   const [assignment, setAssignment] = useState('');
   const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const assignmentlist = [
-    { id: 0, title: 'Assignment0' },
-    { id: 1, title: 'Assignment1' },
-    { id: 2, title: 'Assignment2' },
-  ];
+  const [assignments, setAssignments] = useState([]);
+  let { courseId } = useParams();
+  const axiosPrivate = useAxiosPrivate();
+  const { showLoading, hideLoading } = useContext(LoadingContext);
+  useEffect(() => {
+    showLoading();
+
+    const response = axiosPrivate
+      .get(GET_ALL_ASSIGNMENTS_URL + `${courseId}/Materials`)
+      .then((response) => {
+        // handle successful response
+        // console.log(response.data);
+        const data = response.data;
+        setAssignments(data);
+      })
+      .catch((error) => {
+        // handle error
+        console.error(error);
+      })
+      .finally(() => {
+        // console.log('Hello, World!');
+        hideLoading();
+      });
+  }, []);
+
   return (
     <Box m="20px">
       <Container maxWidth="xl">
@@ -30,7 +54,7 @@ const ListAssignment = () => {
             </Stack>
             <div>
               <Button
-                onClick={() => navigate('New')}
+                onClick={() => navigate('Materials/New')}
                 startIcon={
                   <SvgIcon fontSize="small">
                     <PlusIcon />
@@ -50,7 +74,7 @@ const ListAssignment = () => {
             </div>
           </Stack>
           <Grid gap={0} container spacing={1}>
-            {assignmentlist.map((assignments) => (
+            {assignments.map((assignments) => (
               <Grid xs={12} md={6} lg={4} item key={assignments.id}>
                 <Card
                   sx={{
@@ -83,6 +107,22 @@ const ListAssignment = () => {
                     >
                       {assignments.title}
                     </Typography>
+                    <CardActions>
+                      <Button
+                        onClick={() => navigate(`Materials/${courseId}`)}
+                        sx={{
+                          backgroundColor: colors.greenAccent[700],
+                          color: colors.grey[100],
+                          fontSize: '14px',
+                          fontWeight: 'bold',
+                          padding: '10px 20px',
+                          boxShadow: 5,
+                        }}
+                        size="small"
+                      >
+                        View Assignment
+                      </Button>
+                    </CardActions>
                   </CardContent>
                 </Card>
               </Grid>

@@ -193,5 +193,11 @@ namespace API.Controllers
         {
             return Ok(await _unitOfWork.PerfIndicatorRepository.GetPerfIndicatorsAsync());
         }
+
+        [HttpGet("Courses/{courseId}/PI")]
+        public async Task<ActionResult<IEnumerable<PerformanceIndicatorDto>>> GetCourseIndicator(int courseId)
+        {
+            return Ok(await _unitOfWork.PerfIndicatorRepository.GetPerfIndicatorsForCourse(courseId));
+        }
     }
 }

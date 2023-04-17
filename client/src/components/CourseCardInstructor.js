@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 import ClockIcon from '@heroicons/react/24/solid/ClockIcon';
+import ViewFinderCircle from '@heroicons/react/24/solid/ViewfinderCircleIcon';
 import {
   Avatar,
   Box,
@@ -12,7 +13,7 @@ import {
   SvgIcon,
   Typography,
 } from '@mui/material';
-import { ClassOutlined } from '@mui/icons-material';
+import { ClassOutlined, ViewAgenda } from '@mui/icons-material';
 import { useTheme } from '@emotion/react';
 import { tokens } from '../theme';
 import { bgcolor, width } from '@mui/system';
@@ -79,6 +80,18 @@ export const CourseCard = (props) => {
               variant="body2"
             >
               Edit
+            </Typography>
+          </Button>
+          <Button onClick={() => navigate(`View/${course.id}`)}>
+            <SvgIcon fontSize="small">
+              <ViewFinderCircle color={colors.greenAccent[400]} />
+            </SvgIcon>
+            <Typography
+              color={colors.greenAccent[400]}
+              display="inline"
+              variant="body2"
+            >
+              View
             </Typography>
           </Button>
         </Stack>
