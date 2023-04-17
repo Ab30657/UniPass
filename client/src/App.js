@@ -19,6 +19,8 @@ import LoadingProvider from './components/LoadingProvider';
 import Spinner from './components/Spinner';
 import Createcourse from './pages/admin/Createcourse';
 import Users from './pages/admin/Users';
+import ListAssignment from './pages/ListAssignment';
+import CreateAssignment from './pages/CreateAssignment';
 //import { createTheme } from './theme';
 import CreatePIs from './pages/admin/CreatePIs';
 import { RequestPageRounded } from '@mui/icons-material';
@@ -106,12 +108,32 @@ function App() {
                       <Route path="/Courses" element={<AdminCourses />} />
                     )}
                   </Route>
+                  <Route
+                    element={
+                      <RequireAuth allowedRoles={[ROLES[0], ROLES[1]]} />
+                    }
+                  >
+                    {user?.roles[0] === ROLES[1] && (
+                      <Route path="/Courses" element={<InstructorCourses />} />
+                    )}
+                    {user?.roles[0] === ROLES[0] && (
+                      <Route path="/Courses" element={<AdminCourses />} />
+                    )}
+                  </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[0]]} />}>
                     <Route path="/Courses/New" element={<Createcourse />} />
                     <Route path="/PIs/Create" element={<CreatePIs />} />
                   </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
                     <Route path="/Courses/:courseId" element={<Editcourse />} />
+                    <Route
+                      path="/Courses/:courseId/View"
+                      element={<ListAssignment />}
+                    />
+                    <Route
+                      path="Courses/:courseId/View/Materials/New"
+                      element={<CreateAssignment />}
+                    />
                   </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
                     <Route path="/DepartmentCourses" element={<AllCourses />} />

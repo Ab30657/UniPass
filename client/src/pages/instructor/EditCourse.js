@@ -177,12 +177,8 @@ const Editcourse = () => {
           }}
           onClick={handleSubmit}
           type="submit"
-          // fullWidth
           variant="contained"
           size="large"
-          // sx={ {color: colors.grey[100],}}}
-          // fullWidth
-          // sx={{ mt: 3, mb: 2 }}
         >
           Save Changes
         </Button>

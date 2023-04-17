@@ -107,6 +107,9 @@ namespace API.Helpers
                 .ForMember(x => x.Score, opt => opt.MapFrom(x => x.Score))
                 .ForMember(x => x.FullMarks, opt => opt.MapFrom(x => x.TakeAssignment.Assignment.AssignmentPIs.Where(a => a.PerformanceIndicatorId == x.PerformanceIndicatorId).FirstOrDefault().FullScore))
                 .ForMember(x => x.Name, opt => opt.MapFrom(x => x.PerformanceIndicator.Name));
+            CreateMap<CoursePI, PerformanceIndicatorDto>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(x => x.PerformanceIndicatorId))
+                .ForMember(x => x.Name, opt => opt.MapFrom(x => x.PerformanceIndicator.Name));
             // CreateMap<Takes, CourseWithStudentScoresDto>()
             //     .ForMember(x => x.FullMarks, opt => opt.MapFrom(x => x.Course.Assignments.Sum(x => x.FullMarks)))
             //     .ForMember(x => x.PIFullMarksDtos, opt => opt.MapFrom(x => x.Course.CoursePIs))
