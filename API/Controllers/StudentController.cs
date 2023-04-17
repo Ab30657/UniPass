@@ -66,12 +66,12 @@ namespace API.Controllers
         }
 
         [HttpPost("Courses/{courseId}/Materials/{assignmentId}")]
-        public async Task<ActionResult<AssignmentAttemptGradeDto>> SubmitAssignment(int courseId, int assignmentId, CreateTakeAssignmentDto createTakeAssignmentDto, int id)
+        public async Task<ActionResult<AssignmentAttemptGradeDto>> SubmitAssignment(int courseId, int assignmentId, CreateTakeAssignmentDto createTakeAssignmentDto)
         {
             //This gets the currently logged in user claims from .NET Web API Middleware through HttpContext
-            //var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             // Uncomment the line below, to test manually, otherwise use postman tests
-            var userId = id;
+            // var userId = id;
             var student = await _unitOfWork.UserRepository.GetStudentByUserIdAsync(userId);
             var assignment = await _unitOfWork.AssignmentRepository.GetAssignmentByIdAsync(assignmentId);
             if (assignment == null)
@@ -142,12 +142,15 @@ namespace API.Controllers
             //Change this later with feature/take-assignment-grade
             //We use the logged in student 
             //Dont let the client determine who the student is
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var student = await _unitOfWork.UserRepository.GetStudentByUserIdAsync(userId);
+
             if (!(await _unitOfWork.CourseRepository.CourseExistsById(rcDto.CourseId)))
             {
                 return BadRequest("Course does not exist.");
             }
 
-            if (!(await _unitOfWork.CourseRepository.StudentExists(rcDto.StudentId)))
+            if (!(await _unitOfWork.CourseRepository.StudentExists(student.Id)))
             {
                 return BadRequest("Student does not exist.");
             }
@@ -157,12 +160,12 @@ namespace API.Controllers
                 return BadRequest("Semester does not exist.");
             }
 
-            if (await _unitOfWork.CourseRepository.StudentAlreadyRegistered(rcDto.CourseId, rcDto.StudentId))
+            if (await _unitOfWork.CourseRepository.StudentAlreadyRegistered(rcDto.CourseId, student.Id))
             {
                 return BadRequest("Student is already registerd.");
             }
 
-            _unitOfWork.CourseRepository.RegisterForCourse(rcDto);
+            _unitOfWork.CourseRepository.RegisterForCourse(rcDto, student.Id);
 
             var result = await _unitOfWork.CompleteAsync();
             if (result == false)

@@ -4,33 +4,37 @@ import Signup from './pages/SignUp';
 import Login from './pages/Login';
 import Layout from './pages/Layout';
 import RequireAuth from './components/RequireAuth';
-import Dashboard from './pages/Dashboard';
+import Dashboard from './pages/admin/Dashboard';
 import Missing from './pages/Missing';
+import Editcourse from './pages/instructor/EditCourse';
 import AuthContext from './context/AuthContext';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { ColorModeContext, useMode } from './theme';
 import { useCallback, useEffect, useState } from 'react';
-import Courses from './pages/Courses';
-import PerformanceIndicators from './pages/PIs';
+import AdminCourses from './pages/admin/Courses';
+import InstructorCourses from './pages/instructor/Courses';
+import AllCourses from './pages/student/AllCourses';
+import PerformanceIndicators from './pages/admin/PIs';
 import LoadingProvider from './components/LoadingProvider';
 import Spinner from './components/Spinner';
-import Createcourse from './pages/Createcourse';
-import Users from './pages/Users';
+import Createcourse from './pages/admin/Createcourse';
+import Users from './pages/admin/Users';
 import ListAssignment from './pages/ListAssignment';
 import CreateAssignment from './pages/CreateAssignment';
 //import { createTheme } from './theme';
-import CreatePIs from './pages/CreatePIs';
+import CreatePIs from './pages/admin/CreatePIs';
+import { RequestPageRounded } from '@mui/icons-material';
+import { EnrolledCourses } from './pages/student/EnrolledCourses';
 
 const ROLES = {
   0: 'Admin',
-  1: 'Student',
-  2: 'Instructor',
+  1: 'Instructor',
+  2: 'Student',
 };
 
 function App() {
   const [theme, colorMode] = useMode();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
-
   const login = useCallback((user) => {
     setUser(user);
     localStorage.setItem('user', JSON.stringify(user));
@@ -89,7 +93,7 @@ function App() {
                   >
                     <Route path="/Dashboard" element={<Dashboard />} />
                     <Route path="/Users" element={<Users />} />
-                    <Route path="/Courses" element={<Courses />} />
+                    {/* <Route path="/Courses" element={<Courses />} /> */}
                     <Route path="/PIs" element={<PerformanceIndicators />} />
                     <Route
                       path="/ListAssignment"
@@ -100,12 +104,42 @@ function App() {
                       element={<CreateAssignment />}
                     />
                   </Route>
+                  <Route
+                    element={
+                      <RequireAuth allowedRoles={[ROLES[0], ROLES[1]]} />
+                    }
+                  >
+                    {user?.roles[0] === ROLES[1] && (
+                      <Route path="/Courses" element={<InstructorCourses />} />
+                    )}
+                    {user?.roles[0] === ROLES[0] && (
+                      <Route path="/Courses" element={<AdminCourses />} />
+                    )}
+                  </Route>
+                  <Route
+                    element={
+                      <RequireAuth allowedRoles={[ROLES[0], ROLES[1]]} />
+                    }
+                  >
+                    {user?.roles[0] === ROLES[1] && (
+                      <Route path="/Courses" element={<InstructorCourses />} />
+                    )}
+                    {user?.roles[0] === ROLES[0] && (
+                      <Route path="/Courses" element={<AdminCourses />} />
+                    )}
+                  </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[0]]} />}>
                     <Route path="/Courses/New" element={<Createcourse />} />
-                  </Route>
-                  <Route element={<RequireAuth allowedRoles={[ROLES[0]]} />}>
                     <Route path="/PIs/Create" element={<CreatePIs />} />
                   </Route>
+                  <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
+                    <Route path="/Courses/:courseId" element={<Editcourse />} />
+                  </Route>
+                  <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
+                    <Route path="/DepartmentCourses" element={<AllCourses />} />
+                    <Route path="/Courses" element={<EnrolledCourses />} />
+                  </Route>
+                  <Route path="/createcourse" element={<Createcourse />} />
                 </Route>
                 <Route path="*" element={<Missing />} />
               </Routes>

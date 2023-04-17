@@ -182,14 +182,14 @@ namespace API.Data
             return false;
         }
 
-        public async void RegisterForCourse(RegisterCourseDto rcDto)
+        public async void RegisterForCourse(RegisterCourseDto rcDto, int studentId)
         {
             //var course = await _context.Courses.FirstOrDefaultAsync(x => x.Id == courseId);
-            var student = await _context.Students.Include(x => x.Takes).FirstOrDefaultAsync(x => x.Id == rcDto.StudentId);
+            var student = await _context.Students.Include(x => x.Takes).FirstOrDefaultAsync(x => x.Id == studentId);
 
             var taking = new Takes
             {
-                StudentId = rcDto.StudentId,
+                StudentId = studentId,
                 CourseId = rcDto.CourseId,
                 SemesterId = rcDto.SemesterId
             };
@@ -214,6 +214,17 @@ namespace API.Data
         {
             var courses = await _context.Courses.ProjectTo<CourseDto>(_mapper.ConfigurationProvider).ToListAsync();
             return courses;
+        }
+
+        public async Task<StudentAssignmentGradesDto> GetStudentGradeForAssignmentById(int studentId, int assignmentId)
+        {
+            var studentGrade = await _context.TakeAssignments.Where(x => x.AssignmentId == assignmentId && x.StudentId == studentId).ProjectTo<StudentAssignmentGradesDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+            return studentGrade;
+        }
+
+        public async Task<StudentWithScoreDto> GetAStudentWithScoresAsyncById(int courseId, int semesterId, int studentId)
+        {
+            return await _context.Takes.Where(x => x.CourseId == courseId && x.SemesterId == semesterId && x.StudentId == studentId).ProjectTo<StudentWithScoreDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
         }
     }
 }

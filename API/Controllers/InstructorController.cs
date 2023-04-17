@@ -180,5 +180,18 @@ namespace API.Controllers
             var studentGrades = await _unitOfWork.CourseRepository.GetStudentGradesForAssignment(assignmentId);
             return Ok(studentGrades);
         }
+
+        [HttpGet("Assignment/{assignmentId}/{studentId}/grades")]
+        public async Task<ActionResult<List<StudentAssignmentGradesDto>>> GetStudentGradeForAssignmentById(int studentId, int assignmentId)
+        {
+            var studentGrade = await _unitOfWork.CourseRepository.GetStudentGradeForAssignmentById(studentId, assignmentId);
+            return Ok(studentGrade);
+        }
+
+        [HttpGet("PI")]
+        public async Task<ActionResult<IEnumerable<PerformanceIndicatorDto>>> GetAllIndicators()
+        {
+            return Ok(await _unitOfWork.PerfIndicatorRepository.GetPerfIndicatorsAsync());
+        }
     }
 }

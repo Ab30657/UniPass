@@ -1,13 +1,13 @@
 import { Box } from '@mui/material';
-import { tokens } from '../theme';
-import Header from '../components/Header';
+import { tokens } from '../../theme';
+import Header from '../../components/Header';
 import React, { useContext, useEffect, useState } from 'react';
 import { Container, Stack } from '@mui/system';
 import { Button, SvgIcon } from '@mui/material';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import { useTheme } from '@emotion/react';
-import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import LoadingContext from '../context/LoadingContext';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import LoadingContext from '../../context/LoadingContext';
 import { useNavigate } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 import EditPIs from './EditPIs';
@@ -29,7 +29,7 @@ const PerformanceIndicators = () => {
       .get(GET_ALL_PI_URL)
       .then((response) => {
         // handle successful response
-        console.log(response.data);
+        // console.log(response.data);
         const data = response.data;
         setPI(data);
       })

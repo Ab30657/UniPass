@@ -4,12 +4,12 @@ import Box from '@mui/material/Box';
 import { Container, Stack } from '@mui/system';
 import { Button, Grid, SvgIcon, Typography } from '@mui/material';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
-import { CourseCard } from '../components/CourseCard';
+import { CourseCard } from '../../components/CourseCardAdmin';
 import { useTheme } from '@emotion/react';
-import { tokens } from '../theme';
-import Header from '../components/Header';
-import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import LoadingContext from '../context/LoadingContext';
+import { tokens } from '../../theme';
+import Header from '../../components/Header';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import LoadingContext from '../../context/LoadingContext';
 import { useNavigate } from 'react-router-dom';
 
 const GET_ALL_COURSES_URL = 'admin/courses';
