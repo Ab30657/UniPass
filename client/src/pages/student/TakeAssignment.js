@@ -35,6 +35,8 @@ const TakeAssignment = () => {
         const response = await axiosPrivate.get(
           `Student/Courses/${courseId}/Materials/${assignmentId}`,
         );
+        //testing
+        console.log(response.data);
         setAssignment(response.data);
         setUserAnswers(new Array(response.data.questions.length).fill(null));
       } catch (error) {

@@ -26,7 +26,7 @@ export const EnrolledCourses = () => {
     Promise.all([axiosPrivate.get(GET_OWN_COURSES_URL)])
       .then(([reqAll, reqOwn]) => {
         const data = reqAll.data;
-        // console.log(data);
+        console.log(data);
         setEnrolledCourses(data);
       })
       .finally(() => {
