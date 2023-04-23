@@ -38,14 +38,27 @@ const GradeForAssignment = () => {
         );
         //testing
         console.log(response.data);
-        //console.log(response.data.takeQuestions.length);
         setAssignment(response.data);
         setTitle(response.data.title);
         if (response.data.questions) {
           setQuestions(response.data.questions);
         }
         if (response.data.takeAssignment) {
-          setUserAnswers(response.data.takeAssignment.takeQuestions);
+          const updatedUserAnswers = response.data.questions.map((question) => {
+            const userAnswer = response.data.takeAssignment.takeQuestions.find(
+              (answer) => answer.questionId === question.id,
+            );
+            if (userAnswer) {
+              return userAnswer;
+            } else {
+              return {
+                questionId: question.id,
+                answerText: '',
+                correct: false,
+              };
+            }
+          });
+          setUserAnswers(updatedUserAnswers);
         }
       } catch (error) {
         console.error(error);
@@ -55,16 +68,14 @@ const GradeForAssignment = () => {
     };
     fetchData();
   }, []);
-  console.log(userAnswers);
+
   const calculateScore = () => {
     let score = 0;
-    for (let i = 0; i < userAnswers.length; i++) {
-      if (userAnswers[i].correct) {
-        console.log(userAnswers[i]);
-        score += 1;
+    userAnswers.forEach((answer, index) => {
+      if (answer && answer.correct) {
+        score += questions[index].fullMarks;
       }
-    }
-    //console.log(score);
+    });
     return score;
   };
 
@@ -96,21 +107,22 @@ const GradeForAssignment = () => {
                       ),
                     )}
                   </RadioGroup>
-                  {userAnswers[index]?.correct && (
+                  {userAnswers[index]?.correct ? (
                     <Typography variant="caption" color="green">
                       Correct
                     </Typography>
-                  )}
-                  {!userAnswers[index]?.correct && (
+                  ) : (
                     <Typography variant="caption" color="red">
-                      Incorrect
+                      Incorrect. The correct answer is:{' '}
+                      {userAnswers[index]?.correctAnswer}
                     </Typography>
                   )}
                 </FormControl>
               </div>
             ))}
           <Typography variant="h6" gutterBottom>
-            Total Score: {final_score}/ {userAnswers.length}
+            Score: {final_score} out of{' '}
+            {questions.reduce((acc, question) => acc + question.fullMarks, 0)}
           </Typography>
         </CardContent>
       </Card>
