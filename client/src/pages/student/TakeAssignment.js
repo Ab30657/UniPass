@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -10,42 +11,46 @@ import {
   Button,
 } from '@mui/material';
 import { Box } from '@mui/system';
-import { useParams } from 'react-router-dom';
+import { useTheme } from '@emotion/react';
+import { tokens } from '../../theme';
+import LoadingContext from '../../context/LoadingContext';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const TakeAssignment = () => {
+  const [assignment, setAssignment] = useState(null);
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const axiosPrivate = useAxiosPrivate();
+  const { showLoading, hideLoading } = useContext(LoadingContext);
+
   const { courseId, assignmentId } = useParams();
-  const [quizData] = useState([
-    {
-      question: 'What is the capital of France?',
-      options: [
-        { answer: 'Paris', isCorrect: true },
-        { answer: 'London', isCorrect: false },
-        { answer: 'Berlin', isCorrect: false },
-      ],
-    },
-    {
-      question: 'What is the largest country in the world?',
-      options: [
-        { answer: 'USA', isCorrect: false },
-        { answer: 'China', isCorrect: false },
-        { answer: 'Russia', isCorrect: true },
-      ],
-    },
-  ]);
 
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [userAnswers, setUserAnswers] = useState(
-    new Array(quizData.length).fill(null),
-  );
+  useEffect(() => {
+    const fetchData = async () => {
+      showLoading();
+      try {
+        const response = await axiosPrivate.get(
+          `Student/Courses/${courseId}/Materials/${assignmentId}`,
+        );
+        setAssignment(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        hideLoading();
+      }
+    };
+    fetchData();
+  }, [axiosPrivate, courseId, assignmentId, showLoading, hideLoading]);
 
-  const handleAnswerChange = (event) => {
+  const handleAnswerChange = (event, index) => {
     const newAnswers = [...userAnswers];
-    newAnswers[currentQuestion] = parseInt(event.target.value);
+    newAnswers[index] = parseInt(event.target.value);
     setUserAnswers(newAnswers);
   };
 
-  const handleNextQuestion = () => {
-    setCurrentQuestion(currentQuestion + 1);
+  const handleNextQuestion = (index) => {
+    setCurrentQuestion(index + 1);
   };
 
   const calculateScore = () => {
@@ -61,57 +66,142 @@ const TakeAssignment = () => {
     return score;
   };
 
+  if (!assignment) {
+    return null; // render loading spinner or message
+  }
+
+  const { title, questions, takeAssignments } = assignment;
+  const quizData = questions.map((question) => {
+    const options = question.performanceIndicators.map((option) => ({
+      answer: option.name,
+      isCorrect: false, // replace with correct answer logic
+    }));
+    return {
+      question: question.questionText,
+      options,
+    };
+  });
+
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [userAnswers, setUserAnswers] = useState(
+    new Array(quizData.length).fill(null),
+  );
+
   const score = calculateScore();
 
   return (
     <Box m="20px">
-      <Card>
-        <CardContent>
-          {currentQuestion < quizData.length ? (
-            <>
+      {quizData.map((question, index) => (
+        <div key={index} style={{ marginBottom: '20px' }}>
+          <Card>
+            <CardContent>
               <Typography variant="h5" gutterBottom>
-                Question {currentQuestion + 1} of {quizData.length}
+                Question {index + 1} of {quizData.length}
               </Typography>
               <Typography variant="body1" gutterBottom>
-                {quizData[currentQuestion].question}
+                {question.question}
               </Typography>
               <FormControl component="fieldset">
                 <RadioGroup
-                  value={userAnswers[currentQuestion]}
-                  onChange={handleAnswerChange}
+                  value={userAnswers[index]}
+                  onChange={(event) => handleAnswerChange(event, index)}
                 >
-                  {quizData[currentQuestion].options.map((option, index) => (
+                  {question.options.map((option, optionIndex) => (
                     <FormControlLabel
-                      key={index}
-                      value={index}
+                      key={optionIndex}
+                      value={optionIndex}
                       control={<Radio />}
                       label={option.answer}
                     />
                   ))}
                 </RadioGroup>
               </FormControl>
-              <Button
-                variant="contained"
-                disabled={userAnswers[currentQuestion] === null}
-                onClick={handleNextQuestion}
-              >
-                Next
-              </Button>
-            </>
-          ) : (
-            <>
+              {currentQuestion === index && (
+                <Button
+                  variant="contained"
+                  disabled={userAnswers[index] === null}
+                  onClick={() => handleNextQuestion(index)}
+                >
+                  Next
+                </Button>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      ))}
+      {currentQuestion === quizData.length && (
+        <Box mt="20px">
+          <Card>
+            <CardContent>
               <Typography variant="h5" gutterBottom>
-                Quiz Complete!
+                Quiz Completed!
               </Typography>
               <Typography variant="body1" gutterBottom>
                 You scored {score} out of {quizData.length} (
                 {(score / quizData.length) * 100}%).
               </Typography>
-            </>
-          )}
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        </Box>
+      )}
     </Box>
+
+    /*return (
+    <Box m="20px">
+      {quizData.map((question, index) => (
+        <div key={index} style={{ marginBottom: '20px' }}>
+          <Card>
+            <CardContent>
+              <Typography variant="h5" gutterBottom>
+                Question {index + 1} of {quizData.length}
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                {question.question}
+              </Typography>
+              <FormControl component="fieldset">
+                <RadioGroup
+                  value={userAnswers[index]}
+                  onChange={handleAnswerChange}
+                >
+                  {question.options.map((option, optionIndex) => (
+                    <FormControlLabel
+                      key={optionIndex}
+                      value={optionIndex}
+                      control={<Radio />}
+                      label={option.answer}
+                    />
+                  ))}
+                </RadioGroup>
+              </FormControl>
+              {currentQuestion === index && (
+                <Button
+                  variant="contained"
+                  disabled={userAnswers[index] === null}
+                  onClick={handleNextQuestion}
+                >
+                  Next
+                </Button>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      ))}
+      {currentQuestion === quizData.length && (
+        <Box mt="20px">
+          <Card>
+            <CardContent>
+              <Typography variant="h5" gutterBottom>
+                Quiz Completed!
+              </Typography>
+              <Typography variant="body1" gutterBottom>
+                You scored {score} out of {quizData.length} (
+                {(score / quizData.length) * 100}%).
+              </Typography>
+            </CardContent>
+          </Card>
+        </Box>
+      )}
+    </Box>*/
   );
 };
 

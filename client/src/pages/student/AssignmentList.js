@@ -16,7 +16,8 @@ import Divider from '@mui/material/Divider';
 import { AssistWalker } from '@mui/icons-material';
 import Grid from '@mui/material/Grid';
 
-const GET_STUDENT_ASSIGNMENT_URL = 'Student/Courses/1/Materials';
+const courseId = '1';
+const GET_STUDENT_ASSIGNMENT_URL = `Student/Courses/1/Materials`;
 const GET__ALL_COURSES_URL = 'Student/Courses';
 const style = {
   width: '100%',
@@ -25,7 +26,7 @@ const style = {
 };
 
 const AssignmentList = () => {
-  const { courseId } = useParams();
+  //const { courseId } = useParams();
   const [Assignment, setAssignment] = useState([]);
   const [Courses, setCourses] = useState([]);
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const AssignmentList = () => {
 
   useEffect(() => {
     showLoading();
-
+    /*
     const res = axiosPrivate
       .get(GET__ALL_COURSES_URL)
       .then((res) => {
@@ -48,13 +49,13 @@ const AssignmentList = () => {
       })
       .finally(() => {
         hideLoading();
-      });
+      });*/
 
     const response = axiosPrivate
       .get(GET_STUDENT_ASSIGNMENT_URL)
       .then((response) => {
         // handle successful response
-        //console.log(response.data);
+        console.log(response.data);
         const data = response.data;
         setAssignment(data);
       })
@@ -67,13 +68,13 @@ const AssignmentList = () => {
       });
   }, []);
   //console.log(Courses);
-
+  /*
   const rows = Assignment.map((material) => ({
     id: material.id,
     title: material.title,
     semesterId: material.semesterId,
     courseId: material.courseId,
-  }));
+  }));*/
 
   return (
     <>
@@ -92,7 +93,9 @@ const AssignmentList = () => {
               <List sx={style} component="nav" aria-label="mailbox folders">
                 {Assignment.map((material) => (
                   <div key={material.id}>
-                    <Link to={`/Courses/Assignment/Quiz/${material.id}`}>
+                    <Link
+                      to={`/Courses/${material.courseId}/Assignment/${material.id}`}
+                    >
                       <ListItem button>
                         <ListItemText primary={material.title} />
                       </ListItem>
