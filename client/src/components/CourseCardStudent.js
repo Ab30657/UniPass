@@ -116,9 +116,7 @@ export const CourseCard = (props) => {
       >
         <Stack alignItems="center" direction="row" spacing={1}>
           {registered && (
-            <Button
-              onClick={() => navigate(`/Courses/${course.id}/Assignment`)}
-            >
+            <Button onClick={() => navigate(`/Courses/${course.id}/Materials`)}>
               <SvgIcon fontSize="small">
                 <ShieldCheckIcon color={colors.greenAccent[400]} />
               </SvgIcon>

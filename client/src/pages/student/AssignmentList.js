@@ -55,7 +55,7 @@ const AssignmentList = () => {
       .get(GET_STUDENT_ASSIGNMENT_URL)
       .then((response) => {
         // handle successful response
-        console.log(response.data);
+        // console.log(response.data);
         const data = response.data;
         setAssignment(data);
       })
@@ -94,7 +94,7 @@ const AssignmentList = () => {
                 {Assignment.map((material) => (
                   <div key={material.id}>
                     <Link
-                      to={`/Courses/${material.courseId}/Assignment/${material.id}`}
+                      to={`/Courses/${material.courseId}/Materials/${material.id}`}
                     >
                       <ListItem button>
                         <ListItemText primary={material.title} />

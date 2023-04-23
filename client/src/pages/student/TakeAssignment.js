@@ -16,13 +16,18 @@ import { tokens } from '../../theme';
 import LoadingContext from '../../context/LoadingContext';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
+const POST_SUBMIT_ASSIGNMENT = 'student/courses/';
+
 const TakeAssignment = () => {
-  const [assignment, setAssignment] = useState(null);
+  const [assignment, setAssignment] = useState({});
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
   const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [title, setTitle] = useState('');
+  const [questions, setQuestions] = useState([]);
+  const [takeAssignments, setTakeAssignments] = useState([]);
   const axiosPrivate = useAxiosPrivate();
   const { showLoading, hideLoading } = useContext(LoadingContext);
 
@@ -36,9 +41,11 @@ const TakeAssignment = () => {
           `Student/Courses/${courseId}/Materials/${assignmentId}`,
         );
         //testing
-        console.log(response.data);
+        // console.log(response.data);
         setAssignment(response.data);
-        setUserAnswers(new Array(response.data.questions.length).fill(null));
+        setTitle(response.data.title);
+        setQuestions(response.data.questions);
+        setTakeAssignments(response.data.questions);
       } catch (error) {
         console.error(error);
       } finally {
@@ -46,11 +53,22 @@ const TakeAssignment = () => {
       }
     };
     fetchData();
-  }, [axiosPrivate, courseId, assignmentId, showLoading, hideLoading]);
+  }, []);
 
-  const handleAnswerChange = (event) => {
-    const newAnswers = [...userAnswers];
-    newAnswers[currentQuestion] = parseInt(event.target.value);
+  const handleAnswerChange = (questionId, event) => {
+    const newAnswers = userAnswers;
+    if (newAnswers.find((x) => x.questionId === questionId)) {
+      newAnswers.find((x) => x.questionId === questionId).answerId = parseInt(
+        event.target.value,
+      );
+    } else {
+      newAnswers.push({
+        questionId: questionId,
+        answerId: parseInt(event.target.value),
+      });
+    }
+    // user[currentQuestion].answerId = parseInt(event.target.value);
+    // console.log(newAnswers);
     setUserAnswers(newAnswers);
   };
 
@@ -58,60 +76,49 @@ const TakeAssignment = () => {
     setCurrentQuestion(currentQuestion + 1);
   };
 
-  const calculateScore = () => {
-    let score = 0;
-    for (let i = 0; i < quizData.length; i++) {
-      if (
-        userAnswers[i] ===
-        quizData[i].options.findIndex((option) => option.isCorrect)
-      ) {
-        score++;
-      }
-    }
-    return score;
+  const submitAnswer = () => {
+    // console.log(userAnswers);
+    const response = axiosPrivate
+      .post(
+        POST_SUBMIT_ASSIGNMENT + courseId + `/Materials/${assignmentId}`,
+        JSON.stringify({ takeQuestions: userAnswers }),
+      )
+      .then((response) => {
+        // handle successful response
+        // console.log(response.data);
+        navigate(`/Courses/${courseId}/Materials/${assignmentId}/Grade`);
+      })
+      .catch((error) => {
+        // handle error
+        console.error(error);
+      })
+      .finally(() => {
+        // console.log('Hello, World!');
+        hideLoading();
+      });
   };
-
-  if (!assignment) {
-    return null; // render loading spinner or message
-  }
-
-  const { title, questions, takeAssignments } = assignment;
-  const quizData = questions.map((question) => {
-    const options = question.performanceIndicators.map((option) => ({
-      answer: option.name,
-      isCorrect: false, // replace with correct answer logic
-    }));
-    return {
-      question: question.questionText,
-      options,
-    };
-  });
-
-  const score = calculateScore();
-
   return (
     <Box m="20px">
-      {quizData.map((question, index) => (
+      {questions.map((question, index) => (
         <div key={index} style={{ marginBottom: '20px' }}>
           <Card>
             <CardContent>
               <Typography variant="h5" gutterBottom>
-                Question {index + 1} of {quizData.length}
+                Question {index + 1} of {questions.length}
               </Typography>
               <Typography variant="body1" gutterBottom>
-                {question.question}
+                {question.questionText}
               </Typography>
               <FormControl component="fieldset">
                 <RadioGroup
-                  value={userAnswers[index]}
-                  onChange={handleAnswerChange}
+                  onChange={(e) => handleAnswerChange(question.id, e)}
                 >
-                  {question.options.map((option, optionIndex) => (
+                  {question?.answers.map((option, optionIndex) => (
                     <FormControlLabel
                       key={optionIndex}
-                      value={optionIndex}
+                      value={option.id}
                       control={<Radio />}
-                      label={option.answer}
+                      label={option.answerText}
                     />
                   ))}
                 </RadioGroup>
@@ -129,19 +136,11 @@ const TakeAssignment = () => {
           </Card>
         </div>
       ))}
-      {currentQuestion === quizData.length && (
+      {currentQuestion === questions.length && (
         <Box mt="20px">
-          <Card>
-            <CardContent>
-              <Typography variant="h5" gutterBottom>
-                Quiz Completed!
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                You scored {score} out of {quizData.length} (
-                {(score / quizData.length) * 100}%).
-              </Typography>
-            </CardContent>
-          </Card>
+          <Button variant="contained" onClick={submitAnswer}>
+            Submit Assignment
+          </Button>
         </Box>
       )}
     </Box>

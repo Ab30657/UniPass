@@ -35,8 +35,6 @@ const CreateAssignment = () => {
         JSON.stringify({ title, questions, semesterId: 1 }),
       )
       .then((response) => {
-        // handle successful response
-        // console.log(response.data);
         navigate(`/Courses/${courseId}/View`);
       })
       .catch((error) => {

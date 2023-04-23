@@ -27,6 +27,7 @@ import AssignmentList from './pages/student/AssignmentList';
 import { RequestPageRounded } from '@mui/icons-material';
 import TakeAssignment from './pages/student/TakeAssignment';
 import { EnrolledCourses } from './pages/student/EnrolledCourses';
+import GradeForAssignment from './pages/student/GradeForAssignment';
 
 const ROLES = {
   0: 'Admin',
@@ -166,12 +167,16 @@ function App() {
                     <Route path="/DepartmentCourses" element={<AllCourses />} />
                     <Route path="/Courses" element={<EnrolledCourses />} />
                     <Route
-                      path="/Courses/:courseId/Assignment"
+                      path="/Courses/:courseId/Materials"
                       element={<AssignmentList />}
                     />
                     <Route
-                      path="/Courses/:courseId/Assignment/:assignmentId"
+                      path="/Courses/:courseId/Materials/:assignmentId"
                       element={<TakeAssignment />}
+                    />
+                    <Route
+                      path="/Courses/:courseId/Materials/:assignmentId/Grade"
+                      element={<GradeForAssignment />}
                     />
                   </Route>
                   <Route path="/createcourse" element={<Createcourse />} />

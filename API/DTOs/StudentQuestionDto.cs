@@ -6,5 +6,6 @@ namespace API.DTOs
         public string QuestionText { get; set; }
         public int FullMarks { get; set; }
         public ICollection<PerformanceIndicatorDto> PerformanceIndicators { get; set; }
+        public ICollection<StudentAnswerDto> Answers { get; set; }
     }
 }
