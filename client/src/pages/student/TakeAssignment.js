@@ -18,6 +18,8 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const TakeAssignment = () => {
   const [assignment, setAssignment] = useState(null);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [userAnswers, setUserAnswers] = useState([]);
   const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -34,6 +36,7 @@ const TakeAssignment = () => {
           `Student/Courses/${courseId}/Materials/${assignmentId}`,
         );
         setAssignment(response.data);
+        setUserAnswers(new Array(response.data.questions.length).fill(null));
       } catch (error) {
         console.error(error);
       } finally {
@@ -43,14 +46,14 @@ const TakeAssignment = () => {
     fetchData();
   }, [axiosPrivate, courseId, assignmentId, showLoading, hideLoading]);
 
-  const handleAnswerChange = (event, index) => {
+  const handleAnswerChange = (event) => {
     const newAnswers = [...userAnswers];
-    newAnswers[index] = parseInt(event.target.value);
+    newAnswers[currentQuestion] = parseInt(event.target.value);
     setUserAnswers(newAnswers);
   };
 
-  const handleNextQuestion = (index) => {
-    setCurrentQuestion(index + 1);
+  const handleNextQuestion = () => {
+    setCurrentQuestion(currentQuestion + 1);
   };
 
   const calculateScore = () => {
@@ -82,71 +85,9 @@ const TakeAssignment = () => {
     };
   });
 
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [userAnswers, setUserAnswers] = useState(
-    new Array(quizData.length).fill(null),
-  );
-
   const score = calculateScore();
 
   return (
-    <Box m="20px">
-      {quizData.map((question, index) => (
-        <div key={index} style={{ marginBottom: '20px' }}>
-          <Card>
-            <CardContent>
-              <Typography variant="h5" gutterBottom>
-                Question {index + 1} of {quizData.length}
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {question.question}
-              </Typography>
-              <FormControl component="fieldset">
-                <RadioGroup
-                  value={userAnswers[index]}
-                  onChange={(event) => handleAnswerChange(event, index)}
-                >
-                  {question.options.map((option, optionIndex) => (
-                    <FormControlLabel
-                      key={optionIndex}
-                      value={optionIndex}
-                      control={<Radio />}
-                      label={option.answer}
-                    />
-                  ))}
-                </RadioGroup>
-              </FormControl>
-              {currentQuestion === index && (
-                <Button
-                  variant="contained"
-                  disabled={userAnswers[index] === null}
-                  onClick={() => handleNextQuestion(index)}
-                >
-                  Next
-                </Button>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-      ))}
-      {currentQuestion === quizData.length && (
-        <Box mt="20px">
-          <Card>
-            <CardContent>
-              <Typography variant="h5" gutterBottom>
-                Quiz Completed!
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                You scored {score} out of {quizData.length} (
-                {(score / quizData.length) * 100}%).
-              </Typography>
-            </CardContent>
-          </Card>
-        </Box>
-      )}
-    </Box>
-
-    /*return (
     <Box m="20px">
       {quizData.map((question, index) => (
         <div key={index} style={{ marginBottom: '20px' }}>
@@ -172,16 +113,16 @@ const TakeAssignment = () => {
                     />
                   ))}
                 </RadioGroup>
+                {currentQuestion === index && (
+                  <Button
+                    variant="contained"
+                    disabled={userAnswers[index] === null}
+                    onClick={handleNextQuestion}
+                  >
+                    Next
+                  </Button>
+                )}
               </FormControl>
-              {currentQuestion === index && (
-                <Button
-                  variant="contained"
-                  disabled={userAnswers[index] === null}
-                  onClick={handleNextQuestion}
-                >
-                  Next
-                </Button>
-              )}
             </CardContent>
           </Card>
         </div>
@@ -201,7 +142,7 @@ const TakeAssignment = () => {
           </Card>
         </Box>
       )}
-    </Box>*/
+    </Box>
   );
 };
 
