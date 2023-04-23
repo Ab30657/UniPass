@@ -16,7 +16,7 @@ import { tokens } from '../../theme';
 import LoadingContext from '../../context/LoadingContext';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
-const POST_SUBMIT_ASSIGNMENT = 'student/courses/';
+const POST_SUBMIT_ASSIGNMENT = 'Student/Courses/';
 
 const TakeAssignment = () => {
   const [assignment, setAssignment] = useState({});
@@ -41,7 +41,7 @@ const TakeAssignment = () => {
           `Student/Courses/${courseId}/Materials/${assignmentId}`,
         );
         //testing
-        // console.log(response.data);
+        console.log(response.data);
         setAssignment(response.data);
         setTitle(response.data.title);
         setQuestions(response.data.questions);
