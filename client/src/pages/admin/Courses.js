@@ -27,7 +27,8 @@ const Courses = () => {
       .get(GET_ALL_COURSES_URL)
       .then((response) => {
         // handle successful response
-        // console.log(response.data);
+        console.log(response.data);
+
         const data = response.data;
         setCourses(data);
       })

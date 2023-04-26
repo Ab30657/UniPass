@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Container, Stack } from '@mui/system';
 import Box from '@mui/material/Box';
-import Header from '../components/Header';
+import Header from '../../components/Header';
 import TextField from '@mui/material/TextField';
 import { Button, Grid, MenuItem, FormControl } from '@mui/material';
 import { useTheme } from '@emotion/react';
@@ -9,9 +9,9 @@ import IconButton from '@mui/material/IconButton';
 import InputLabel from '@mui/material/InputLabel';
 import AddIcon from '@mui/icons-material/Add';
 import Select from '@mui/material/Select';
-import { tokens } from '../theme';
-import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import LoadingContext from '../context/LoadingContext';
+import { tokens } from '../../theme';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import LoadingContext from '../../context/LoadingContext';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const GET_ALL_PIs = 'instructor/courses/';
@@ -35,9 +35,7 @@ const CreateAssignment = () => {
         JSON.stringify({ title, questions, semesterId: 1 }),
       )
       .then((response) => {
-        // handle successful response
-        // console.log(response.data);
-        navigate(`/Courses/${courseId}/View`);
+        navigate(`/Courses/${courseId}/Materials`);
       })
       .catch((error) => {
         // handle error

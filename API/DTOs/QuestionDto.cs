@@ -2,6 +2,6 @@ namespace API.DTOs
 {
     public class InstructorQuestionDto : StudentQuestionDto
     {
-        public ICollection<AnswerDto> Answers { get; set; }
+        public ICollection<InstructorAnswerDto> Answers { get; set; }
     }
 }

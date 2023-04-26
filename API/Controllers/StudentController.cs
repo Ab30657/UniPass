@@ -175,5 +175,15 @@ namespace API.Controllers
 
             return Ok("Register successful.");
         }
+
+        [HttpGet("Assignment/{assignmentId}/grades")]
+        public async Task<ActionResult<List<StudentAssignmentGradesDto>>> GetStudentGradeForAssignmentById(int assignmentId)
+        {
+
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var studentId = (await _unitOfWork.UserRepository.GetStudentByUserIdAsync(userId)).Id;
+            var studentGrade = await _unitOfWork.CourseRepository.GetStudentGradeForAssignmentById(studentId, assignmentId);
+            return Ok(studentGrade);
+        }
     }
 }
