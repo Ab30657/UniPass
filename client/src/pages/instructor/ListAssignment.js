@@ -54,7 +54,7 @@ const ListAssignment = () => {
             </Stack>
             <div>
               <Button
-                onClick={() => navigate('Materials/New')}
+                onClick={() => navigate('New')}
                 startIcon={
                   <SvgIcon fontSize="small">
                     <PlusIcon />

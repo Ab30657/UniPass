@@ -155,7 +155,7 @@ function App() {
                   >
                     {user?.roles[0] === ROLES[1] && (
                       <Route
-                        path="/Courses/:courseId/View"
+                        path="/Courses/:courseId/Materials"
                         element={<ListAssignment />}
                       />
                     )}
@@ -173,7 +173,7 @@ function App() {
                   <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
                     <Route path="/Courses/:courseId" element={<Editcourse />} />
                     <Route
-                      path="Courses/:courseId/View/Materials/New"
+                      path="Courses/:courseId/Materials/New"
                       element={<CreateAssignment />}
                     />
                   </Route>
