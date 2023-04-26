@@ -317,6 +317,7 @@ const GradeForAssignment = () => {
               colors={{ scheme: 'accent' }}
               blendMode="multiply"
               motionConfig="wobbly"
+              maxValue="100"
               legends={[
                 {
                   anchor: 'top-left',
