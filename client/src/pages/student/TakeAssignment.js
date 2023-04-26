@@ -41,6 +41,7 @@ const TakeAssignment = () => {
           `Student/Courses/${courseId}/Materials/${assignmentId}`,
         );
         //testing
+        if (response.data.takeAssignments.length > 0) navigate(`Grade`);
         console.log(response.data);
         setAssignment(response.data);
         setTitle(response.data.title);
@@ -99,49 +100,98 @@ const TakeAssignment = () => {
   };
   return (
     <Box m="20px">
-      {questions.map((question, index) => (
-        <div key={index} style={{ marginBottom: '20px' }}>
-          <Card>
-            <CardContent>
-              <Typography variant="h5" gutterBottom>
-                Question {index + 1} of {questions.length}
+      <Box
+        gridColumn="span 4"
+        gridRow="span 2"
+        backgroundColor={colors.primary[400]}
+        overflow="auto"
+      >
+        {questions?.map((question, index) => (
+          <div key={index}>
+            <Box
+              key={index}
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+              borderBottom={`4px solid ${colors.primary[500]}`}
+              colors={colors.grey[100]}
+              p="15px"
+            >
+              <Typography
+                color={colors.grey[100]}
+                variant="h5"
+                fontWeight="600"
+              >
+                {index + 1}. {question.questionText}
               </Typography>
-              <Typography variant="body1" gutterBottom>
-                {question.questionText}
-              </Typography>
-              <FormControl component="fieldset">
-                <RadioGroup
-                  onChange={(e) => handleAnswerChange(question.id, e)}
+            </Box>
+            <Box
+              key={`${question.txId}-${index}`}
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+              borderBottom={`4px solid ${colors.primary[500]}`}
+              p="15px"
+            >
+              <Box>
+                <Typography
+                  color={colors.greenAccent[500]}
+                  variant="h5"
+                  fontWeight="600"
                 >
-                  {question?.answers.map((option, optionIndex) => (
-                    <FormControlLabel
-                      key={optionIndex}
-                      value={option.id}
-                      control={<Radio />}
-                      label={option.answerText}
-                    />
-                  ))}
-                </RadioGroup>
-                {currentQuestion === index && (
-                  <Button
-                    variant="contained"
-                    disabled={userAnswers[index] === null}
-                    onClick={handleNextQuestion}
-                  >
-                    Next
-                  </Button>
-                )}
-              </FormControl>
-            </CardContent>
-          </Card>
-        </div>
-      ))}
+                  <FormControl component="fieldset">
+                    <RadioGroup
+                      onChange={(e) => handleAnswerChange(question.id, e)}
+                    >
+                      {question?.answers.map((option, optionIndex) => (
+                        <FormControlLabel
+                          key={optionIndex}
+                          value={option.id}
+                          control={<Radio />}
+                          label={option.answerText}
+                        />
+                      ))}
+                    </RadioGroup>
+                    {currentQuestion === index && (
+                      <Button
+                        variant="contained"
+                        disabled={userAnswers[index] === null}
+                        onClick={handleNextQuestion}
+                      >
+                        Next
+                      </Button>
+                    )}
+                  </FormControl>
+                </Typography>
+              </Box>
+              <Box
+                backgroundColor={colors.greenAccent[500]}
+                p="5px 10px"
+                borderRadius="4px"
+                minWidth={100}
+              >
+                Points: {question.fullMarks}
+              </Box>
+            </Box>
+          </div>
+        ))}
+      </Box>
       {currentQuestion === questions.length && (
-        <Box mt="20px">
-          <Button variant="contained" onClick={submitAnswer}>
-            Submit Assignment
-          </Button>
-        </Box>
+        <Button
+          sx={{
+            backgroundColor: colors.blueAccent[700],
+            color: colors.grey[100],
+            fontSize: '14px',
+            fontWeight: 'bold',
+            padding: '10px 20px',
+            boxShadow: 5,
+            mt: 3,
+            mb: 2,
+          }}
+          onClick={submitAnswer}
+        >
+          Submit Assignment
+        </Button>
       )}
     </Box>
   );

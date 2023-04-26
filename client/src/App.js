@@ -19,8 +19,8 @@ import LoadingProvider from './components/LoadingProvider';
 import Spinner from './components/Spinner';
 import Createcourse from './pages/admin/Createcourse';
 import Users from './pages/admin/Users';
-import ListAssignment from './pages/ListAssignment';
-import CreateAssignment from './pages/CreateAssignment';
+import ListAssignment from './pages/instructor/ListAssignment';
+import CreateAssignment from './pages/instructor/CreateAssignment';
 //import { createTheme } from './theme';
 import CreatePIs from './pages/admin/CreatePIs';
 import AssignmentList from './pages/student/AssignmentList';
@@ -100,7 +100,7 @@ function App() {
                     {/* //<Route path="/Courses" element={<Courses />} />*/}
                     <Route path="/PIs" element={<PerformanceIndicators />} />
                   </Route>
-                  <Route
+                  {/* <Route
                     element={
                       <RequireAuth allowedRoles={[ROLES[0], ROLES[1]]} />
                     }
@@ -135,7 +135,7 @@ function App() {
                     {user?.roles[0] === ROLES[0] && (
                       <Route path="/Courses" element={<AdminCourses />} />
                     )}
-                  </Route>
+                  </Route> */}
                   <Route
                     element={
                       <RequireAuth allowedRoles={[ROLES[0], ROLES[1]]} />
@@ -146,6 +146,24 @@ function App() {
                     )}
                     {user?.roles[0] === ROLES[0] && (
                       <Route path="/Courses" element={<AdminCourses />} />
+                    )}
+                  </Route>
+                  <Route
+                    element={
+                      <RequireAuth allowedRoles={[ROLES[1], ROLES[2]]} />
+                    }
+                  >
+                    {user?.roles[0] === ROLES[1] && (
+                      <Route
+                        path="/Courses/:courseId/Materials"
+                        element={<ListAssignment />}
+                      />
+                    )}
+                    {user?.roles[0] === ROLES[2] && (
+                      <Route
+                        path="/Courses/:courseId/Materials"
+                        element={<AssignmentList />}
+                      />
                     )}
                   </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[0]]} />}>
@@ -155,21 +173,13 @@ function App() {
                   <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
                     <Route path="/Courses/:courseId" element={<Editcourse />} />
                     <Route
-                      path="/Courses/:courseId/View"
-                      element={<ListAssignment />}
-                    />
-                    <Route
-                      path="Courses/:courseId/View/Materials/New"
+                      path="Courses/:courseId/Materials/New"
                       element={<CreateAssignment />}
                     />
                   </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
                     <Route path="/DepartmentCourses" element={<AllCourses />} />
                     <Route path="/Courses" element={<EnrolledCourses />} />
-                    <Route
-                      path="/Courses/:courseId/Materials"
-                      element={<AssignmentList />}
-                    />
                     <Route
                       path="/Courses/:courseId/Materials/:assignmentId"
                       element={<TakeAssignment />}

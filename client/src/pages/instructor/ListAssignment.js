@@ -5,12 +5,12 @@ import { Button, CardActions, Grid, SvgIcon, Typography } from '@mui/material';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
-import { tokens } from '../theme';
-import Header from '../components/Header';
+import { tokens } from '../../theme';
+import Header from '../../components/Header';
 import { ClassOutlined } from '@mui/icons-material';
 import { Avatar, Card, CardContent, Divider } from '@mui/material';
-import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import LoadingContext from '../context/LoadingContext';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import LoadingContext from '../../context/LoadingContext';
 
 const GET_ALL_ASSIGNMENTS_URL = 'instructor/courses/';
 
@@ -54,7 +54,7 @@ const ListAssignment = () => {
             </Stack>
             <div>
               <Button
-                onClick={() => navigate('Materials/New')}
+                onClick={() => navigate('New')}
                 startIcon={
                   <SvgIcon fontSize="small">
                     <PlusIcon />
@@ -109,7 +109,7 @@ const ListAssignment = () => {
                     </Typography>
                     <CardActions>
                       <Button
-                        onClick={() => navigate(`Materials/${courseId}`)}
+                        onClick={() => navigate(`${courseId}`)}
                         sx={{
                           backgroundColor: colors.greenAccent[700],
                           color: colors.grey[100],

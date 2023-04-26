@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { Bar } from 'react-chartjs-2';
+import { Bar, Line } from 'react-chartjs-2';
 
 const PerformanceIndicatorGraph = ({ questions }) => {
   const performanceIndicators = questions.flatMap((question) =>
