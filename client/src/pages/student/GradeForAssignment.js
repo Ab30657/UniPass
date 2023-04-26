@@ -369,11 +369,12 @@ const GradeForAssignment = () => {
               innerRadius={0.5}
               padAngle={0.7}
               cornerRadius={3}
+              valueFormat=">-.2f"
               activeOuterRadiusOffset={8}
               borderWidth={1}
               borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
               arcLinkLabelsSkipAngle={10}
-              arcLinkLabelsTextColor="#333333"
+              arcLinkLabelsTextColor={colors.grey[100]}
               arcLinkLabelsThickness={2}
               arcLinkLabelsColor={{ from: 'color' }}
               arcLabelsSkipAngle={10}
