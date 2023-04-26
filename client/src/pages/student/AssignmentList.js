@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { tokens } from '../../theme';
 import Header from '../../components/Header';
 import React, { useContext, useEffect, useState } from 'react';
@@ -17,18 +17,32 @@ import { AssistWalker } from '@mui/icons-material';
 import Grid from '@mui/material/Grid';
 
 const courseId = '1';
-const GET_STUDENT_ASSIGNMENT_URL = `Student/Courses/1/Materials`;
+const GET_STUDENT_ASSIGNMENT_URL = `Student/Courses/`;
 const GET__ALL_COURSES_URL = 'Student/Courses';
+const GET_COURSE_URL = 'Student/Courses/';
+
 const style = {
   width: '100%',
   maxWidth: 900,
   bgcolor: 'background.paper',
 };
 
+const useStyle = {
+  '&:hover': {
+    cursor: 'pointer',
+    color: '#ffffff !important',
+    boxShadow: 'none !important',
+  },
+  '&:active': {
+    boxShadow: 'none !important',
+    color: '#3c52b2 !important',
+  },
+};
+
 const AssignmentList = () => {
-  //const { courseId } = useParams();
   const [Assignment, setAssignment] = useState([]);
-  const [Courses, setCourses] = useState([]);
+  const [course, setCourse] = useState({ instructors: [] });
+  let { courseId } = useParams();
   const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -37,22 +51,21 @@ const AssignmentList = () => {
 
   useEffect(() => {
     showLoading();
-    /*
+
     const res = axiosPrivate
-      .get(GET__ALL_COURSES_URL)
+      .get(GET_COURSE_URL + courseId)
       .then((res) => {
-        const data = res.data;
-        setCourses(data);
+        setCourse(res.data);
       })
       .catch((error) => {
         console.error(error);
       })
       .finally(() => {
         hideLoading();
-      });*/
+      });
 
     const response = axiosPrivate
-      .get(GET_STUDENT_ASSIGNMENT_URL)
+      .get(GET_STUDENT_ASSIGNMENT_URL + courseId + '/Materials')
       .then((response) => {
         // handle successful response
         // console.log(response.data);
@@ -84,26 +97,67 @@ const AssignmentList = () => {
             <Stack direction="row" justifyContent="space-between" spacing={4}>
               <Stack spacing={1}>
                 <Header
-                  title="Assignment"
-                  subtitle={`Course ID: ${Assignment.courseId}`}
+                  title={course?.title}
+                  subtitle={`Instructor: ${
+                    course?.instructors[0]?.firstName +
+                    ' ' +
+                    course?.instructors[0]?.lastName
+                  }`}
                 />
               </Stack>
             </Stack>
-            <Box sx={{ height: 400, width: '100%' }}>
-              <List sx={style} component="nav" aria-label="mailbox folders">
-                {Assignment.map((material) => (
-                  <div key={material.id}>
-                    <Link
-                      to={`/Courses/${material.courseId}/Materials/${material.id}`}
+            <Box
+              gridColumn="span 4"
+              gridRow="span 2"
+              backgroundColor={colors.primary[400]}
+              overflow="auto"
+            >
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                borderBottom={`4px solid ${colors.primary[500]}`}
+                colors={colors.grey[100]}
+                p="15px"
+              >
+                <Typography
+                  color={colors.grey[100]}
+                  variant="h5"
+                  fontWeight="600"
+                >
+                  Assignments
+                </Typography>
+              </Box>
+              {Assignment?.map((material, i) => (
+                <Box
+                  key={`${material.txId}-${i}`}
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  borderBottom={`4px solid ${colors.primary[500]}`}
+                  p="15px"
+                >
+                  <Box onClick={() => navigate(`${material.id}`)}>
+                    <Typography
+                      color={colors.greenAccent[500]}
+                      variant="h5"
+                      fontWeight="600"
+                      sx={useStyle}
                     >
-                      <ListItem button>
-                        <ListItemText primary={material.title} />
-                      </ListItem>
-                    </Link>
-                    <Divider />
-                  </div>
-                ))}
-              </List>
+                      {material.title}
+                    </Typography>
+                  </Box>
+                  <Box color={colors.grey[100]}>{material.date}</Box>
+                  <Box
+                    backgroundColor={colors.greenAccent[500]}
+                    p="5px 10px"
+                    borderRadius="4px"
+                    minWidth={100}
+                  >
+                    Full Points: {material.fullMarks}
+                  </Box>
+                </Box>
+              ))}
             </Box>
             <Box
               sx={{

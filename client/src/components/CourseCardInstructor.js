@@ -82,7 +82,7 @@ export const CourseCard = (props) => {
               Edit
             </Typography>
           </Button>
-          <Button onClick={() => navigate(`View/${course.id}`)}>
+          <Button onClick={() => navigate(`${course.id}/Materials`)}>
             <SvgIcon fontSize="small">
               <ViewFinderCircle color={colors.greenAccent[400]} />
             </SvgIcon>

@@ -6,5 +6,6 @@ namespace API.DTOs
         public string Title { get; set; }
         public int SemesterId { get; set; }
         public int CourseId { get; set; }
+        public int FullMarks { get; set; }
     }
 }
