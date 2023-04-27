@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import ShieldCheckIcon from '@heroicons/react/24/solid/ShieldCheckIcon';
 import SquaresPlusIcon from '@heroicons/react/24/solid/SquaresPlusIcon';
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+
 import {
   Alert,
   Box,
@@ -140,6 +142,20 @@ export const CourseCard = (props) => {
                 variant="body2"
               >
                 Register
+              </Typography>
+            </Button>
+          )}
+          {registered && (
+            <Button onClick={() => navigate(`/Courses/${course.id}/PI`)}>
+              <SvgIcon fontSize="small">
+                <AnalyticsIcon color={colors.greenAccent[400]} />
+              </SvgIcon>
+              <Typography
+                color={colors.greenAccent[400]}
+                display="inline"
+                variant="body2"
+              >
+                View PI
               </Typography>
             </Button>
           )}

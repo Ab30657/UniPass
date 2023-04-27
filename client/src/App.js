@@ -28,7 +28,7 @@ import { RequestPageRounded } from '@mui/icons-material';
 import TakeAssignment from './pages/student/TakeAssignment';
 import { EnrolledCourses } from './pages/student/EnrolledCourses';
 import GradeForAssignment from './pages/student/GradeForAssignment';
-import PerformanceIndicatorGraph from './pages/student/PIGraphs';
+import PerformanceIndicatorGraph from './pages/student/PIGraphsCourse';
 const ROLES = {
   0: 'Admin',
   1: 'Instructor',
@@ -189,7 +189,7 @@ function App() {
                       element={<GradeForAssignment />}
                     />
                     <Route
-                      path="/PIGraph"
+                      path="/Courses/:courseId/PI"
                       element={<PerformanceIndicatorGraph />}
                     />
                   </Route>
