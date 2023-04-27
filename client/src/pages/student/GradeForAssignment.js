@@ -360,7 +360,7 @@ const GradeForAssignment = () => {
           height="75vh"
         >
           <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-            Pie Chart for Performance Indicator
+            Pie Chart
           </Typography>
           {assignmentTake && (
             <ResponsivePie
