@@ -28,6 +28,7 @@ import { RequestPageRounded } from '@mui/icons-material';
 import TakeAssignment from './pages/student/TakeAssignment';
 import { EnrolledCourses } from './pages/student/EnrolledCourses';
 import GradeForAssignment from './pages/student/GradeForAssignment';
+import AllAssigmentGrade from './pages/instructor/AllAssigmentGrade';
 
 const ROLES = {
   0: 'Admin',
@@ -99,6 +100,8 @@ function App() {
 
                     {/* //<Route path="/Courses" element={<Courses />} />*/}
                     <Route path="/PIs" element={<PerformanceIndicators />} />
+
+                    <Route path="/AllGrade" element={<AllAssigmentGrade />} />
                   </Route>
                   {/* <Route
                     element={
