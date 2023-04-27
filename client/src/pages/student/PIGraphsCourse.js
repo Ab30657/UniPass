@@ -18,7 +18,7 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import Header from '../../components/Header';
 
 const GET_COURSE_URL = 'Student/Courses/';
-const GET_ASSIGNMENT_GRADES_URL = 'Student/Assignment';
+const GET_ASSIGNMENT_GRADES_URL = 'Student/Assignment/';
 const PerformanceIndicatorGraph = () => {
   //Get title for the courses
   const [Assignment, setAssignment] = useState([]);
@@ -39,6 +39,7 @@ const PerformanceIndicatorGraph = () => {
 
   //const { courseId, assignmentId } = useParams();
   const { courseId, assignmentId } = useParams();
+  //let finalPiScores;
   //const assignmentId = '1';
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +49,35 @@ const PerformanceIndicatorGraph = () => {
         //testing
         //console.log(response.data);
         setCourse(response.data);
+        // fetch assignment grades for PI
+        /*const assignments = response.data.assignments;
+        const piScores = {};
+
+        for (const assignment of assignments) {
+          const response = await axiosPrivate.get(
+            `${GET_ASSIGNMENT_GRADES_URL}/${assignment.id}/grades`,
+          );
+          const performanceIndicatorScores =
+            response.data.performanceIndicatorScores;
+
+          for (const pis of performanceIndicatorScores) {
+            if (!piScores[pis.name]) {
+              piScores[pis.name] = {
+                name: pis.name,
+                Score: pis.score / pis.fullMarks,
+              };
+            } else {
+              piScores[pis.name].Score += pis.score / pis.fullMarks;
+            }
+          }
+        }
+
+        const finalPiScores = Object.values(piScores).map((pis) => ({
+          name: pis.name,
+          Score: (pis.Score / assignments.length) * 100,
+        }));
+
+        setPiScores(finalPiScores);*/
       } catch (error) {
         console.log(error);
       } finally {
@@ -59,113 +89,43 @@ const PerformanceIndicatorGraph = () => {
     const fetchData1 = async () => {
       showLoading();
       try {
-        const response = await axiosPrivate.get(
-          //`Student/Assignment/${assignmentId}/grades`,
-          'Student/Courses/',
-        );
-        //testing
-        console.log(response.data);
-        setAssignmentTake(response.data);
-        setTitle(response.data.title);
-        // if (response.data.questions) {
-        //   setQuestions(response.data.questions);
-        // }
-        /*
-        setPiScores(
-          response.data.performanceIndicatorScores.map((el) => ({
-            name: el.name,
-            Score: (el.score / el.fullMarks) * 100,
-          })),
-        );*/
-        // console.log(data);
-        if (response.data.takeAssignment) {
-          const updatedUserAnswers = response.data.questions.map((question) => {
-            const userAnswer = response.data.takeAssignment.takeQuestions.find(
-              (answer) => answer.questionId === question.id,
-            );
-            if (userAnswer) {
-              return userAnswer;
-            } else {
-              return {
-                questionId: question.id,
-                answerText: '',
-                correct: false,
-              };
-            }
-          });
-          setUserAnswers(updatedUserAnswers);
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        hideLoading();
-      }
-    };
-    fetchData1();
-    /*
-    const fetchData9 = async () => {
-      showLoading();
-      try {
-        const response = await axiosPrivate.get(
-          `Student/Courses/${courseId}/Materials/${assignmentId}`,
-        );
-        //testing
-        // if (response.data.takeAssignments.length > 0) navigate(`Grade`);
-        // console.log(response.data);
-        setTitle(response.data.title);
-        setQuestions(response.data.questions);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        hideLoading();
-      }
-    };
-    fetchData9();
+        const response = await axiosPrivate.get(GET_COURSE_URL + courseId);
+        const assignments = response.data.assignments;
+        const piScores = {};
 
-    const fetchData10 = async () => {
-      showLoading();
-      try {
-        const response = await axiosPrivate.get(
-          `Student/Assignment/${assignmentId}/grades`,
-        );
-        //testing
-        console.log(response.data);
-        setAssignmentTake(response.data);
-        setTitle(response.data.title);
-        // if (response.data.questions) {
-        //   setQuestions(response.data.questions);
-        // }
-        setPiScores(
-          response.data.performanceIndicatorScores.map((el) => ({
-            name: el.name,
-            Score: (el.score / el.fullMarks) * 100,
-          })),
-        );
-        // console.log(data);
-        if (response.data.takeAssignment) {
-          const updatedUserAnswers = response.data.questions.map((question) => {
-            const userAnswer = response.data.takeAssignment.takeQuestions.find(
-              (answer) => answer.questionId === question.id,
-            );
-            if (userAnswer) {
-              return userAnswer;
-            } else {
-              return {
-                questionId: question.id,
-                answerText: '',
-                correct: false,
+        for (const assignment of assignments) {
+          const response = await axiosPrivate.get(
+            `${GET_ASSIGNMENT_GRADES_URL}/${assignment.id}/grades`,
+          );
+          const performanceIndicatorScores =
+            response.data.performanceIndicatorScores;
+
+          for (const pis of performanceIndicatorScores) {
+            if (!piScores[pis.name]) {
+              piScores[pis.name] = {
+                name: pis.name,
+                Score: pis.score / pis.fullMarks,
               };
+            } else {
+              piScores[pis.name].Score += pis.score / pis.fullMarks;
             }
-          });
-          setUserAnswers(updatedUserAnswers);
+          }
         }
+
+        const finalPiScores = Object.values(piScores).map((pis) => ({
+          name: pis.name,
+          Score: (pis.Score / assignments.length) * 100,
+        }));
+
+        setPiScores(finalPiScores);
       } catch (error) {
         console.error(error);
       } finally {
         hideLoading();
       }
     };
-    fetchData10();*/
+
+    fetchData1();
   }, []);
 
   return (
