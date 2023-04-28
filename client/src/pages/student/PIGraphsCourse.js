@@ -16,6 +16,7 @@ import { tokens } from '../../theme';
 import LoadingContext from '../../context/LoadingContext';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import Header from '../../components/Header';
+import { NumbersSharp } from '@mui/icons-material';
 
 const GET_COURSE_URL = 'Student/Courses/';
 const GET_ASSIGNMENT_GRADES_URL = 'Student/Assignment/';
@@ -32,52 +33,21 @@ const PerformanceIndicatorGraph = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [title, setTitle] = useState('');
-  //   const [questions, setQuestions] = useState([]);
   const [piScores, setPiScores] = useState([]);
+  const [updatedpiScores, setUpdatedPiScores] = useState([]);
   const axiosPrivate = useAxiosPrivate();
   const { showLoading, hideLoading } = useContext(LoadingContext);
 
-  //const { courseId, assignmentId } = useParams();
-  const { courseId, assignmentId } = useParams();
-  //let finalPiScores;
-  //const assignmentId = '1';
+  const { courseId } = useParams();
+
   useEffect(() => {
+    //To get header for instructor
     const fetchData = async () => {
       showLoading();
       try {
         const response = await axiosPrivate.get(GET_COURSE_URL + courseId);
-        //testing
-        //console.log(response.data);
+        console.log(response);
         setCourse(response.data);
-        // fetch assignment grades for PI
-        /*const assignments = response.data.assignments;
-        const piScores = {};
-
-        for (const assignment of assignments) {
-          const response = await axiosPrivate.get(
-            `${GET_ASSIGNMENT_GRADES_URL}/${assignment.id}/grades`,
-          );
-          const performanceIndicatorScores =
-            response.data.performanceIndicatorScores;
-
-          for (const pis of performanceIndicatorScores) {
-            if (!piScores[pis.name]) {
-              piScores[pis.name] = {
-                name: pis.name,
-                Score: pis.score / pis.fullMarks,
-              };
-            } else {
-              piScores[pis.name].Score += pis.score / pis.fullMarks;
-            }
-          }
-        }
-
-        const finalPiScores = Object.values(piScores).map((pis) => ({
-          name: pis.name,
-          Score: (pis.Score / assignments.length) * 100,
-        }));
-
-        setPiScores(finalPiScores);*/
       } catch (error) {
         console.log(error);
       } finally {
@@ -85,46 +55,68 @@ const PerformanceIndicatorGraph = () => {
       }
     };
     fetchData();
-    //fetcha assignment grades for PI
+    const number_assignments = [];
     const fetchData1 = async () => {
       showLoading();
       try {
-        const response = await axiosPrivate.get(GET_COURSE_URL + courseId);
-        const assignments = response.data.assignments;
-        const piScores = {};
+        const res = axiosPrivate
+          .get(GET_COURSE_URL + courseId + '/Materials')
+          .then((response) => {
+            const data = response.data;
+            //console.log(data);
+            number_assignments.push(...data.map((d) => d.id));
+            //console.log(number_assignments);
+            setAssignment(data);
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+          .finally(() => {
+            hideLoading();
+          });
 
-        for (const assignment of assignments) {
+        for (const assignmentId of number_assignments) {
           const response = await axiosPrivate.get(
-            `${GET_ASSIGNMENT_GRADES_URL}/${assignment.id}/grades`,
+            GET_ASSIGNMENT_GRADES_URL + assignmentId + '/grades',
           );
-          const performanceIndicatorScores =
-            response.data.performanceIndicatorScores;
 
-          for (const pis of performanceIndicatorScores) {
-            if (!piScores[pis.name]) {
-              piScores[pis.name] = {
-                name: pis.name,
-                Score: pis.score / pis.fullMarks,
-              };
-            } else {
-              piScores[pis.name].Score += pis.score / pis.fullMarks;
-            }
+          //console.log(response.data.title);
+          console.log(response.data);
+          setAssignmentTake(response.data);
+          setPiScores(
+            response.data.performanceIndicatorScores.map((el) => ({
+              name: el.name,
+              Score: (el.score / el.fullMarks) * 100,
+            })),
+          );
+
+          if (response.data.takeAssignment) {
+            const updatedUserAnswers = response.data.questions.map(
+              (question) => {
+                const userAnswer =
+                  response.data.takeAssignment.takeQuestions.find(
+                    (answer) => answer.questionId === question.id,
+                  );
+                if (userAnswer) {
+                  return userAnswer;
+                } else {
+                  return {
+                    questionId: question.id,
+                    answerText: '',
+                    correct: false,
+                  };
+                }
+              },
+            );
+            setUserAnswers(updatedUserAnswers);
           }
         }
-
-        const finalPiScores = Object.values(piScores).map((pis) => ({
-          name: pis.name,
-          Score: (pis.Score / assignments.length) * 100,
-        }));
-
-        setPiScores(finalPiScores);
       } catch (error) {
         console.error(error);
       } finally {
         hideLoading();
       }
     };
-
     fetchData1();
   }, []);
 
@@ -150,7 +142,7 @@ const PerformanceIndicatorGraph = () => {
         <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
           Performance Indicator Scores
         </Typography>
-        {assignmentTake && (
+        {piScores.length >= 0 && (
           <ResponsiveRadar
             theme={{
               axis: {

@@ -55,6 +55,7 @@ const AssignmentList = () => {
     const res = axiosPrivate
       .get(GET_COURSE_URL + courseId)
       .then((res) => {
+        //console.log(res.data);
         setCourse(res.data);
       })
       .catch((error) => {
@@ -68,6 +69,8 @@ const AssignmentList = () => {
       .get(GET_STUDENT_ASSIGNMENT_URL + courseId + '/Materials')
       .then((response) => {
         const data = response.data;
+        console.log(data);
+        console.log(data.length);
         setAssignment(data);
       })
       .catch((error) => {
