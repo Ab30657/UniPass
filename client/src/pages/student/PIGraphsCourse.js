@@ -59,58 +59,44 @@ const PerformanceIndicatorGraph = () => {
     const fetchData1 = async () => {
       showLoading();
       try {
-        const res = axiosPrivate
-          .get(GET_COURSE_URL + courseId + '/Materials')
-          .then((response) => {
-            const data = response.data;
-            //console.log(data);
-            number_assignments.push(...data.map((d) => d.id));
-            //console.log(number_assignments);
-            setAssignment(data);
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-          .finally(() => {
-            hideLoading();
+        const res = await axiosPrivate.get(
+          GET_COURSE_URL + courseId + '/Materials',
+        );
+        const data = res.data;
+        setAssignment(data);
+
+        // Fetch data for all assignments in parallel
+        const assignmentResponses = await Promise.all(
+          data.map((assignment) =>
+            axiosPrivate.get(
+              GET_ASSIGNMENT_GRADES_URL + assignment.id + '/grades',
+            ),
+          ),
+        );
+
+        let piScoreSums = {};
+        let piScoreCounts = {};
+
+        // Process results for each assignment
+        assignmentResponses.forEach((response) => {
+          response.data.performanceIndicatorScores.forEach((piScore) => {
+            if (piScoreSums[piScore.name]) {
+              piScoreSums[piScore.name] += piScore.score;
+              piScoreCounts[piScore.name]++;
+            } else {
+              piScoreSums[piScore.name] = piScore.score;
+              piScoreCounts[piScore.name] = 1;
+            }
           });
+        });
+        console.log(piScoreSums);
+        console.log(piScoreCounts);
+        let averagePiScores = Object.keys(piScoreSums).map((piName) => ({
+          name: piName,
+          Score: piScoreSums[piName] / piScoreCounts[piName],
+        }));
 
-        for (const assignmentId of number_assignments) {
-          const response = await axiosPrivate.get(
-            GET_ASSIGNMENT_GRADES_URL + assignmentId + '/grades',
-          );
-
-          //console.log(response.data.title);
-          console.log(response.data);
-          setAssignmentTake(response.data);
-          setPiScores(
-            response.data.performanceIndicatorScores.map((el) => ({
-              name: el.name,
-              Score: (el.score / el.fullMarks) * 100,
-            })),
-          );
-
-          if (response.data.takeAssignment) {
-            const updatedUserAnswers = response.data.questions.map(
-              (question) => {
-                const userAnswer =
-                  response.data.takeAssignment.takeQuestions.find(
-                    (answer) => answer.questionId === question.id,
-                  );
-                if (userAnswer) {
-                  return userAnswer;
-                } else {
-                  return {
-                    questionId: question.id,
-                    answerText: '',
-                    correct: false,
-                  };
-                }
-              },
-            );
-            setUserAnswers(updatedUserAnswers);
-          }
-        }
+        setPiScores(averagePiScores);
       } catch (error) {
         console.error(error);
       } finally {
