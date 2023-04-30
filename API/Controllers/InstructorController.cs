@@ -112,6 +112,21 @@ namespace API.Controllers
         }
 
 
+        [HttpGet("Courses/{courseId}/Materials/{assignmentId}/{studentId}/grades")]
+        public async Task<ActionResult<AssignmentDetailDto<StudentQuestionDto>>> GetStudentGrade(int courseId, int assignmentId, int studentId)
+        {
+            //courseId is to check if student is enrolled in the course
+            var studentGrade = await _unitOfWork.CourseRepository.GetStudentGradeForAssignmentById(studentId, assignmentId);
+            return Ok(studentGrade);
+        }
+
+        [HttpGet("Courses/{courseId}/Materials/{assignmentId}/{studentId}")]
+        public async Task<ActionResult<AssignmentDetailDto<StudentQuestionDto>>> GetClassMaterial(int courseId, int assignmentId, int studentId)
+        {
+            //courseId is to check if student is enrolled in the course
+            return Ok(await _unitOfWork.AssignmentRepository.GetAssignmentByIdWithAttemptsAsync(assignmentId, studentId));
+        }
+
         //Later add functionality to change title, description
         //Have a courseUpdateDto or similar
         [HttpPut("Course/{courseId}")]
