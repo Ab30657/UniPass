@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, Link, useParams } from 'react-router-dom';
 import { ResponsiveRadar } from '@nivo/radar';
+import { ResponsivePie } from '@nivo/pie';
 import {
   Card,
   CardContent,
@@ -60,7 +61,7 @@ const GradeForAssignment = () => {
           `Student/Assignment/${assignmentId}/grades`,
         );
         //testing
-        // console.log(response.data);
+        console.log(response.data);
         setAssignmentTake(response.data);
         setTitle(response.data.title);
         // if (response.data.questions) {
@@ -98,6 +99,14 @@ const GradeForAssignment = () => {
     };
     fetchData();
   }, []);
+
+  const pieData = assignmentTake.performanceIndicatorScores
+    ? assignmentTake.performanceIndicatorScores.map((el) => ({
+        id: el.name,
+        label: el.name,
+        value: (el.score / el.fullMarks) * 100,
+      }))
+    : [];
 
   //   const calculateScore = () => {
   //     let score = 0;
@@ -307,6 +316,44 @@ const GradeForAssignment = () => {
                   ],
                 },
               ]}
+            />
+          )}
+        </Box>
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="center"
+          p="15px"
+          height="75vh"
+        >
+          <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
+            Pie Chart
+          </Typography>
+          {assignmentTake && (
+            <ResponsivePie
+              data={pieData}
+              margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+              innerRadius={0.5}
+              padAngle={0.7}
+              cornerRadius={3}
+              valueFormat=">-.2f"
+              activeOuterRadiusOffset={8}
+              borderWidth={1}
+              borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
+              arcLinkLabelsSkipAngle={10}
+              arcLinkLabelsTextColor={colors.grey[100]}
+              arcLinkLabelsThickness={2}
+              arcLinkLabelsColor={{ from: 'color' }}
+              arcLabelsSkipAngle={10}
+              arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
+              theme={{
+                tooltip: {
+                  container: {
+                    background: colors.blueAccent[400],
+                  },
+                },
+              }}
             />
           )}
         </Box>

@@ -30,7 +30,7 @@ import { EnrolledCourses } from './pages/student/EnrolledCourses';
 import GradeForAssignment from './pages/student/GradeForAssignment';
 import ViewAssignment from './pages/instructor/ViewAssignment';
 import GradeForAssignmentStudent from './pages/instructor/GradeForAssignmentStudent';
-
+import PerformanceIndicatorGraph from './pages/student/PIGraphs';
 const ROLES = {
   0: 'Admin',
   1: 'Instructor',
@@ -165,6 +165,10 @@ function App() {
                   <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
                     <Route path="/DepartmentCourses" element={<AllCourses />} />
                     <Route path="/Courses" element={<EnrolledCourses />} />
+                    <Route
+                      path="/PIGraph"
+                      element={<PerformanceIndicatorGraph />}
+                    />
                   </Route>
                   <Route path="/createcourse" element={<Createcourse />} />
                 </Route>
