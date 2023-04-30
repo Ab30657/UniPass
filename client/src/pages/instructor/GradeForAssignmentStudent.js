@@ -11,6 +11,7 @@ import {
   Radio,
   Button,
   Chip,
+  getAccordionDetailsUtilityClass,
 } from '@mui/material';
 import { Box } from '@mui/system';
 import { useTheme } from '@emotion/react';
@@ -18,11 +19,12 @@ import { tokens } from '../../theme';
 import LoadingContext from '../../context/LoadingContext';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import Header from '../../components/Header';
-const GradeForAssignment = () => {
+const GradeForAssignmentStudent = () => {
   const [assignmentTake, setAssignmentTake] = useState({});
   const [userAnswers, setUserAnswers] = useState([]);
   const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
+  const { studentId } = useParams();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [title, setTitle] = useState('');
@@ -38,7 +40,7 @@ const GradeForAssignment = () => {
       showLoading();
       try {
         const response = await axiosPrivate.get(
-          `Student/Courses/${courseId}/Materials/${assignmentId}`,
+          `Instructor/Courses/${courseId}/Materials/${assignmentId}/${studentId}`,
         );
         //testing
         // if (response.data.takeAssignments.length > 0) navigate(`Grade`);
@@ -57,7 +59,7 @@ const GradeForAssignment = () => {
       showLoading();
       try {
         const response = await axiosPrivate.get(
-          `Student/Assignment/${assignmentId}/grades`,
+          `Instructor/Courses/${courseId}/Materials/${assignmentId}/${studentId}/grades`,
         );
         //testing
         // console.log(response.data);
@@ -114,7 +116,14 @@ const GradeForAssignment = () => {
   return (
     <Box m="20px">
       <Header
-        title={title}
+        title={
+          title +
+          (assignmentTake.student &&
+            ': ' +
+              assignmentTake?.student.firstName +
+              ' ' +
+              assignmentTake?.student.lastName)
+        }
         subtitle={`Your Score: ${assignmentTake?.grade}/${assignmentTake?.fullMarks}`}
       />
       <Box
@@ -151,7 +160,10 @@ const GradeForAssignment = () => {
                 variant="h5"
                 fontWeight="600"
               >
-                {index + 1}. {questions && questions[index].questionText}
+                {index + 1}.{' '}
+                {questions &&
+                  questions.length > 0 &&
+                  questions[index].questionText}
               </Typography>
               <Typography
                 color={colors.grey[100]}
@@ -315,4 +327,4 @@ const GradeForAssignment = () => {
   );
 };
 
-export default GradeForAssignment;
+export default GradeForAssignmentStudent;
