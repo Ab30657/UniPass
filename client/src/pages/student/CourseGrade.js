@@ -189,7 +189,7 @@ const CourseGrade = () => {
         for (var i in piData) {
           piData[i].score = (piData[i].score / piData[i].fullMarks) * 100;
         }
-        // console.log(piData);
+
         setPiScores(
           Object.keys(piData).map((el) => ({
             name: el,
