@@ -320,7 +320,6 @@ const ViewAssignment = () => {
         </Stack>
         <div>
           <Button
-            onClick={() => navigate('New')}
             startIcon={
               <SvgIcon fontSize="small">
                 <ClockIcon />
@@ -347,10 +346,11 @@ const ViewAssignment = () => {
       >
         <Box
           display="flex"
-          justifyContent="space-between"
+          justifyContent="center"
           alignItems="center"
           borderBottom={`4px solid ${colors.primary[500]}`}
           colors={colors.grey[100]}
+          bgcolor={colors.blueAccent[500]}
           p="15px"
         >
           <Typography color={colors.grey[100]} variant="h5" fontWeight="600">

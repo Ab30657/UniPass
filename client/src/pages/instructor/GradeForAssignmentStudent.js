@@ -141,7 +141,7 @@ const GradeForAssignmentStudent = () => {
           p="15px"
         >
           <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-            Your Answers
+            Answers
           </Typography>
         </Box>
         {assignmentTake?.takeQuestions?.map((question, index) => (
