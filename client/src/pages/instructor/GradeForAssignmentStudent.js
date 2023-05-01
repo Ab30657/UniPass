@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, Link, useParams } from 'react-router-dom';
 import { ResponsiveRadar } from '@nivo/radar';
-import { ResponsivePie } from '@nivo/pie';
 import {
   Card,
   CardContent,
@@ -12,6 +11,7 @@ import {
   Radio,
   Button,
   Chip,
+  getAccordionDetailsUtilityClass,
 } from '@mui/material';
 import { Box } from '@mui/system';
 import { useTheme } from '@emotion/react';
@@ -19,11 +19,12 @@ import { tokens } from '../../theme';
 import LoadingContext from '../../context/LoadingContext';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import Header from '../../components/Header';
-const GradeForAssignment = () => {
+const GradeForAssignmentStudent = () => {
   const [assignmentTake, setAssignmentTake] = useState({});
   const [userAnswers, setUserAnswers] = useState([]);
   const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
+  const { studentId } = useParams();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [title, setTitle] = useState('');
@@ -39,7 +40,7 @@ const GradeForAssignment = () => {
       showLoading();
       try {
         const response = await axiosPrivate.get(
-          `Student/Courses/${courseId}/Materials/${assignmentId}`,
+          `Instructor/Courses/${courseId}/Materials/${assignmentId}/${studentId}`,
         );
         //testing
         // if (response.data.takeAssignments.length > 0) navigate(`Grade`);
@@ -58,10 +59,10 @@ const GradeForAssignment = () => {
       showLoading();
       try {
         const response = await axiosPrivate.get(
-          `Student/Assignment/${assignmentId}/grades`,
+          `Instructor/Courses/${courseId}/Materials/${assignmentId}/${studentId}/grades`,
         );
         //testing
-        console.log(response.data);
+        // console.log(response.data);
         setAssignmentTake(response.data);
         setTitle(response.data.title);
         // if (response.data.questions) {
@@ -100,14 +101,6 @@ const GradeForAssignment = () => {
     fetchData();
   }, []);
 
-  const pieData = assignmentTake.performanceIndicatorScores
-    ? assignmentTake.performanceIndicatorScores.map((el) => ({
-        id: el.name,
-        label: el.name,
-        value: (el.score / el.fullMarks) * 100,
-      }))
-    : [];
-
   //   const calculateScore = () => {
   //     let score = 0;
   //     userAnswers.forEach((answer, index) => {
@@ -123,7 +116,14 @@ const GradeForAssignment = () => {
   return (
     <Box m="20px">
       <Header
-        title={title}
+        title={
+          title +
+          (assignmentTake.student &&
+            ': ' +
+              assignmentTake?.student.firstName +
+              ' ' +
+              assignmentTake?.student.lastName)
+        }
         subtitle={`Your Score: ${assignmentTake?.grade}/${assignmentTake?.fullMarks}`}
       />
       <Box
@@ -141,7 +141,7 @@ const GradeForAssignment = () => {
           p="15px"
         >
           <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-            Your Answers
+            Answers
           </Typography>
         </Box>
         {assignmentTake?.takeQuestions?.map((question, index) => (
@@ -160,7 +160,10 @@ const GradeForAssignment = () => {
                 variant="h5"
                 fontWeight="600"
               >
-                {index + 1}. {questions && questions[index].questionText}
+                {index + 1}.{' '}
+                {questions &&
+                  questions.length > 0 &&
+                  questions[index].questionText}
               </Typography>
               <Typography
                 color={colors.grey[100]}
@@ -319,47 +322,9 @@ const GradeForAssignment = () => {
             />
           )}
         </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          p="15px"
-          height="75vh"
-        >
-          <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-            Pie Chart
-          </Typography>
-          {assignmentTake && (
-            <ResponsivePie
-              data={pieData}
-              margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-              innerRadius={0.5}
-              padAngle={0.7}
-              cornerRadius={3}
-              valueFormat=">-.2f"
-              activeOuterRadiusOffset={8}
-              borderWidth={1}
-              borderColor={{ from: 'color', modifiers: [['darker', 0.2]] }}
-              arcLinkLabelsSkipAngle={10}
-              arcLinkLabelsTextColor={colors.grey[100]}
-              arcLinkLabelsThickness={2}
-              arcLinkLabelsColor={{ from: 'color' }}
-              arcLabelsSkipAngle={10}
-              arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
-              theme={{
-                tooltip: {
-                  container: {
-                    background: colors.blueAccent[400],
-                  },
-                },
-              }}
-            />
-          )}
-        </Box>
       </Box>
     </Box>
   );
 };
 
-export default GradeForAssignment;
+export default GradeForAssignmentStudent;

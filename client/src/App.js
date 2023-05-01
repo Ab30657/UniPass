@@ -28,7 +28,9 @@ import { RequestPageRounded } from '@mui/icons-material';
 import TakeAssignment from './pages/student/TakeAssignment';
 import { EnrolledCourses } from './pages/student/EnrolledCourses';
 import GradeForAssignment from './pages/student/GradeForAssignment';
-
+import ViewAssignment from './pages/instructor/ViewAssignment';
+import GradeForAssignmentStudent from './pages/instructor/GradeForAssignmentStudent';
+import PerformanceIndicatorGraph from './pages/student/PIGraphs';
 const ROLES = {
   0: 'Admin',
   1: 'Instructor',
@@ -97,45 +99,8 @@ function App() {
                     <Route path="/Dashboard" element={<Dashboard />} />
                     <Route path="/Users" element={<Users />} />
 
-                    {/* //<Route path="/Courses" element={<Courses />} />*/}
                     <Route path="/PIs" element={<PerformanceIndicators />} />
                   </Route>
-                  {/* <Route
-                    element={
-                      <RequireAuth allowedRoles={[ROLES[0], ROLES[1]]} />
-                    }
-                  >
-                    {user?.roles[0] === ROLES[1] && (
-                      <Route path="/Courses" element={<InstructorCourses />} />
-                    )}
-                    {user?.roles[0] === ROLES[0] && (
-                      <Route path="/Courses" element={<AdminCourses />} />
-                    )}
-                  </Route>
-                  <Route
-                    element={
-                      <RequireAuth allowedRoles={[ROLES[0], ROLES[1]]} />
-                    }
-                  >
-                    {user?.roles[0] === ROLES[1] && (
-                      <Route path="/Courses" element={<InstructorCourses />} />
-                    )}
-                    {user?.roles[0] === ROLES[0] && (
-                      <Route path="/Courses" element={<AdminCourses />} />
-                    )}
-                  </Route>
-                  <Route
-                    element={
-                      <RequireAuth allowedRoles={[ROLES[0], ROLES[1]]} />
-                    }
-                  >
-                    {user?.roles[0] === ROLES[1] && (
-                      <Route path="/Courses" element={<InstructorCourses />} />
-                    )}
-                    {user?.roles[0] === ROLES[0] && (
-                      <Route path="/Courses" element={<AdminCourses />} />
-                    )}
-                  </Route> */}
                   <Route
                     element={
                       <RequireAuth allowedRoles={[ROLES[0], ROLES[1]]} />
@@ -154,16 +119,36 @@ function App() {
                     }
                   >
                     {user?.roles[0] === ROLES[1] && (
-                      <Route
-                        path="/Courses/:courseId/Materials"
-                        element={<ListAssignment />}
-                      />
+                      <>
+                        <Route
+                          path="/Courses/:courseId/Materials"
+                          element={<ListAssignment />}
+                        />
+                        <Route
+                          path="/Courses/:courseId/Materials/:assignmentId"
+                          element={<ViewAssignment />}
+                        />
+                        <Route
+                          path="/Courses/:courseId/Materials/:assignmentId/:studentId"
+                          element={<GradeForAssignmentStudent />}
+                        />
+                      </>
                     )}
                     {user?.roles[0] === ROLES[2] && (
-                      <Route
-                        path="/Courses/:courseId/Materials"
-                        element={<AssignmentList />}
-                      />
+                      <>
+                        <Route
+                          path="/Courses/:courseId/Materials"
+                          element={<AssignmentList />}
+                        />
+                        <Route
+                          path="/Courses/:courseId/Materials/:assignmentId"
+                          element={<TakeAssignment />}
+                        />
+                        <Route
+                          path="/Courses/:courseId/Materials/:assignmentId/Grade"
+                          element={<GradeForAssignment />}
+                        />
+                      </>
                     )}
                   </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[0]]} />}>
@@ -181,12 +166,8 @@ function App() {
                     <Route path="/DepartmentCourses" element={<AllCourses />} />
                     <Route path="/Courses" element={<EnrolledCourses />} />
                     <Route
-                      path="/Courses/:courseId/Materials/:assignmentId"
-                      element={<TakeAssignment />}
-                    />
-                    <Route
-                      path="/Courses/:courseId/Materials/:assignmentId/Grade"
-                      element={<GradeForAssignment />}
+                      path="/PIGraph"
+                      element={<PerformanceIndicatorGraph />}
                     />
                   </Route>
                   <Route path="/createcourse" element={<Createcourse />} />

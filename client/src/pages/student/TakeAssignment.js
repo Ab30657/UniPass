@@ -15,6 +15,7 @@ import { useTheme } from '@emotion/react';
 import { tokens } from '../../theme';
 import LoadingContext from '../../context/LoadingContext';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import Header from '../../components/Header';
 
 const POST_SUBMIT_ASSIGNMENT = 'Student/Courses/';
 
@@ -42,7 +43,7 @@ const TakeAssignment = () => {
         );
         //testing
         if (response.data.takeAssignments.length > 0) navigate(`Grade`);
-        console.log(response.data);
+        // console.log(response.data);
         setAssignment(response.data);
         setTitle(response.data.title);
         setQuestions(response.data.questions);
@@ -100,6 +101,7 @@ const TakeAssignment = () => {
   };
   return (
     <Box m="20px">
+      <Header title={title} />
       <Box
         gridColumn="span 4"
         gridRow="span 2"

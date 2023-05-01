@@ -1,20 +1,21 @@
-import { Box, Typography } from '@mui/material';
-import { tokens } from '../../theme';
-import Header from '../../components/Header';
+import {
+  Box,
+  Container,
+  Divider,
+  Link as MuiLink,
+  List,
+  Typography,
+  ListItemButton,
+  ListItemText,
+  Stack,
+} from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
-import { Container, Stack } from '@mui/system';
-import { Button, SvgIcon } from '@mui/material';
-import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
+import { useNavigate, Link, useParams } from 'react-router-dom';
+import Header from '../../components/Header';
 import { useTheme } from '@emotion/react';
+import { tokens } from '../../theme';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import LoadingContext from '../../context/LoadingContext';
-import { useNavigate, Link, useParams } from 'react-router-dom';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import { AssistWalker } from '@mui/icons-material';
-import Grid from '@mui/material/Grid';
 
 const courseId = '1';
 const GET_STUDENT_ASSIGNMENT_URL = `Student/Courses/`;
@@ -48,7 +49,6 @@ const AssignmentList = () => {
   const colors = tokens(theme.palette.mode);
   const axiosPrivate = useAxiosPrivate();
   const { showLoading, hideLoading } = useContext(LoadingContext);
-
   useEffect(() => {
     showLoading();
 
@@ -67,27 +67,16 @@ const AssignmentList = () => {
     const response = axiosPrivate
       .get(GET_STUDENT_ASSIGNMENT_URL + courseId + '/Materials')
       .then((response) => {
-        // handle successful response
-        // console.log(response.data);
         const data = response.data;
         setAssignment(data);
       })
       .catch((error) => {
-        // handle error
         console.error(error);
       })
       .finally(() => {
         hideLoading();
       });
   }, []);
-  //console.log(Courses);
-  /*
-  const rows = Assignment.map((material) => ({
-    id: material.id,
-    title: material.title,
-    semesterId: material.semesterId,
-    courseId: material.courseId,
-  }));*/
 
   return (
     <>

@@ -85,12 +85,11 @@ const ListAssignment = () => {
                   }}
                 >
                   <CardContent>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        pb: 3,
-                      }}
+                    <Typography
+                      textAlign="center"
+                      gutterBottom
+                      variant="h5"
+                      component="div"
                     >
                       <ClassOutlined
                         sx={{
@@ -98,32 +97,33 @@ const ListAssignment = () => {
                           fontSize: '25px',
                         }}
                       />
-                    </Box>
+                    </Typography>
                     <Typography
                       align="center"
                       color={colors.greenAccent[500]}
                       gutterBottom
-                      variant="h3"
+                      variant="h4"
                     >
                       {assignments.title}
                     </Typography>
-                    <CardActions>
-                      <Button
-                        onClick={() => navigate(`${courseId}`)}
-                        sx={{
-                          backgroundColor: colors.greenAccent[700],
-                          color: colors.grey[100],
-                          fontSize: '14px',
-                          fontWeight: 'bold',
-                          padding: '10px 20px',
-                          boxShadow: 5,
-                        }}
-                        size="small"
-                      >
-                        View Assignment
-                      </Button>
-                    </CardActions>
                   </CardContent>
+                  <CardActions>
+                    <Button
+                      onClick={() => navigate(`${assignments.id}`)}
+                      sx={{
+                        backgroundColor: colors.greenAccent[700],
+                        color: colors.grey[100],
+                        fontSize: '14px',
+                        fontWeight: 'bold',
+                        padding: '5px 10px',
+                        boxShadow: 5,
+                        '&:hover': { bgcolor: colors.greenAccent[800] },
+                      }}
+                      size="small"
+                    >
+                      View Assignment
+                    </Button>
+                  </CardActions>
                 </Card>
               </Grid>
             ))}
