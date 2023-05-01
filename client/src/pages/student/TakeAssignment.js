@@ -43,7 +43,7 @@ const TakeAssignment = () => {
         );
         //testing
         if (response.data.takeAssignments.length > 0) navigate(`Grade`);
-        console.log(response.data);
+        // console.log(response.data);
         setAssignment(response.data);
         setTitle(response.data.title);
         setQuestions(response.data.questions);
