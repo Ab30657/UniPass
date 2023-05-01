@@ -222,9 +222,9 @@ namespace API.Data
             return studentGrade;
         }
 
-        public async Task<StudentWithScoreDto> GetAStudentWithScoresAsyncById(int courseId, int semesterId, int studentId)
+        public async Task<StudentWithAssignmentAndScoreDto> GetAStudentWithScoresAsyncById(int courseId, int semesterId, int studentId)
         {
-            return await _context.Takes.Where(x => x.CourseId == courseId && x.SemesterId == semesterId && x.StudentId == studentId).ProjectTo<StudentWithScoreDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
+            return await _context.Takes.Where(x => x.CourseId == courseId && x.SemesterId == semesterId && x.StudentId == studentId).ProjectTo<StudentWithAssignmentAndScoreDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync();
         }
     }
 }
