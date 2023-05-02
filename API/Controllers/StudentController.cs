@@ -66,7 +66,7 @@ namespace API.Controllers
         }
 
         [HttpPost("Courses/{courseId}/Materials/{assignmentId}")]
-        public async Task<ActionResult<AssignmentAttemptGradeDto>> SubmitAssignment(int courseId, int assignmentId, CreateTakeAssignmentDto createTakeAssignmentDto)
+        public async Task<ActionResult<AssignmentAttemptGradeDto>> SubmitAssignment(int courseId, int assignmentId, CreateTakeAssignmentDto createTakeAssignmentDto, int id)
         {
             //This gets the currently logged in user claims from .NET Web API Middleware through HttpContext
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
@@ -184,6 +184,14 @@ namespace API.Controllers
             var studentId = (await _unitOfWork.UserRepository.GetStudentByUserIdAsync(userId)).Id;
             var studentGrade = await _unitOfWork.CourseRepository.GetStudentGradeForAssignmentById(studentId, assignmentId);
             return Ok(studentGrade);
+        }
+
+        [HttpGet("Courses/{courseId}/StudentReports")]
+        public async Task<ActionResult<StudentWithAssignmentAndScoreDto>> GetStudentsWithScore(int courseId, int semesterId)
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var studentId = (await _unitOfWork.UserRepository.GetStudentByUserIdAsync(userId)).Id;
+            return Ok(await _unitOfWork.CourseRepository.GetAStudentWithScoresAsyncById(courseId, semesterId, studentId));
         }
     }
 }

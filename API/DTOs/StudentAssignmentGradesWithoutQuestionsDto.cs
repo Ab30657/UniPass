@@ -1,6 +1,6 @@
 namespace API.DTOs
 {
-    public class StudentAssignmentGradesDto
+    public class StudentAssignmentGradesWithoutQuestionsDto
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -8,6 +8,5 @@ namespace API.DTOs
         public int Grade { get; set; }
         public int FullMarks { get; set; }
         public ICollection<PIScoreDto> PerformanceIndicatorScores { get; set; }
-        public List<TakeQuestionWithAnswerDto> TakeQuestions { get; set; }
     }
 }

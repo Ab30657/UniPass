@@ -28,6 +28,12 @@ namespace API.Controllers
             return Ok(await _unitOfWork.CourseRepository.GetStudentWithScoresAsync(courseId, semesterId));
         }
 
+        [HttpGet("Courses/{courseId}/{studentId}/StudentReports")]
+        public async Task<ActionResult<StudentWithAssignmentAndScoreDto>> GetStudentsWithScore(int courseId, int semesterId, int studentId)
+        {
+            return Ok(await _unitOfWork.CourseRepository.GetAStudentWithScoresAsyncById(courseId, semesterId, studentId));
+        }
+
         [HttpGet("Courses")]
         public async Task<ActionResult<IEnumerable<CourseDto>>> GetCourses()
         {
@@ -177,7 +183,7 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet("Course/{courseId}/students")]
+        [HttpGet("Courses/{courseId}/students")]
         public async Task<ActionResult<List<StudentDto>>> GetStudentsToACourse(int courseId, int semesterId)
         {
             var courseExists = await _unitOfWork.CourseRepository.CourseExistsById(courseId);

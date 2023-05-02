@@ -79,85 +79,83 @@ const AssignmentList = () => {
   }, []);
 
   return (
-    <>
-      <Box m="20px">
-        <Container maxWidth="xl">
-          <Stack spacing={3}>
-            <Stack direction="row" justifyContent="space-between" spacing={4}>
-              <Stack spacing={1}>
-                <Header
-                  title={course?.title}
-                  subtitle={`Instructor: ${
-                    course?.instructors[0]?.firstName +
-                    ' ' +
-                    course?.instructors[0]?.lastName
-                  }`}
-                />
-              </Stack>
+    <Box m="20px">
+      <Container maxWidth="xl">
+        <Stack spacing={3}>
+          <Stack direction="row" justifyContent="space-between" spacing={4}>
+            <Stack spacing={1}>
+              <Header
+                title={course?.title}
+                subtitle={`Instructor: ${
+                  course?.instructors[0]?.firstName +
+                  ' ' +
+                  course?.instructors[0]?.lastName
+                }`}
+              />
             </Stack>
+          </Stack>
+          <Box
+            gridColumn="span 4"
+            gridRow="span 2"
+            backgroundColor={colors.primary[400]}
+            overflow="auto"
+          >
             <Box
-              gridColumn="span 4"
-              gridRow="span 2"
-              backgroundColor={colors.primary[400]}
-              overflow="auto"
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+              borderBottom={`4px solid ${colors.primary[500]}`}
+              colors={colors.grey[100]}
+              p="15px"
             >
+              <Typography
+                color={colors.grey[100]}
+                variant="h5"
+                fontWeight="600"
+              >
+                Assignments
+              </Typography>
+            </Box>
+            {Assignment?.map((material, i) => (
               <Box
+                key={`${material.txId}-${i}`}
                 display="flex"
                 justifyContent="space-between"
                 alignItems="center"
                 borderBottom={`4px solid ${colors.primary[500]}`}
-                colors={colors.grey[100]}
                 p="15px"
               >
-                <Typography
-                  color={colors.grey[100]}
-                  variant="h5"
-                  fontWeight="600"
-                >
-                  Assignments
-                </Typography>
-              </Box>
-              {Assignment?.map((material, i) => (
-                <Box
-                  key={`${material.txId}-${i}`}
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  borderBottom={`4px solid ${colors.primary[500]}`}
-                  p="15px"
-                >
-                  <Box onClick={() => navigate(`${material.id}`)}>
-                    <Typography
-                      color={colors.greenAccent[500]}
-                      variant="h5"
-                      fontWeight="600"
-                      sx={useStyle}
-                    >
-                      {material.title}
-                    </Typography>
-                  </Box>
-                  <Box color={colors.grey[100]}>{material.date}</Box>
-                  <Box
-                    backgroundColor={colors.greenAccent[500]}
-                    p="5px 10px"
-                    borderRadius="4px"
-                    minWidth={100}
+                <Box onClick={() => navigate(`${material.id}`)}>
+                  <Typography
+                    color={colors.greenAccent[500]}
+                    variant="h5"
+                    fontWeight="600"
+                    sx={useStyle}
                   >
-                    Full Points: {material.fullMarks}
-                  </Box>
+                    {material.title}
+                  </Typography>
                 </Box>
-              ))}
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            ></Box>
-          </Stack>
-        </Container>
-      </Box>
-    </>
+                <Box color={colors.grey[100]}>{material.date}</Box>
+                <Box
+                  backgroundColor={colors.greenAccent[500]}
+                  p="5px 10px"
+                  borderRadius="4px"
+                  minWidth={100}
+                >
+                  Full Points: {material.fullMarks}
+                </Box>
+              </Box>
+            ))}
+          </Box>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          ></Box>
+        </Stack>
+      </Container>
+    </Box>
   );
 };
 

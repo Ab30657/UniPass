@@ -2,8 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { Container, Stack } from '@mui/system';
-import { Button, Grid, SvgIcon, Typography } from '@mui/material';
-import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
+import { Grid } from '@mui/material';
 import { CourseCard } from '../../components/CourseCardStudent';
 import { useTheme } from '@emotion/react';
 import { tokens } from '../../theme';
@@ -31,13 +30,10 @@ const AllCourses = () => {
     ])
       .then(([reqAll, reqOwn]) => {
         const data = reqAll.data;
-        // console.log(data);
         setAllCourses(data);
         //
         const classes = reqOwn.data;
-        // console.log(piData);
         // setOwnCourses(classes);
-        // console.log(currentPIs);
         setOwnCourses(classes.map((x) => x.id));
       })
       .finally(() => {

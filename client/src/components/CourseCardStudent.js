@@ -48,7 +48,6 @@ export const CourseCard = (props) => {
   }, [hasRegistered]);
   const registerCourse = () => {
     showLoading();
-    // console.log();
     const response = axiosPrivate
       .post(
         REGISTER_COURSE_URL,
@@ -65,7 +64,6 @@ export const CourseCard = (props) => {
         console.error(error);
       })
       .finally(() => {
-        // console.log('Hello, World!');
         hideLoading();
       });
   };

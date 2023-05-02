@@ -21,7 +21,6 @@ const PerformanceIndicators = () => {
   const colors = tokens(theme.palette.mode);
   const axiosPrivate = useAxiosPrivate();
   const { showLoading, hideLoading } = useContext(LoadingContext);
-  //console.log('PIS', PIs);
   useEffect(() => {
     showLoading();
 
@@ -29,7 +28,6 @@ const PerformanceIndicators = () => {
       .get(GET_ALL_PI_URL)
       .then((response) => {
         // handle successful response
-        // console.log(response.data);
         const data = response.data;
         setPI(data);
       })
@@ -38,7 +36,6 @@ const PerformanceIndicators = () => {
         console.error(error);
       })
       .finally(() => {
-        // console.log('Hello, World!');
         hideLoading();
       });
   }, []);

@@ -1,16 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate, Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ResponsiveRadar } from '@nivo/radar';
 import { ResponsivePie } from '@nivo/pie';
 import {
-  Card,
-  CardContent,
   Typography,
   FormControl,
   RadioGroup,
   FormControlLabel,
   Radio,
-  Button,
   Chip,
 } from '@mui/material';
 import { Box } from '@mui/system';
@@ -43,7 +40,6 @@ const GradeForAssignment = () => {
         );
         //testing
         // if (response.data.takeAssignments.length > 0) navigate(`Grade`);
-        // console.log(response.data);
         setTitle(response.data.title);
         setQuestions(response.data.questions);
       } catch (error) {
@@ -61,19 +57,16 @@ const GradeForAssignment = () => {
           `Student/Assignment/${assignmentId}/grades`,
         );
         //testing
-        console.log(response.data);
         setAssignmentTake(response.data);
+
         setTitle(response.data.title);
-        // if (response.data.questions) {
-        //   setQuestions(response.data.questions);
-        // }
+
         setPiScores(
           response.data.performanceIndicatorScores.map((el) => ({
             name: el.name,
             Score: (el.score / el.fullMarks) * 100,
           })),
         );
-        // console.log(data);
         if (response.data.takeAssignment) {
           const updatedUserAnswers = response.data.questions.map((question) => {
             const userAnswer = response.data.takeAssignment.takeQuestions.find(
@@ -167,9 +160,10 @@ const GradeForAssignment = () => {
                 variant="h6"
                 fontWeight="600"
               >
-                {questions[index]?.performanceIndicators.map((pi, piIndex) => (
-                  <Chip key={piIndex} color="success" label={pi.name} />
-                ))}
+                {questions &&
+                  questions[index]?.performanceIndicators.map((pi, piIndex) => (
+                    <Chip key={piIndex} color="success" label={pi.name} />
+                  ))}
               </Typography>
             </Box>
             <Box
@@ -188,21 +182,31 @@ const GradeForAssignment = () => {
                 >
                   <FormControl component="fieldset">
                     <RadioGroup value={question?.answerText}>
-                      {questions[index]?.answers.map((option, optionIndex) => (
-                        <FormControlLabel
-                          key={optionIndex}
-                          value={option.answerText}
-                          control={<Radio disabled />}
-                          label={option.answerText}
-                        />
-                      ))}
+                      {questions &&
+                        questions[index]?.answers.map((option, optionIndex) => (
+                          <FormControlLabel
+                            key={optionIndex}
+                            value={option.answerText}
+                            control={<Radio disabled />}
+                            label={option.answerText}
+                          />
+                        ))}
                     </RadioGroup>
                   </FormControl>
                 </Typography>
-                <Typography color={colors.grey[100]}>
+                <Typography
+                  fontWeight={700}
+                  color={
+                    question.correct
+                      ? colors.greenAccent[400]
+                      : colors.redAccent[400]
+                  }
+                >
                   Points:{' '}
-                  {question.correct ? `${questions[index].fullMarks}` : '0'}/
-                  {questions[index].fullMarks}
+                  {question.correct
+                    ? `${questions && questions[index].fullMarks}`
+                    : '0'}
+                  /{questions && questions[index].fullMarks}
                 </Typography>
               </Box>
               <Box
