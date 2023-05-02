@@ -44,7 +44,6 @@ const TakeAssignment = () => {
         //testing
         if (response.data.takeAssignments.length > 0)
           navigate(`Grade`, { replace: true });
-        // console.log(response.data);
         setAssignment(response.data);
         setTitle(response.data.title);
         setQuestions(response.data.questions);
@@ -71,7 +70,6 @@ const TakeAssignment = () => {
       });
     }
     // user[currentQuestion].answerId = parseInt(event.target.value);
-    // console.log(newAnswers);
     setUserAnswers(newAnswers);
   };
 
@@ -80,7 +78,6 @@ const TakeAssignment = () => {
   };
 
   const submitAnswer = () => {
-    // console.log(userAnswers);
     const response = axiosPrivate
       .post(
         POST_SUBMIT_ASSIGNMENT + courseId + `/Materials/${assignmentId}`,
@@ -88,7 +85,6 @@ const TakeAssignment = () => {
       )
       .then((response) => {
         // handle successful response
-        // console.log(response.data);
         navigate(`/Courses/${courseId}/Materials/${assignmentId}/Grade`);
       })
       .catch((error) => {
@@ -96,7 +92,6 @@ const TakeAssignment = () => {
         console.error(error);
       })
       .finally(() => {
-        // console.log('Hello, World!');
         hideLoading();
       });
   };

@@ -44,7 +44,6 @@ const GradeForAssignmentStudent = () => {
         );
         //testing
         // if (response.data.takeAssignments.length > 0) navigate(`Grade`);
-        // console.log(response.data);
         setTitle(response.data.title);
         setQuestions(response.data.questions);
       } catch (error) {
@@ -62,7 +61,6 @@ const GradeForAssignmentStudent = () => {
           `Instructor/Courses/${courseId}/Materials/${assignmentId}/${studentId}/grades`,
         );
         //testing
-        // console.log(response.data);
         setAssignmentTake(response.data);
         setTitle(response.data.title);
         // if (response.data.questions) {
@@ -74,7 +72,6 @@ const GradeForAssignmentStudent = () => {
             Score: (el.score / el.fullMarks) * 100,
           })),
         );
-        // console.log(data);
         if (response.data.takeAssignment) {
           const updatedUserAnswers = response.data.questions.map((question) => {
             const userAnswer = response.data.takeAssignment.takeQuestions.find(
@@ -170,9 +167,11 @@ const GradeForAssignmentStudent = () => {
                 variant="h6"
                 fontWeight="600"
               >
-                {questions[index]?.performanceIndicators.map((pi, piIndex) => (
-                  <Chip key={piIndex} color="success" label={pi.name} />
-                ))}
+                {questions &&
+                  questions.length > 0 &&
+                  questions[index]?.performanceIndicators.map((pi, piIndex) => (
+                    <Chip key={piIndex} color="success" label={pi.name} />
+                  ))}
               </Typography>
             </Box>
             <Box
@@ -191,21 +190,32 @@ const GradeForAssignmentStudent = () => {
                 >
                   <FormControl component="fieldset">
                     <RadioGroup value={question?.answerText}>
-                      {questions[index]?.answers.map((option, optionIndex) => (
-                        <FormControlLabel
-                          key={optionIndex}
-                          value={option.answerText}
-                          control={<Radio disabled />}
-                          label={option.answerText}
-                        />
-                      ))}
+                      {questions &&
+                        questions.length > 0 &&
+                        questions[index]?.answers.map((option, optionIndex) => (
+                          <FormControlLabel
+                            key={optionIndex}
+                            value={option.answerText}
+                            control={<Radio disabled />}
+                            label={option.answerText}
+                          />
+                        ))}
                     </RadioGroup>
                   </FormControl>
                 </Typography>
                 <Typography color={colors.grey[100]}>
                   Points:{' '}
-                  {question.correct ? `${questions[index].fullMarks}` : '0'}/
-                  {questions[index].fullMarks}
+                  {question.correct
+                    ? `${
+                        questions &&
+                        questions.length > 0 &&
+                        questions[index].fullMarks
+                      }`
+                    : '0'}
+                  /
+                  {questions &&
+                    questions.length > 0 &&
+                    questions[index].fullMarks}
                 </Typography>
               </Box>
               <Box

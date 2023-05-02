@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    // [Authorize(Roles = "Student")]
+    [Authorize(Roles = "Student")]
     public class StudentController : BaseApiController
     {
 

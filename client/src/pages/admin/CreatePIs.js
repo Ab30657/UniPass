@@ -26,12 +26,10 @@ const CreatePIs = () => {
   const handleSubmit = async (event) => {
     showLoading();
     event.preventDefault();
-    // console.log(JSON.stringify(PI));
     const response = axiosPrivate
       .post(POST_NEW_PI_URL, JSON.stringify(PI))
       .then((response) => {
         // handle successful response
-        // console.log(response.data);
         navigate('/PIs');
       })
       .catch((error) => {
@@ -39,7 +37,6 @@ const CreatePIs = () => {
         console.error(error);
       })
       .finally(() => {
-        // console.log('Hello, World!');
         hideLoading();
       });
   };

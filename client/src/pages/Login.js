@@ -36,7 +36,6 @@ function Login() {
         headers: { 'Content-Type': 'application/json' },
       })
       .finally(() => {
-        // console.log('Hello, World!');
         hideLoading();
       });
     var roles = [];

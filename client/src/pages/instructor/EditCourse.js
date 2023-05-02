@@ -30,7 +30,6 @@ const Editcourse = () => {
   const axiosPrivate = useAxiosPrivate();
 
   const getStyles = (piId, piList, customTheme) => {
-    // console.log(piList.includes(piId));
     return {
       fontWeight: piList.includes(piId)
         ? theme.typography.fontWeightBold
@@ -46,11 +45,9 @@ const Editcourse = () => {
     ])
       .then(([reqCourseData, reqPiData]) => {
         const data = reqCourseData.data;
-        // console.log(data);
         setCourse(data);
         //
         const piData = reqPiData.data;
-        // console.log(piData);
         setAllPIs(piData);
         setPi(data.performanceIndicators.map((x) => x.id));
       })
@@ -62,12 +59,10 @@ const Editcourse = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     showLoading();
-    // console.log();
     const response = axiosPrivate
       .put(UPDATE_COURSE + courseId, Pi)
       .then((response) => {
         // handle successful response
-        // console.log(response.data);
         // navigate('/courses');
       })
       .catch((error) => {
@@ -75,7 +70,6 @@ const Editcourse = () => {
         console.error(error);
       })
       .finally(() => {
-        // console.log('Hello, World!');
         hideLoading();
       });
   };

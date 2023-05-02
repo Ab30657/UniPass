@@ -28,7 +28,6 @@ const CreateAssignment = () => {
   const [Pi, setPi] = useState([]);
 
   const handleSubmitAssignment = () => {
-    // console.log({ title, questions, semesterId: 1 });
     const response = axiosPrivate
       .post(
         POST_CREATE_ASSIGNMENT + courseId + `/Materials`,
@@ -42,7 +41,6 @@ const CreateAssignment = () => {
         console.error(error);
       })
       .finally(() => {
-        // console.log('Hello, World!');
         hideLoading();
       });
   };
@@ -99,11 +97,9 @@ const CreateAssignment = () => {
       } else {
         // Set the selected answer as correct
         answer.correct = true;
-        // console.log(answer);
       }
     });
     setQuestions(updatedQuestions);
-    // console.log(updatedQuestions);
   };
   const handleChangePerformanceIndicators = (e, questionIndex) => {
     const { value } = e.target;
@@ -124,7 +120,6 @@ const CreateAssignment = () => {
         console.error(error);
       })
       .finally(() => {
-        // console.log('Hello, World!');
         hideLoading();
       });
   }, []);

@@ -31,13 +31,10 @@ const AllCourses = () => {
     ])
       .then(([reqAll, reqOwn]) => {
         const data = reqAll.data;
-        // console.log(data);
         setAllCourses(data);
         //
         const classes = reqOwn.data;
-        // console.log(piData);
         // setOwnCourses(classes);
-        // console.log(currentPIs);
         setOwnCourses(classes.map((x) => x.id));
       })
       .finally(() => {

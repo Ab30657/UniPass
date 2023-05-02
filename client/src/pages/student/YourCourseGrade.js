@@ -35,7 +35,7 @@ const colorStyle = (vl) => {
   if (vl < 52) return '#ff8e15';
   if (vl < 70) return '#fab733';
   if (vl < 88) return '#acb334';
-  if (vl < 100) return '#69b34c';
+  if (vl <= 100) return '#69b34c';
 };
 const data = [
   {
@@ -309,7 +309,6 @@ const data = [
     ],
   },
 ];
-// console.log('DATA: ', data);
 const useStyle = {
   '&:hover': {
     cursor: 'pointer',
@@ -356,7 +355,6 @@ const YourCourseGrade = () => {
           grade: response.data.grade,
           fullMarks: response.data.fullMarks,
         });
-        // console.log(response.data);
         let testData = [
           {
             id: 'overall',
@@ -399,7 +397,6 @@ const YourCourseGrade = () => {
             }),
           })),
         );
-        // console.log(testData);
         setLineData(testData);
 
         var piData = {};
@@ -410,7 +407,6 @@ const YourCourseGrade = () => {
             : { score: 0, fullMarks: piSc.fullMarks };
           piData[piSc.name].score += piSc.score;
         }
-        // console.log(piData);
         for (var i in piData) {
           piData[i].score = (piData[i].score / piData[i].fullMarks) * 100;
         }
@@ -421,7 +417,6 @@ const YourCourseGrade = () => {
             Score: piData[el].score,
           })),
         );
-        // console.log(response.data);
       } catch (error) {
         console.error(error);
       } finally {

@@ -98,7 +98,8 @@ namespace API.Helpers
             CreateMap<Takes, StudentDto>()
                 .ForMember(x => x.FirstName, opt => opt.MapFrom(x => x.Student.AppUser.FirstName))
                 .ForMember(x => x.LastName, opt => opt.MapFrom(x => x.Student.AppUser.LastName))
-                .ForMember(x => x.AppUserId, opt => opt.MapFrom(x => x.Student.AppUserId));
+                .ForMember(x => x.AppUserId, opt => opt.MapFrom(x => x.Student.AppUserId))
+                .ForMember(x => x.Grade, opt => opt.MapFrom(a => (a.Grade * 100) / a.Course.Assignments.Sum(b => b.FullMarks)));
             CreateMap<TakeAssignment, StudentAssignmentGradesDto>()
                 .ForMember(x => x.Id, opt => opt.MapFrom(x => x.Assignment.Id))
                 .ForMember(x => x.Title, opt => opt.MapFrom(x => x.Assignment.Title))

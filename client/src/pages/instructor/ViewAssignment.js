@@ -28,100 +28,6 @@ function valuetext(value) {
   return `${value}`;
 }
 
-const data = [
-  {
-    taste: 'fruity',
-    chardonay: 92,
-    carmenere: 54,
-    syrah: 44,
-  },
-  {
-    taste: 'bitter',
-    chardonay: 28,
-    carmenere: 50,
-    syrah: 35,
-  },
-  {
-    taste: 'heavy',
-    chardonay: 106,
-    carmenere: 66,
-    syrah: 78,
-  },
-  {
-    taste: 'strong',
-    chardonay: 41,
-    carmenere: 87,
-    syrah: 80,
-  },
-  {
-    taste: 'sunny',
-    chardonay: 50,
-    carmenere: 35,
-    syrah: 109,
-  },
-];
-const data1 = [
-  {
-    gradeMin: '0',
-    gradeMax: '10',
-    count: 0,
-    countColor: 'hsl(82, 70%, 50%)',
-  },
-  {
-    gradeMin: '10',
-    gradeMax: '20',
-    count: 0,
-    countColor: 'hsl(204, 70%, 50%)',
-  },
-  {
-    gradeMin: '20',
-    gradeMax: '30',
-    count: 0,
-    countColor: 'hsl(192, 70%, 50%)',
-  },
-  {
-    gradeMin: '30',
-    gradeMax: '40',
-    count: 0,
-    countColor: 'hsl(342, 70%, 50%)',
-  },
-  {
-    gradeMin: '40',
-    gradeMax: '50',
-    count: 0,
-    countColor: 'hsl(176, 70%, 50%)',
-  },
-  {
-    gradeMin: '50',
-    gradeMax: '60',
-    count: 0,
-    countColor: 'hsl(8, 70%, 50%)',
-  },
-  {
-    gradeMin: '60',
-    gradeMax: '70',
-    count: 0,
-    countColor: 'hsl(102, 70%, 50%)',
-  },
-  {
-    gradeMin: '70',
-    gradeMax: '80',
-    count: 0,
-    countColor: 'hsl(102, 70%, 50%)',
-  },
-  {
-    gradeMin: '80',
-    gradeMax: '90',
-    count: 0,
-    countColor: 'hsl(102, 70%, 50%)',
-  },
-  {
-    gradeMin: '90',
-    gradeMax: '100',
-    count: 0,
-    countColor: 'hsl(102, 70%, 50%)',
-  },
-];
 const POST_SUBMIT_ASSIGNMENT = 'Student/Courses/';
 const colorStyle = (vl) => {
   if (vl < 18) return '#ff0d0d';
@@ -198,7 +104,6 @@ const ViewAssignment = () => {
         );
         //testing
         // if (response.data.takeAssignments.length > 0) navigate(`Grade`);
-        // console.log(response.data);
         // setAssignment(response.data);
         setTitle(response.data[0].title);
         // setQuestions(response.data.questions);
@@ -211,7 +116,6 @@ const ViewAssignment = () => {
               ? piData[piSc.name]
               : { score: 0, fullMarks: piSc.fullMarks };
             piData[piSc.name].score += piSc.score;
-            // console.log(piData[piSc.name]);
           }
         }
         for (var i in piData) {
@@ -248,7 +152,6 @@ const ViewAssignment = () => {
           });
         });
         setgScores(cumulativeFrequency);
-        // console.log(cumulativeFrequency);
       } catch (error) {
         console.error(error);
       } finally {
@@ -266,7 +169,6 @@ const ViewAssignment = () => {
       sub['Scored'] = gScores[k];
       data.push(sub);
     }
-    // console.log(data);
     setInputScores(data);
   }, [gScores]);
 
@@ -283,7 +185,6 @@ const ViewAssignment = () => {
       });
     }
     // user[currentQuestion].answerId = parseInt(event.target.value);
-    // console.log(newAnswers);
     setUserAnswers(newAnswers);
   };
 
@@ -292,7 +193,6 @@ const ViewAssignment = () => {
   };
 
   const submitAnswer = () => {
-    // console.log(userAnswers);
     const response = axiosPrivate
       .post(
         POST_SUBMIT_ASSIGNMENT + courseId + `/Materials/${assignmentId}`,
@@ -300,7 +200,6 @@ const ViewAssignment = () => {
       )
       .then((response) => {
         // handle successful response
-        // console.log(response.data);
         navigate(`/Courses/${courseId}/Materials/${assignmentId}/Grade`);
       })
       .catch((error) => {
@@ -308,7 +207,6 @@ const ViewAssignment = () => {
         console.error(error);
       })
       .finally(() => {
-        // console.log('Hello, World!');
         hideLoading();
       });
   };

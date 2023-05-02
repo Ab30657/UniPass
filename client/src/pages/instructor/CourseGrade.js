@@ -35,281 +35,9 @@ const colorStyle = (vl) => {
   if (vl < 52) return '#ff8e15';
   if (vl < 70) return '#fab733';
   if (vl < 88) return '#acb334';
-  if (vl < 100) return '#69b34c';
+  if (vl <= 100) return '#69b34c';
 };
-const data = [
-  {
-    id: 'japan',
-    color: 'hsl(17, 70%, 50%)',
-    data: [
-      {
-        x: 'plane',
-        y: 102,
-      },
-      {
-        x: 'helicopter',
-        y: 243,
-      },
-      {
-        x: 'boat',
-        y: 135,
-      },
-      {
-        x: 'train',
-        y: 29,
-      },
-      {
-        x: 'subway',
-        y: 61,
-      },
-      {
-        x: 'bus',
-        y: 110,
-      },
-      {
-        x: 'car',
-        y: 40,
-      },
-      {
-        x: 'moto',
-        y: 58,
-      },
-      {
-        x: 'bicycle',
-        y: 255,
-      },
-      {
-        x: 'horse',
-        y: 104,
-      },
-      {
-        x: 'skateboard',
-        y: 99,
-      },
-      {
-        x: 'others',
-        y: 189,
-      },
-    ],
-  },
-  {
-    id: 'france',
-    color: 'hsl(317, 70%, 50%)',
-    data: [
-      {
-        x: 'plane',
-        y: 64,
-      },
-      {
-        x: 'helicopter',
-        y: 115,
-      },
-      {
-        x: 'boat',
-        y: 179,
-      },
-      {
-        x: 'train',
-        y: 165,
-      },
-      {
-        x: 'subway',
-        y: 29,
-      },
-      {
-        x: 'bus',
-        y: 104,
-      },
-      {
-        x: 'car',
-        y: 81,
-      },
-      {
-        x: 'moto',
-        y: 245,
-      },
-      {
-        x: 'bicycle',
-        y: 228,
-      },
-      {
-        x: 'horse',
-        y: 221,
-      },
-      {
-        x: 'skateboard',
-        y: 61,
-      },
-      {
-        x: 'others',
-        y: 169,
-      },
-    ],
-  },
-  {
-    id: 'us',
-    color: 'hsl(56, 70%, 50%)',
-    data: [
-      {
-        x: 'plane',
-        y: 164,
-      },
-      {
-        x: 'helicopter',
-        y: 17,
-      },
-      {
-        x: 'boat',
-        y: 111,
-      },
-      {
-        x: 'train',
-        y: 124,
-      },
-      {
-        x: 'subway',
-        y: 217,
-      },
-      {
-        x: 'bus',
-        y: 163,
-      },
-      {
-        x: 'car',
-        y: 124,
-      },
-      {
-        x: 'moto',
-        y: 264,
-      },
-      {
-        x: 'bicycle',
-        y: 100,
-      },
-      {
-        x: 'horse',
-        y: 170,
-      },
-      {
-        x: 'skateboard',
-        y: 269,
-      },
-      {
-        x: 'others',
-        y: 79,
-      },
-    ],
-  },
-  {
-    id: 'germany',
-    color: 'hsl(163, 70%, 50%)',
-    data: [
-      {
-        x: 'plane',
-        y: 124,
-      },
-      {
-        x: 'helicopter',
-        y: 275,
-      },
-      {
-        x: 'boat',
-        y: 147,
-      },
-      {
-        x: 'train',
-        y: 203,
-      },
-      {
-        x: 'subway',
-        y: 209,
-      },
-      {
-        x: 'bus',
-        y: 289,
-      },
-      {
-        x: 'car',
-        y: 62,
-      },
-      {
-        x: 'moto',
-        y: 94,
-      },
-      {
-        x: 'bicycle',
-        y: 7,
-      },
-      {
-        x: 'horse',
-        y: 26,
-      },
-      {
-        x: 'skateboard',
-        y: 202,
-      },
-      {
-        x: 'others',
-        y: 11,
-      },
-    ],
-  },
-  {
-    id: 'norway',
-    color: 'hsl(151, 70%, 50%)',
-    data: [
-      {
-        x: 'plane',
-        y: 120,
-      },
-      {
-        x: 'helicopter',
-        y: 47,
-      },
-      {
-        x: 'boat',
-        y: 212,
-      },
-      {
-        x: 'train',
-        y: 92,
-      },
-      {
-        x: 'subway',
-        y: 44,
-      },
-      {
-        x: 'bus',
-        y: 166,
-      },
-      {
-        x: 'car',
-        y: 289,
-      },
-      {
-        x: 'moto',
-        y: 170,
-      },
-      {
-        x: 'bicycle',
-        y: 213,
-      },
-      {
-        x: 'horse',
-        y: 265,
-      },
-      {
-        x: 'skateboard',
-        y: 51,
-      },
-      {
-        x: 'others',
-        y: 161,
-      },
-    ],
-  },
-];
-// console.log('DATA: ', data);
+
 const useStyle = {
   '&:hover': {
     cursor: 'pointer',
@@ -353,7 +81,6 @@ const CourseGrade = () => {
           grade: response.data.grade,
           fullMarks: response.data.fullMarks,
         });
-        // console.log(response.data);
         let testData = [
           {
             id: 'overall',
@@ -370,12 +97,6 @@ const CourseGrade = () => {
               if (
                 asgn.performanceIndicatorScores.find((x) => x.id === piScore.id)
               ) {
-                // console.log(
-                //   'Here' +
-                //     asgn.performanceIndicatorScores.find(
-                //       (x) => x.id === piScore.id,
-                //     ).score,
-                // );
                 return {
                   x: asgn.title,
                   y:
@@ -402,16 +123,7 @@ const CourseGrade = () => {
             }),
           })),
         );
-        // console.log(testData);
         setLineData(testData);
-        // );
-        // console.log(testData);
-        //   assignment.performanceIndicatorScores.map((piScore, j) => ({
-        //     id: piScore.name,
-
-        //     x: piScore.name,
-        //     y: piScore.score,
-
         var piData = {};
         for (var i in response.data.performanceIndicatorScores) {
           var piSc = response.data.performanceIndicatorScores[i];
@@ -420,7 +132,6 @@ const CourseGrade = () => {
             : { score: 0, fullMarks: piSc.fullMarks };
           piData[piSc.name].score += piSc.score;
         }
-        // console.log(piData);
         for (var i in piData) {
           piData[i].score = (piData[i].score / piData[i].fullMarks) * 100;
         }
@@ -431,7 +142,6 @@ const CourseGrade = () => {
             Score: piData[el].score,
           })),
         );
-        // console.log(response.data);
       } catch (error) {
         console.error(error);
       } finally {

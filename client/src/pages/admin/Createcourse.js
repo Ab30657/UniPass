@@ -34,7 +34,6 @@ const Createcourse = () => {
       .get(GET_ALL_INSTRUCTORS_URL)
       .then((response) => {
         // handle successful response
-        // console.log(response.data);
         const data = response.data;
         setInstructors(data);
       })
@@ -43,7 +42,6 @@ const Createcourse = () => {
         console.error(error);
       })
       .finally(() => {
-        // console.log('Hello, World!');
         hideLoading();
       });
   }, []);
@@ -51,13 +49,6 @@ const Createcourse = () => {
   const handleSubmit = async (event) => {
     showLoading();
     event.preventDefault();
-    console.log(
-      JSON.stringify({
-        title: courseTitle,
-        instructorId: selectInstructor,
-        semesterId: selectSemester,
-      }),
-    );
     const response = axiosPrivate
       .post(
         POST_NEW_COURSE_URL,
@@ -69,7 +60,6 @@ const Createcourse = () => {
       )
       .then((response) => {
         // handle successful response
-        // console.log(response.data);
         navigate('/courses');
       })
       .catch((error) => {
@@ -77,7 +67,6 @@ const Createcourse = () => {
         console.error(error);
       })
       .finally(() => {
-        // console.log('Hello, World!');
         hideLoading();
       });
   };
