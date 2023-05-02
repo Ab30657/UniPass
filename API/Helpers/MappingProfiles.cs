@@ -100,6 +100,7 @@ namespace API.Helpers
                 .ForMember(x => x.LastName, opt => opt.MapFrom(x => x.Student.AppUser.LastName))
                 .ForMember(x => x.AppUserId, opt => opt.MapFrom(x => x.Student.AppUserId));
             CreateMap<TakeAssignment, StudentAssignmentGradesDto>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(x => x.Assignment.Id))
                 .ForMember(x => x.Title, opt => opt.MapFrom(x => x.Assignment.Title))
                 .ForMember(x => x.Student, opt => opt.MapFrom(x => x.Student))
                 .ForMember(x => x.FullMarks, opt => opt.MapFrom(x => x.Assignment.Questions.Sum(x => x.FullMarks)))
@@ -107,6 +108,7 @@ namespace API.Helpers
                 .ForMember(x => x.PerformanceIndicatorScores, opt => opt.MapFrom(x => x.PIScores))
                 .ForMember(x => x.TakeQuestions, opt => opt.MapFrom(x => x.TakeQuestions));
             CreateMap<TakeAssignment, StudentAssignmentGradesWithoutQuestionsDto>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(x => x.Assignment.Id))
                 .ForMember(x => x.Title, opt => opt.MapFrom(x => x.Assignment.Title))
                 .ForMember(x => x.Student, opt => opt.MapFrom(x => x.Student))
                 .ForMember(x => x.FullMarks, opt => opt.MapFrom(x => x.Assignment.Questions.Sum(x => x.FullMarks)))

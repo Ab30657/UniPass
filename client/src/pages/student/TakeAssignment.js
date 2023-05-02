@@ -42,7 +42,8 @@ const TakeAssignment = () => {
           `Student/Courses/${courseId}/Materials/${assignmentId}`,
         );
         //testing
-        if (response.data.takeAssignments.length > 0) navigate(`Grade`);
+        if (response.data.takeAssignments.length > 0)
+          navigate(`Grade`, { replace: true });
         // console.log(response.data);
         setAssignment(response.data);
         setTitle(response.data.title);

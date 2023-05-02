@@ -61,7 +61,7 @@ const GradeForAssignment = () => {
           `Student/Assignment/${assignmentId}/grades`,
         );
         //testing
-        console.log(response.data);
+        // console.log(response.data);
         setAssignmentTake(response.data);
         setTitle(response.data.title);
         // if (response.data.questions) {

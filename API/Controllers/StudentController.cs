@@ -185,5 +185,13 @@ namespace API.Controllers
             var studentGrade = await _unitOfWork.CourseRepository.GetStudentGradeForAssignmentById(studentId, assignmentId);
             return Ok(studentGrade);
         }
+
+        [HttpGet("Courses/{courseId}/StudentReports")]
+        public async Task<ActionResult<StudentWithAssignmentAndScoreDto>> GetStudentsWithScore(int courseId, int semesterId)
+        {
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var studentId = (await _unitOfWork.UserRepository.GetStudentByUserIdAsync(userId)).Id;
+            return Ok(await _unitOfWork.CourseRepository.GetAStudentWithScoresAsyncById(courseId, semesterId, studentId));
+        }
     }
 }
