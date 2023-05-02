@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
-import { Container, Stack, bgcolor } from '@mui/system';
+import { Container, Stack } from '@mui/system';
 import { Button, CardActions, Grid, SvgIcon, Typography } from '@mui/material';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { useTheme } from '@emotion/react';
 import { tokens } from '../../theme';
 import Header from '../../components/Header';
 import { ClassOutlined } from '@mui/icons-material';
-import { Avatar, Card, CardContent, Divider } from '@mui/material';
+import { Card, CardContent } from '@mui/material';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import LoadingContext from '../../context/LoadingContext';
 
@@ -21,7 +21,7 @@ const colorStyle = (vl) => {
   if (vl < 52) return '#ff8e15';
   if (vl < 70) return '#fab733';
   if (vl < 88) return '#acb334';
-  if (vl < 100) return '#69b34c';
+  if (vl <= 100) return '#69b34c';
 };
 
 const useStyle = {

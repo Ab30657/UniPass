@@ -1,16 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate, Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
-  Card,
-  CardContent,
   Typography,
-  FormControl,
-  RadioGroup,
   FormControlLabel,
-  Radio,
   Button,
   SvgIcon,
-  Slider,
   Chip,
   Switch,
 } from '@mui/material';
@@ -20,11 +14,8 @@ import { tokens } from '../../theme';
 import LoadingContext from '../../context/LoadingContext';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import Header from '../../components/Header';
-import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import ClockIcon from '@heroicons/react/24/solid/ClockIcon';
 import { ResponsiveRadar } from '@nivo/radar';
-import { ResponsiveBar } from '@nivo/bar';
-import { setIn } from 'formik';
 import { ResponsiveLine } from '@nivo/line';
 
 const POST_SUBMIT_ASSIGNMENT = 'Student/Courses/';

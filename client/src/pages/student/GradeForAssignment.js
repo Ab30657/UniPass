@@ -1,16 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate, Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ResponsiveRadar } from '@nivo/radar';
 import { ResponsivePie } from '@nivo/pie';
 import {
-  Card,
-  CardContent,
   Typography,
   FormControl,
   RadioGroup,
   FormControlLabel,
   Radio,
-  Button,
   Chip,
 } from '@mui/material';
 import { Box } from '@mui/system';

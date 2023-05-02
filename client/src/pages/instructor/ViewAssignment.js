@@ -1,28 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate, Link, useParams } from 'react-router-dom';
-import {
-  Card,
-  CardContent,
-  Typography,
-  FormControl,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Button,
-  SvgIcon,
-  Slider,
-} from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Typography, Button, SvgIcon, Slider } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 import { useTheme } from '@emotion/react';
 import { tokens } from '../../theme';
 import LoadingContext from '../../context/LoadingContext';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import Header from '../../components/Header';
-import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import ClockIcon from '@heroicons/react/24/solid/ClockIcon';
 import { ResponsiveRadar } from '@nivo/radar';
 import { ResponsiveBar } from '@nivo/bar';
-import { setIn } from 'formik';
 
 function valuetext(value) {
   return `${value}`;
@@ -35,7 +22,7 @@ const colorStyle = (vl) => {
   if (vl < 52) return '#ff8e15';
   if (vl < 70) return '#fab733';
   if (vl < 88) return '#acb334';
-  if (vl < 100) return '#69b34c';
+  if (vl <= 100) return '#69b34c';
 };
 
 const useStyle = {

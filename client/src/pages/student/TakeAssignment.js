@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate, Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
-  Card,
-  CardContent,
   Typography,
   FormControl,
   RadioGroup,
