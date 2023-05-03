@@ -131,7 +131,7 @@ function App() {
                           element={<ViewAssignment />}
                         />
                         <Route
-                          path="/Courses/:courseId/Materials/:assignmentId/:studentId"
+                          path="/Courses/:courseId/Materials/:assignmentId/:studentId/Grades"
                           element={<GradeForAssignmentStudent />}
                         />
                       </>
