@@ -211,7 +211,7 @@ const CourseGrade = () => {
             <Box
               onClick={() =>
                 navigate(
-                  `/Courses/${courseId}/Materials/${material.id}/${studentId}`,
+                  `/Courses/${courseId}/Materials/${material.id}/${studentId}/Grades`,
                 )
               }
             >

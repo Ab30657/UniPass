@@ -254,7 +254,7 @@ const ViewAssignment = () => {
             borderBottom={`4px solid ${colors.primary[500]}`}
             p="15px"
           >
-            <Box onClick={() => navigate(`${material.student.id}`)}>
+            <Box onClick={() => navigate(`${material.student.id}/grades`)}>
               <Typography
                 color={colors.greenAccent[500]}
                 variant="h5"
