@@ -8,6 +8,7 @@ for assignment in json_data:
     a = assignment["assignmentId"]
     for attempt in assignment['attempts']:
         url = 'https://localhost:7153/api/Student/Courses/1/Materials/'+str(a)+'?id='+str(st)
+        # url = 'https://unipass-dev.azurewebsites.net/api/Student/Courses/1/Materials/'+str(a)+'?id='+str(st)
         payload = {'takeQuestions': attempt['takeQuestions']}
         response = requests.post(url, json=payload, verify=False)
         print(payload)

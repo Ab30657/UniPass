@@ -66,7 +66,7 @@ namespace API.Controllers
         }
 
         [HttpPost("Courses/{courseId}/Materials/{assignmentId}")]
-        public async Task<ActionResult<AssignmentAttemptGradeDto>> SubmitAssignment(int courseId, int assignmentId, CreateTakeAssignmentDto createTakeAssignmentDto, int id)
+        public async Task<ActionResult<AssignmentAttemptGradeDto>> SubmitAssignment(int courseId, int assignmentId, CreateTakeAssignmentDto createTakeAssignmentDto)
         {
             //This gets the currently logged in user claims from .NET Web API Middleware through HttpContext
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
