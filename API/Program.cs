@@ -99,14 +99,6 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    using (var scope = app.Services.CreateScope())
-    {
-        var context = scope.ServiceProvider.GetRequiredService<DataContext>();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
-        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
-        await context.Database.MigrateAsync();
-        await Seed.SeedUsersAsync(userManager, roleManager, context);
-    }
     app.UseHttpsRedirection();
     app.UseCors();
     app.UseRouting();

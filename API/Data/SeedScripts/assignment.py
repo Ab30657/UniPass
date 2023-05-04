@@ -6,8 +6,8 @@ with open('AssignmentData.json', 'r') as f:
     data = json.load(f)
 
 # Iterate over each assignment and send a POST request
-# url = 'https://localhost:7153/api/Instructor/Courses/1/Materials'
-url = 'https://unipass-dev.azurewebsites.net//api/Instructor/Courses/1/Materials'
+url = 'https://localhost:7153/api/Instructor/Courses/1/Materials'
+# url = 'https://unipass-dev.azurewebsites.net//api/Instructor/Courses/1/Materials'
 for assignment in data:
     # Set the POST request URL
 
