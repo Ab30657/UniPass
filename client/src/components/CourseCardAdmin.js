@@ -69,7 +69,7 @@ export const CourseCard = (props) => {
         sx={{ p: 2 }}
       >
         <Stack alignItems="center" direction="row" spacing={1}>
-          <Button onClick={() => navigate(`${course.id}`)}>
+          <Button onClick={() => navigate(`${course.id}/Materials`)}>
             <SvgIcon fontSize="small">
               <ClockIcon color={colors.greenAccent[400]} />
             </SvgIcon>

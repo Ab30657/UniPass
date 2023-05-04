@@ -204,6 +204,21 @@ namespace API.Controllers
             return courses;
         }
 
+        [HttpGet("Courses/{courseId}/{instructorId}/Materials")]
+        public async Task<ActionResult<AssignmentDto>> GetClassMaterials(int courseId, int instructorId)
+        {
+            //This gets the currently logged in user claims from .NET Web API Middleware through HttpContext
+            var userId = instructorId; 
+            // Uncomment the line below, to test manually, otherwise use postman tests
+            // var userId = int.Parse(x ?? "1");
+            // var x = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            // var userId = int.Parse(x ?? "2");
+            var instructor = await _unitOfWork.UserRepository.GetInstructorByUserIdAsync(userId);
+            if (_unitOfWork.CourseRepository.YouDontTeach(instructor, courseId))
+                return BadRequest("You don't teach this course");
+            return Ok(await _unitOfWork.AssignmentRepository.GetAssignmentsByCourseIdAsync(courseId));
+        }
+
         [HttpGet("Courses/{courseId}/StudentReports")]
         public async Task<ActionResult<IEnumerable<StudentWithScoreDto>>> GetStudentsWithScore(int courseId, int semesterId)
         {
@@ -214,6 +229,17 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<StudentWithScoreDto>>> GetAStudentWithScoreById(int courseId, int semesterId, int studentId)
         {
             return Ok(await _unitOfWork.CourseRepository.GetAStudentWithScoresAsyncById(courseId, semesterId, studentId));
+        }
+        [HttpGet("Courses/{courseId}/students")]
+        public async Task<ActionResult<List<StudentDto>>> GetStudentsToACourse(int courseId, int semesterId)
+        {
+            var courseExists = await _unitOfWork.CourseRepository.CourseExistsById(courseId);
+            if (!courseExists)
+            {
+                return NotFound("Course does not exist.");
+            }
+            var students = await _unitOfWork.CourseRepository.GetStudentsToACourse(courseId, semesterId);
+            return Ok(students);
         }
     }
 }
