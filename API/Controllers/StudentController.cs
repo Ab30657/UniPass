@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Authorize(Roles = "Student")]
+    // [Authorize(Roles = "Student")]
     public class StudentController : BaseApiController
     {
 
@@ -69,9 +69,9 @@ namespace API.Controllers
         public async Task<ActionResult<AssignmentAttemptGradeDto>> SubmitAssignment(int courseId, int assignmentId, CreateTakeAssignmentDto createTakeAssignmentDto, int id)
         {
             //This gets the currently logged in user claims from .NET Web API Middleware through HttpContext
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            // var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             // Uncomment the line below, to test manually, otherwise use postman tests
-            // var userId = id;
+            var userId = id;
             var student = await _unitOfWork.UserRepository.GetStudentByUserIdAsync(userId);
             var assignment = await _unitOfWork.AssignmentRepository.GetAssignmentByIdAsync(assignmentId);
             if (assignment == null)
