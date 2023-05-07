@@ -35,6 +35,7 @@ import GradeForAssignmentStudent from './pages/instructor/GradeForAssignmentStud
 import PerformanceIndicatorGraph from './pages/student/PIGraphs';
 import CourseGrade from './pages/instructor/CourseGrade';
 import YourCourseGrade from './pages/student/YourCourseGrade';
+import AdminCourseGrade from './pages/admin/CourseGrade';
 //import GradeForAssignmentStudentAdmin from './pages/admin/GradeForAssignmentStudentAdmin';
 const ROLES = {
   0: 'Admin',
@@ -128,15 +129,15 @@ function App() {
                     {user?.roles[0] === ROLES[0] && (
                       <>
                         <Route
-                          path="/Courses/:courseId/Materials"
+                          path="Courses/:courseId/Instructors/:instructorId/Materials"
                           element={<ListAssignmentAdmin />}
                         />
                         <Route
-                          path="/Courses/:courseId/Materials/:assignmentId"
+                          path="/Courses/:courseId/Instructors/:instructorId/Materials/:assignmentId"
                           element={<ViewAssignment />}
                         />
                         <Route
-                          path="/Courses/:courseId/Materials/:assignmentId/:studentId/Grades"
+                          path="/Courses/:courseId/Instructors/:instructorId/Materials/:assignmentId/:studentId/Grades"
                           element={<GradeForAssignmentStudent />}
                         />
                       </>
@@ -177,6 +178,10 @@ function App() {
                   <Route element={<RequireAuth allowedRoles={[ROLES[0]]} />}>
                     <Route path="/Courses/New" element={<Createcourse />} />
                     <Route path="/PIs/Create" element={<CreatePIs />} />
+                    <Route
+                      path="/Courses/:courseId/Instructor/:instructorId/:studentId/Grades"
+                      element={<AdminCourseGrade />}
+                    />
                   </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[1]]} />}>
                     <Route path="/Courses/:courseId" element={<Editcourse />} />
@@ -184,29 +189,10 @@ function App() {
                       path="Courses/:courseId/Materials/New"
                       element={<CreateAssignment />}
                     />
-                  </Route>
-                  <Route
-                    element={
-                      <RequireAuth allowedRoles={[ROLES[1], ROLES[0]]} />
-                    }
-                  >
                     <Route
                       path="/Courses/:courseId/:studentId/Grades"
                       element={<CourseGrade />}
                     />
-                    {/*
-                    <Route
-                      path="/Courses/:courseId/Materials"
-                      element={<AssignmentList />}
-                    />
-                    <Route
-                      path="/Courses/:courseId/Materials/:assignmentId"
-                      element={<TakeAssignment />}
-                    />
-                    <Route
-                      path="/Courses/:courseId/Materials/:assignmentId/Grade"
-                      element={<GradeForAssignment />}
-                    />*/}
                   </Route>
                   <Route element={<RequireAuth allowedRoles={[ROLES[2]]} />}>
                     <Route path="/DepartmentCourses" element={<AllCourses />} />

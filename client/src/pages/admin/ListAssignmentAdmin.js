@@ -42,14 +42,17 @@ const ListAssignment = () => {
   const colors = tokens(theme.palette.mode);
   const [assignments, setAssignments] = useState([]);
   const [students, setStudents] = useState([]);
-  let { courseId } = useParams();
+  let { courseId, instructorId } = useParams();
   const axiosPrivate = useAxiosPrivate();
   const { showLoading, hideLoading } = useContext(LoadingContext);
   useEffect(() => {
     showLoading();
-
+    console.log(instructorId);
     Promise.all([
-      axiosPrivate.get(GET_ALL_ASSIGNMENTS_URL + `${courseId}/21/Materials`),
+      axiosPrivate.get(
+        GET_ALL_ASSIGNMENTS_URL +
+          `${courseId}/Materials?instructorId=${instructorId}`,
+      ),
       axiosPrivate.get(GET_ALL_STUDENTS + `${courseId}/Students?semesterId=1`),
     ])
       .then(([response, studentResponse]) => {
@@ -197,7 +200,9 @@ const ListAssignment = () => {
                 >
                   <Box
                     onClick={() =>
-                      navigate(`/Courses/${courseId}/${student.id}/Grades`)
+                      navigate(
+                        `/Courses/${courseId}/Instructor/${instructorId}/${student.id}/Grades`,
+                      )
                     }
                   >
                     <Typography

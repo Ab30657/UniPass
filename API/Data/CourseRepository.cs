@@ -185,7 +185,7 @@ namespace API.Data
         public async void RegisterForCourse(RegisterCourseDto rcDto, int studentId)
         {
             //var course = await _context.Courses.FirstOrDefaultAsync(x => x.Id == courseId);
-            var student = await _context.Students.Include(x => x.Takes).FirstOrDefaultAsync(x => x.Id == studentId);
+            // var student = await _context.Students.Include(x => x.Takes).FirstOrDefaultAsync(x => x.Id == studentId);
 
             var taking = new Takes
             {
@@ -194,7 +194,7 @@ namespace API.Data
                 SemesterId = rcDto.SemesterId
             };
             //Change this as well after feature/take-assignment-grade
-            student.Takes.Add(taking);
+            await _context.Takes.AddAsync(taking);
         }
 
         public async Task<List<StudentDto>> GetStudentsToACourse(int courseId, int semesterId)
