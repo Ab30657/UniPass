@@ -153,7 +153,10 @@ const GradeForAssignment = () => {
                 variant="h5"
                 fontWeight="600"
               >
-                {index + 1}. {questions && questions[index].questionText}
+                {index + 1}.{' '}
+                {questions &&
+                  questions.length > 0 &&
+                  questions[index].questionText}
               </Typography>
               <Typography
                 color={colors.grey[100]}
@@ -161,6 +164,7 @@ const GradeForAssignment = () => {
                 fontWeight="600"
               >
                 {questions &&
+                  questions.length > 0 &&
                   questions[index]?.performanceIndicators.map((pi, piIndex) => (
                     <Chip key={piIndex} color="success" label={pi.name} />
                   ))}
@@ -183,6 +187,7 @@ const GradeForAssignment = () => {
                   <FormControl component="fieldset">
                     <RadioGroup value={question?.answerText}>
                       {questions &&
+                        questions.length > 0 &&
                         questions[index]?.answers.map((option, optionIndex) => (
                           <FormControlLabel
                             key={optionIndex}
@@ -204,9 +209,16 @@ const GradeForAssignment = () => {
                 >
                   Points:{' '}
                   {question.correct
-                    ? `${questions && questions[index].fullMarks}`
+                    ? `${
+                        questions &&
+                        questions.length > 0 &&
+                        questions[index].fullMarks
+                      }`
                     : '0'}
-                  /{questions && questions[index].fullMarks}
+                  /
+                  {questions &&
+                    questions.length > 0 &&
+                    questions[index].fullMarks}
                 </Typography>
               </Box>
               <Box
