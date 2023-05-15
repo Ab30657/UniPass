@@ -145,7 +145,7 @@ const CreateAssignment = () => {
               fullWidth
               sx={{ color: colors.grey[700] }}
               id="CourseTitle"
-              label="Course Title"
+              label="Assignment Title"
               variant="filled"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
